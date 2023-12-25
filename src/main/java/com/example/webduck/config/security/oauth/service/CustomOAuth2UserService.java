@@ -91,7 +91,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             .username(oAuth2UserInfo.getName())
             .email(oAuth2UserInfo.getEmail())
             .socialType(oAuth2UserInfo.getSocialType())
-            .role(Role.GUEST)
+            .role(Role.USER)
             .socialId(oAuth2UserInfo.getId())
             .socialPk(oAuth2UserInfo.getPk())
             .build();
