@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @RequiredArgsConstructor
@@ -51,9 +52,11 @@ public class SecurityConfig {
                     .anyRequest()
                     .authenticated()
             )
-            .formLogin(withDefaults())
-            .oauth2Login(oauth2 -> oauth2
 
+            .httpBasic((AbstractHttpConfigurer::disable))
+            .formLogin((AbstractHttpConfigurer::disable))
+            .oauth2Login(oauth2 -> oauth2
+                .loginPage("/auth/login")
                 .defaultSuccessUrl("/")
                 .userInfoEndpoint(point -> point
                     .userService(customOAuth2UserService))
