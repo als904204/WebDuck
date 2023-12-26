@@ -12,6 +12,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ms-auto py-4 py-lg-0">
+          <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+            <a class="nav-link px-lg-3 py-2 py-lg-1 nav-manager" th:href="@{/admin}">관리자</a>
+          </li>
           <li class="nav-item"><a class="nav-link px-lg-3 py-2 py-lg-1" th:href="@{/}">태그검색</a></li>
           <li class="nav-item"><a class="nav-link px-lg-3 py-2 py-lg-1" th:href="@{/}">요일별웹툰</a></li>
           <li class="nav-item"><a class="nav-link px-lg-3 py-2 py-lg-1" th:href="@{/}">카카오웹툰</a></li>

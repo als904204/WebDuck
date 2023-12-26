@@ -91,3 +91,8 @@
 .no-hover{
   cursor: default;
 }
+
+.nav-manager{
+  background-color: white; /* 배경색을 흰색으로 설정 */
+  color: black; /* 글자색을 검정색으로 설정 */
+}

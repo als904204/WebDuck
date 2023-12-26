@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="content">
+  <section class="text-white container mb-4 ">
+      <h1>웹툰 업로드</h1>
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+      <div class="row g-3">
+        <div class="col-12">
+          <label for="title" class="form-label">웹툰 제목
+            <input type="text" name="title" id="title" class="form-control" placeholder="제목을 입력해 주세요">
+          </label>
+        </div>
+        <div class="col-md-6">
+          <label for="imageFile" class="form-label">웹툰 이미지
+            <input type="file" name="imageFile" id="imageFile" class="form-control">
+          </label>
+        </div>
+        <div class="col-12">
+          <img id="imagePreview" src="#" alt="이미지 미리보기" style="max-width: 100%; height: auto; display: none;">
+        </div>
+        <div class="col-12">
+          <label for="summary" class="form-label">웹툰 줄거리</label>
+            <textarea name="summary" id="summary" class="form-control" placeholder="줄거리를 입력해 주세요" rows="4"></textarea>
+        </div>
+        <div>
+          <button type="button" class="btn btn-primary" onclick="uploadWebtoon()">업로드</button>
+        </div>
+      </div>
+    </form>
+
+  </section>
+  <script th:src="@{/js/admin/webtoon.js}"></script>
+</th:block>
+</html>

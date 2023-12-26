@@ -62,6 +62,8 @@ public class SecurityConfig {
                     .permitAll()
             )
 //            .csrf((AbstractHttpConfigurer::disable))
+//            .cors((AbstractHttpConfigurer::disable))
+
             .httpBasic((AbstractHttpConfigurer::disable))
             .formLogin((AbstractHttpConfigurer::disable))
             .oauth2Login(oauth2 -> oauth2
@@ -78,9 +80,6 @@ public class SecurityConfig {
                 .invalidateHttpSession(true) // 로그아웃 시 세션 날리기
                 .clearAuthentication(true)   // 시큐리티 컨텍스트 홀더 인증정보 날리기
                 .logoutSuccessUrl("/"));
-
-
-
 
 
         return http.build();
