@@ -1,4 +1,4 @@
-package com.example.webduck.Webtoon.service;
+package com.example.webduck.util.upload;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
-public class ImageUpload {
+public class ImageUploadUtil {
 
 
     // TODO : Exception & Upload to S3
