@@ -1,7 +1,7 @@
 package com.example.webduck.admin.controller.api;
 
 
-import com.example.webduck.Webtoon.dto.WebtoonUploadDto;
+import com.example.webduck.Webtoon.dto.WebtoonUpload;
 import com.example.webduck.admin.service.UploadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +19,9 @@ public class AdminApiController {
 
     private final UploadService uploadWebtoon;
 
-
     @PostMapping("/webtoon")
-    public ResponseEntity<Long> uploadWebtoon(@ModelAttribute WebtoonUploadDto webtoonUploadDto) {
-        // DTO 처리 로직
-        Long uploadWebtoonId = uploadWebtoon.uploadWebtoon(webtoonUploadDto);
+    public ResponseEntity<Long> uploadWebtoon(@ModelAttribute WebtoonUpload webtoonUpload) {
+        Long uploadWebtoonId = uploadWebtoon.uploadWebtoon(webtoonUpload);
         return ResponseEntity.ok(uploadWebtoonId);
     }
 }
