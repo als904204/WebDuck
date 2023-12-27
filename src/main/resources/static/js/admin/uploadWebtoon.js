@@ -13,6 +13,12 @@ function uploadWebtoon() {
     },
     success: function(response) {
       console.log("Response:", response);
+      $('#uploadSuccessModal').modal('show');
+
+      // "웹툰 보기" 버튼 클릭 시 특정 페이지로 이동합니다.
+      $('#viewWebtoon').on('click', function() {
+        window.location.href = '/test'; // 여기에 웹툰 보기 페이지 URL을 입력하세요.
+      });
     },
     error: function(xhr, status, error) {
       console.error("Error:", error);
