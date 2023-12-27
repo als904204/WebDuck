@@ -1,6 +1,6 @@
 package com.example.webduck.admin.service;
 
-import com.example.webduck.Webtoon.dto.WebtoonUploadDto;
+import com.example.webduck.Webtoon.dto.WebtoonUpload;
 import com.example.webduck.Webtoon.entity.Webtoon;
 import com.example.webduck.Webtoon.repository.WebtoonRepository;
 import com.example.webduck.util.upload.ImageUploadUtil;
@@ -18,10 +18,12 @@ public class UploadService {
     private final WebtoonRepository webtoonRepository;
 
 
-    public Long uploadWebtoon(WebtoonUploadDto webtoonUploadDto) {
+
+    //  TODO : Server custom Exception
+    public Long uploadWebtoon(WebtoonUpload webtoonUpload) {
         Webtoon savedWebtoon;
         try {
-            MultipartFile imageFile = webtoonUploadDto.getImageFile();
+            MultipartFile imageFile = webtoonUpload.getImageFile();
             String originalFileName = imageFile.getOriginalFilename();
             String imagePath = ImageUploadUtil.saveImageToFileSystem(imageFile);
 
@@ -32,8 +34,9 @@ public class UploadService {
             String relativePath = "/temp/" + imagePath.substring(imagePath.lastIndexOf("/") + 1);
 
             Webtoon webtoon = Webtoon.builder()
-                .title(webtoonUploadDto.getTitle())
-                .summary(webtoonUploadDto.getSummary())
+                .title(webtoonUpload.getTitle())
+                .summary(webtoonUpload.getSummary())
+                .publishDay(webtoonUpload.getPublishDay())
                 .originalImageName(originalFileName)
                 .imagePath(relativePath) // 상대 경로 저장
                 .build();
