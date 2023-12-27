@@ -16,6 +16,11 @@ public class AdminController {
 
     @GetMapping("/webtoon")
     public String adminWebtoonPage() {
+        return "/admin/webtoon/adminWebtoonMain";
+    }
+
+    @GetMapping("/webtoon/upload")
+    public String adminWebtoonUpload() {
         return "/admin/webtoon/uploadWebtoon";
     }
 
