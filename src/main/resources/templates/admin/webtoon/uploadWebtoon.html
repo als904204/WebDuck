@@ -12,6 +12,21 @@
             <input type="text" name="title" id="title" class="form-control" placeholder="제목을 입력해 주세요">
           </label>
         </div>
+
+        <div>
+          <label for="publishDay" class="form-label">웹툰 요일
+          <select name="publishDay" id="publishDay" class="form-control">
+            <option value="MONDAY">월요일</option>
+            <option value="TUESDAY">화요일</option>
+            <option value="WEDNESDAY">수요일</option>
+            <option value="THURSDAY">목요일</option>
+            <option value="FRIDAY">금요일</option>
+            <option value="SATURDAY">토요일</option>
+            <option value="SUNDAY">일요일</option>
+          </select>
+          </label>
+        </div>
+
         <div class="col-md-6">
           <label for="imageFile" class="form-label">웹툰 이미지
             <input type="file" name="imageFile" id="imageFile" class="form-control">
@@ -31,6 +46,27 @@
     </form>
 
   </section>
-  <script th:src="@{/js/admin/webtoon.js}"></script>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="uploadSuccessModal" tabindex="-1" role="dialog" aria-labelledby="uploadSuccessModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadSuccessModalLabel">업로드 성공</h5>
+        </div>
+        <div class="modal-body">
+          웹툰이 성공적으로 업로드 되었습니다.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-primary" id="viewWebtoon">웹툰 보기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script th:src="@{/js/admin/uploadWebtoon.js}"></script>
 </th:block>
 </html>

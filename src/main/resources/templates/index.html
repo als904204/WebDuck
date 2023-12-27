@@ -83,44 +83,22 @@
                         <h3>요일별 웹툰</h3>
                     </div>
                     <div>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>월</span></button>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>화</span></button>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>수</span></button>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>목</span></button>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>금</span></button>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>토</span></button>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>일</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="MONDAY"><span>월</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="TUESDAY"><span>화</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="WEDNESDAY"><span>수</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="THURSDAY"><span>목</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="FRIDAY"><span>금</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="SATURDAY"><span>토</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="SUNDAY"><span>일</span></button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon1.png}" alt="Java" />
-                        <p class="text-center">화산귀환</p>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon2.png}" alt="Java" />
-                        <p class="text-center">나혼자만 레벨업</p>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon3.png}" alt="Java" />
-                        <p class="text-center">해골병사는 던전을 지키지 못했다</p>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon4.png}" alt="Java" />
-                        <p class="text-center">나노마신</p>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon5.png}" alt="Java" />
-                        <p class="text-center">갓오브하이스쿨</p>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon6.png}" alt="Java" />
-                        <p class="text-center">전지적 독자시점</p>
-                    </div>
+                <!-- 웹툰 목록을 표시할 컨테이너 -->
+                <div id="webtoonListContainer" class="row">
                 </div>
             </main>
         </div>
     </section>
+
 
     <section class="text-white">
         <div class="container">
@@ -165,7 +143,7 @@
             </main>
         </div>
     </section>
-
+<script th:src="@{/js/webtoon/webtoonList.js}"></script>
 </th:block>
 </html>
 
