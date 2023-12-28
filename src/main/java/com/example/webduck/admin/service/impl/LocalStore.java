@@ -22,18 +22,24 @@ public class LocalStore implements FileStore {
             // 중복 파일명 처리를 위한 UUID
             String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
+            // 파일 저장 경로 설정
             Path destinationFilePath = Paths.get(path, filename);
+
+            // 파일 복사 및 저장
             Files.copy(file.getInputStream(), destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
 
+            // 저장된 파일의 상대 경로 반환
             return getRelativePath(destinationFilePath);
         }
         throw new IllegalArgumentException("Local file upload exception!!");
     }
 
+    // 로컬 저장 경로 반환 (User/KIM/Project/src/main...)
     private String getLocalPath() {
         return System.getProperty("user.dir") + "/src/main/resources/static/temp";
     }
 
+    // 저장된 파일의 상대 경로 반환 (/temp/webtoonImage1.png)
     private String getRelativePath(Path destinationFilePath) {
         String imagePath = destinationFilePath.toString();
 
