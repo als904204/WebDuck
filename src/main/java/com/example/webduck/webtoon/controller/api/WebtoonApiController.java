@@ -1,8 +1,8 @@
-package com.example.webduck.Webtoon.controller.api;
+package com.example.webduck.webtoon.controller.api;
 
-import com.example.webduck.Webtoon.dto.WebtoonRequest;
-import com.example.webduck.Webtoon.entity.PublishDay;
-import com.example.webduck.Webtoon.service.WebtoonService;
+import com.example.webduck.webtoon.dto.WebtoonRequest;
+import com.example.webduck.webtoon.entity.PublishDay;
+import com.example.webduck.webtoon.service.WebtoonService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
-package com.example.webduck.Webtoon.dto;
+package com.example.webduck.webtoon.dto;
 
-import com.example.webduck.Webtoon.entity.PublishDay;
-import com.example.webduck.Webtoon.entity.Webtoon;
+import com.example.webduck.webtoon.entity.PublishDay;
+import com.example.webduck.webtoon.entity.Webtoon;
 import lombok.Getter;
 
 @Getter

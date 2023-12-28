@@ -1,4 +1,4 @@
-package com.example.webduck.Member.entity;
+package com.example.webduck.member.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -1,9 +1,9 @@
-package com.example.webduck.Webtoon.service;
+package com.example.webduck.webtoon.service;
 
-import com.example.webduck.Webtoon.dto.WebtoonRequest;
-import com.example.webduck.Webtoon.entity.PublishDay;
-import com.example.webduck.Webtoon.entity.Webtoon;
-import com.example.webduck.Webtoon.repository.WebtoonRepository;
+import com.example.webduck.webtoon.dto.WebtoonRequest;
+import com.example.webduck.webtoon.entity.PublishDay;
+import com.example.webduck.webtoon.entity.Webtoon;
+import com.example.webduck.webtoon.repository.WebtoonRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
-package com.example.webduck.Webtoon.dto;
+package com.example.webduck.webtoon.dto;
 
-import com.example.webduck.Webtoon.entity.PublishDay;
+import com.example.webduck.webtoon.entity.PublishDay;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;

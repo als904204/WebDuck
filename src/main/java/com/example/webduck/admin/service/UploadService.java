@@ -1,8 +1,8 @@
 package com.example.webduck.admin.service;
 
-import com.example.webduck.Webtoon.dto.WebtoonUpload;
-import com.example.webduck.Webtoon.entity.Webtoon;
-import com.example.webduck.Webtoon.repository.WebtoonRepository;
+import com.example.webduck.webtoon.dto.WebtoonUpload;
+import com.example.webduck.webtoon.entity.Webtoon;
+import com.example.webduck.webtoon.repository.WebtoonRepository;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

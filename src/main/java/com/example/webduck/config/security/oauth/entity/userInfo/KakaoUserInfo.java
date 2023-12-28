@@ -1,6 +1,6 @@
 package com.example.webduck.config.security.oauth.entity.userInfo;
 
-import com.example.webduck.Member.entity.SocialType;
+import com.example.webduck.member.entity.SocialType;
 import java.util.Map;
 
 public class KakaoUserInfo extends OAuth2UserInfo {

@@ -1,7 +1,7 @@
-package com.example.webduck.Member.repository;
+package com.example.webduck.member.repository;
 
-import com.example.webduck.Member.entity.Member;
-import com.example.webduck.Member.entity.SocialType;
+import com.example.webduck.member.entity.Member;
+import com.example.webduck.member.entity.SocialType;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

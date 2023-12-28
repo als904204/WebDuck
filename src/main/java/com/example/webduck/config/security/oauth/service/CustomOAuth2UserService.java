@@ -1,8 +1,8 @@
 package com.example.webduck.config.security.oauth.service;
 
-import com.example.webduck.Member.entity.Member;
-import com.example.webduck.Member.entity.Role;
-import com.example.webduck.Member.repository.MemberRepository;
+import com.example.webduck.member.entity.Member;
+import com.example.webduck.member.entity.Role;
+import com.example.webduck.member.repository.MemberRepository;
 import com.example.webduck.config.security.oauth.entity.userInfo.GoogleUserInfo;
 import com.example.webduck.config.security.oauth.entity.userInfo.KakaoUserInfo;
 import com.example.webduck.config.security.oauth.entity.userInfo.NaverUserInfo;

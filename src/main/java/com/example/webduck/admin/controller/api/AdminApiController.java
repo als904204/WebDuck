@@ -1,7 +1,7 @@
 package com.example.webduck.admin.controller.api;
 
 
-import com.example.webduck.Webtoon.dto.WebtoonUpload;
+import com.example.webduck.webtoon.dto.WebtoonUpload;
 import com.example.webduck.admin.service.UploadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

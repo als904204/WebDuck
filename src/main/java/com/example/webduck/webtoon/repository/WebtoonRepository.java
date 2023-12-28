@@ -1,7 +1,7 @@
-package com.example.webduck.Webtoon.repository;
+package com.example.webduck.webtoon.repository;
 
-import com.example.webduck.Webtoon.entity.PublishDay;
-import com.example.webduck.Webtoon.entity.Webtoon;
+import com.example.webduck.webtoon.entity.PublishDay;
+import com.example.webduck.webtoon.entity.Webtoon;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

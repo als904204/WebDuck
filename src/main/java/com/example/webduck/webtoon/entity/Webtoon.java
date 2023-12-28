@@ -1,4 +1,4 @@
-package com.example.webduck.Webtoon.entity;
+package com.example.webduck.webtoon.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
