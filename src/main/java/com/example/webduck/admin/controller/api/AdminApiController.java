@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/admin")
 public class AdminApiController {
 
-    private final UploadService uploadWebtoon;
+    private final UploadService uploadService;
 
     @PostMapping("/webtoon")
     public ResponseEntity<Long> uploadWebtoon(@ModelAttribute WebtoonUpload webtoonUpload) {
-        Long uploadWebtoonId = uploadWebtoon.uploadWebtoon(webtoonUpload);
+        Long uploadWebtoonId = uploadService.uploadWebtoon(webtoonUpload);
         return ResponseEntity.ok(uploadWebtoonId);
     }
 }

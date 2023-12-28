@@ -3,7 +3,6 @@ package com.example.webduck.admin.service;
 import com.example.webduck.Webtoon.dto.WebtoonUpload;
 import com.example.webduck.Webtoon.entity.Webtoon;
 import com.example.webduck.Webtoon.repository.WebtoonRepository;
-import com.example.webduck.util.upload.ImageUploadUtil;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadService {
 
     private final WebtoonRepository webtoonRepository;
-
+    private final FileStore fileStore;
 
 
     //  TODO : Server custom Exception
@@ -25,14 +24,9 @@ public class UploadService {
         try {
             MultipartFile imageFile = webtoonUpload.getImageFile();
             String originalFileName = imageFile.getOriginalFilename();
-            String imagePath = ImageUploadUtil.saveImageToFileSystem(imageFile);
-
-            log.info("originalFileName={}",originalFileName);
-            log.info("image={}",imagePath);
-
+            String imagePath = fileStore.upload(imageFile);
             // 데이터베이스에 저장할 상대 경로
             String relativePath = "/temp/" + imagePath.substring(imagePath.lastIndexOf("/") + 1);
-
             Webtoon webtoon = Webtoon.builder()
                 .title(webtoonUpload.getTitle())
                 .summary(webtoonUpload.getSummary())
