@@ -10,20 +10,22 @@ import java.util.UUID;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+// 로컬 환경 파일 업로드
 @Component
 public class LocalStore implements FileStore {
 
 
-    // todo 커스텀 예외
     @Override
     public String upload(MultipartFile file) throws IOException {
         String path = getLocalPath();
         if (file != null && !file.isEmpty()) {
             // 중복 파일명 처리를 위한 UUID
             String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
+
             Path destinationFilePath = Paths.get(path, filename);
             Files.copy(file.getInputStream(), destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
-            return destinationFilePath.toString();
+
+            return getRelativePath(destinationFilePath);
         }
         throw new IllegalArgumentException("Local file upload exception!!");
     }
@@ -31,4 +33,12 @@ public class LocalStore implements FileStore {
     private String getLocalPath() {
         return System.getProperty("user.dir") + "/src/main/resources/static/temp";
     }
+
+    private String getRelativePath(Path destinationFilePath) {
+        String imagePath = destinationFilePath.toString();
+
+        // static/temp
+        return "/temp/" + imagePath.substring(imagePath.lastIndexOf("/") + 1);
+    }
+
 }

@@ -21,18 +21,19 @@ public class UploadService {
     //  TODO : Server custom Exception
     public Long uploadWebtoon(WebtoonUpload webtoonUpload) {
         Webtoon savedWebtoon;
+
         try {
             MultipartFile imageFile = webtoonUpload.getImageFile();
             String originalFileName = imageFile.getOriginalFilename();
             String imagePath = fileStore.upload(imageFile);
-            // 데이터베이스에 저장할 상대 경로
-            String relativePath = "/temp/" + imagePath.substring(imagePath.lastIndexOf("/") + 1);
+            log.info("imagePath={}",imagePath);
+
             Webtoon webtoon = Webtoon.builder()
                 .title(webtoonUpload.getTitle())
                 .summary(webtoonUpload.getSummary())
                 .publishDay(webtoonUpload.getPublishDay())
                 .originalImageName(originalFileName)
-                .imagePath(relativePath) // 상대 경로 저장
+                .imagePath(imagePath) // 상대 경로 저장
                 .build();
 
             savedWebtoon = webtoonRepository.save(webtoon);
