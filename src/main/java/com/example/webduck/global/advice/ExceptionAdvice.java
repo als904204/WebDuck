@@ -1,11 +1,13 @@
 package com.example.webduck.global.advice;
 
+import com.example.webduck.global.common.ErrorResponse;
+import com.example.webduck.global.exception.CustomException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -62,11 +64,11 @@ public class ExceptionAdvice {
         return ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    // converter가 변환하지 못했을 경우(enum type에 존재하지 않는 값)
+    // 컨트롤러의 메서드로 전달된 인자의 타입이 예상되는 타입과 일치하지 않을 때 발생(converter가 변환하지 못했을 경우)
     /**
      * MethodArgumentTypeMismatchException
-     * 올바르지 않은 HTTP 메소드로 요청을 보낼 때
-     * (GET 요청을 보내야 되는데 POST 요청을 보냄)
+     * enum type에 존재하지 않는 값
+     * Long 타입으로 기대하는데, 실제로 문자열이나 다른 형식의 값이 전달될 경우
      */
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
