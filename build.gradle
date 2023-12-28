@@ -31,6 +31,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly("org.springframework.boot:spring-boot-devtools")
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // TEST
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -40,6 +41,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
     // Thymeleaf와 Spring Security 통합을 위한 의존성
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
