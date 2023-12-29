@@ -35,6 +35,11 @@ public class SecurityConfig {
         "/auth/login",
     };
 
+    private static final String[] ADMIN_URL = {
+        "/api/v1/admin/**",
+        "/admin/**"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -43,23 +48,15 @@ public class SecurityConfig {
                 req.requestMatchers(WHITE_LIST_URL)
                     .permitAll()
 
-                    .requestMatchers("/api/v1/management/**")
-                    .hasAnyRole(ADMIN.name(), MANAGER.name())
+                    .requestMatchers(ADMIN_URL)
+                    .hasRole(ADMIN.name())
 
+                     // ex) 권한 세부 설정
                     .requestMatchers(GET, "/api/v1/management/**")
                     .hasAnyAuthority(ADMIN.name(), MANAGER.name())
 
-                    .requestMatchers(POST, "/api/v1/management/**")
-                    .hasAnyAuthority(ADMIN.name(), MANAGER.name())
-
-                    .requestMatchers(PUT, "/api/v1/management/**")
-                    .hasAnyAuthority(ADMIN.name(), MANAGER.name())
-
-                    .requestMatchers(DELETE, "/api/v1/management/**")
-                    .hasAnyAuthority(ADMIN.name(), MANAGER.name())
-
                     .anyRequest()
-                    .permitAll()
+                    .authenticated()
             )
 //            .csrf((AbstractHttpConfigurer::disable))
 //            .cors((AbstractHttpConfigurer::disable))
