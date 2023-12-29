@@ -1,5 +1,7 @@
 package com.example.webduck.admin.service;
 
+import com.example.webduck.global.exception.CustomException;
+import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.webtoon.dto.WebtoonUpload;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
@@ -18,7 +20,6 @@ public class UploadService {
     private final FileStore fileStore;
 
 
-    //  TODO : Server custom Exception
     public Long uploadWebtoon(WebtoonUpload webtoonUpload) {
         Webtoon savedWebtoon;
 
@@ -40,7 +41,7 @@ public class UploadService {
 
         } catch (IOException e) {
             log.error("upload #e={}",e.getMessage());
-            throw new IllegalArgumentException("Upload Error");
+            throw new CustomException(LogicExceptionCode.BAD_REQUEST);
         }
         return savedWebtoon.getId();
     }
