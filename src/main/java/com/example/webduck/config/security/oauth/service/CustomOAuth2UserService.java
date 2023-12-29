@@ -1,5 +1,10 @@
 package com.example.webduck.config.security.oauth.service;
 
+import static com.example.webduck.global.exception.exceptionCode.ValidationExceptionCode.INVALID_OAUTH_TYPE;
+
+import com.example.webduck.global.exception.CustomException;
+import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
+import com.example.webduck.global.exception.exceptionCode.ValidationExceptionCode;
 import com.example.webduck.member.entity.Member;
 import com.example.webduck.member.entity.Role;
 import com.example.webduck.member.repository.MemberRepository;
@@ -57,13 +62,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .getUserNameAttributeName();
 
 
-            // TODO : 소셜타입 NULL 됨
         OAuth2UserInfo oAuth2UserInfo =
                 switch (oAuthProviderName) {
                 case GOOGLE -> new GoogleUserInfo(oAuth2User.getAttributes(),userNameAttributeName);
                 case KAKAO -> new KakaoUserInfo(oAuth2User.getAttributes(),userNameAttributeName);
                 case NAVER -> new NaverUserInfo(oAuth2User.getAttributes(),userNameAttributeName);
-                default -> throw new IllegalArgumentException("Unsupported OAuth Provider " + oAuthProviderName);
+                default -> throw new CustomException(INVALID_OAUTH_TYPE);
             };
 
         Member member = createOrUpdateMember(oAuth2UserInfo);
