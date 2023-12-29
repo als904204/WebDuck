@@ -5,9 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum LogicExceptionCode implements ExceptionCode {
-    BAD_REQUEST(400, "Bad Request"),
-    JSON_REQUEST_FAILED(401, "Json Request Failed.");
-
+    BAD_REQUEST(400, "Bad Request");
 
     @Getter
     private int status;
