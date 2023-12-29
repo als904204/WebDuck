@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="content">
+  <section class="vh-100 d-flex flex-column justify-content-center align-items-center text-center mt-n5 gradient-custom text-white">
+    <div>
+      <h1 class="display-1">404</h1>
+      <p class="lead">아무것도 없네요!</p>
+      <a class="btn" style="background-color: rgb(152, 255, 152);" th:href="@{/}">홈으로</a>
+    </div>
+  </section>
+</th:block>
+</html>
