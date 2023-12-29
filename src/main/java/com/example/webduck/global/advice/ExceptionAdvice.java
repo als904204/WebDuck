@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @Slf4j
 @RestControllerAdvice
@@ -114,13 +115,21 @@ public class ExceptionAdvice {
         return ErrorResponse.of(HttpStatus.PAYLOAD_TOO_LARGE, e.getMessage());
     }
 
-    // 위에서 지정한 예외 외의 서버 로직 예외에 대한 예외 처리.
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotFoundPage(NoResourceFoundException e) {
+        return ErrorResponse.of(HttpStatus.NOT_FOUND, e.getMessage());
+    }
+
+
+        // 위에서 지정한 예외 외의 서버 로직 예외에 대한 예외 처리.
     // 예상하지 못한 서버 예외
     // 운영에 치명적일 수 있음.
     // 반드시 로그를 기록하고, 관리자에게 알림을 줄 것.
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleException(HttpServletRequest req,Exception e) {
+    public ErrorResponse handleException(HttpServletRequest req, Exception e) {
+
         log.error("# handle Exception", e);
         return ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
     }
