@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @Slf4j
 @RestControllerAdvice
@@ -103,6 +104,15 @@ public class ExceptionAdvice {
             e.getMessage());
     }
 
+    /**
+     * 업로드 한 파일크기가 1MB 를 초과했을 때
+     * 413 리턴
+     */
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
+    public ErrorResponse handleMaxSizeException(MaxUploadSizeExceededException e) {
+        return ErrorResponse.of(HttpStatus.PAYLOAD_TOO_LARGE, e.getMessage());
+    }
 
     // 위에서 지정한 예외 외의 서버 로직 예외에 대한 예외 처리.
     // 예상하지 못한 서버 예외
