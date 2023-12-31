@@ -9,8 +9,6 @@ import com.example.webduck.webtoon.dto.WebtoonRequest;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.service.WebtoonService;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -100,11 +98,41 @@ class WebtoonApiControllerTest {
         mockMvc.perform(reqBuilder)
             .andExpect(status().isOk())
             .andDo(print());
-
-
     }
 
+    @DisplayName("요일별 웹툰 목록 조회")
     @Test
-    void getWebtoonListByPublish() {
+    void getWebtoonListByPublish() throws Exception {
+        List<WebtoonRequest> webtoonList = List.of(
+            new WebtoonRequest(
+                Webtoon.builder()
+                    .title("Webtoon 1")
+                    .summary("Summary 1")
+                    .imagePath("Path 1")
+                    .publishDay(PublishDay.SUNDAY)
+                    .originalImageName("Image1.png")
+                    .build()),
+            new WebtoonRequest(
+                Webtoon.builder()
+                    .title("Webtoon 2")
+                    .summary("Summary 2")
+                    .imagePath("Path 2")
+                    .publishDay(PublishDay.SUNDAY)
+                    .originalImageName("Image2.png")
+                    .build())
+        );
+
+        when(webtoonService.findWebtoonByPublishDay(PublishDay.SUNDAY)).thenReturn(webtoonList);
+
+        String publishDay = String.valueOf(PublishDay.SUNDAY);
+
+        RequestBuilder reqBuilder = MockMvcRequestBuilders
+            .get(url+"publish")
+            .param("publishDay",publishDay)
+            .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(reqBuilder)
+            .andDo(print());
+
     }
 }
