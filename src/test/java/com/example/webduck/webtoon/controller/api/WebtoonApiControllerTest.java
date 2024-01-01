@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.webtoon.dto.WebtoonRequest;
+import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.service.WebtoonService;
@@ -52,6 +53,7 @@ class WebtoonApiControllerTest {
                 .summary("Summary 1")
                 .imagePath("Path 1")
                 .publishDay(PublishDay.MONDAY)
+                .platform(Platform.NAVER)
                 .originalImageName("Image1.png").build()
         );
 
@@ -76,6 +78,7 @@ class WebtoonApiControllerTest {
                     .summary("Summary 1")
                     .imagePath("Path 1")
                     .publishDay(PublishDay.MONDAY)
+                    .platform(Platform.NAVER)
                     .originalImageName("Image1.png")
                     .build()),
             new WebtoonRequest(
@@ -83,6 +86,7 @@ class WebtoonApiControllerTest {
                     .title("Webtoon 2")
                     .summary("Summary 2")
                     .imagePath("Path 2")
+                    .platform(Platform.NAVER)
                     .publishDay(PublishDay.SUNDAY)
                     .originalImageName("Image2.png")
                     .build())
@@ -110,6 +114,7 @@ class WebtoonApiControllerTest {
                     .summary("Summary 1")
                     .imagePath("Path 1")
                     .publishDay(PublishDay.SUNDAY)
+                    .platform(Platform.NAVER)
                     .originalImageName("Image1.png")
                     .build()),
             new WebtoonRequest(
@@ -118,6 +123,7 @@ class WebtoonApiControllerTest {
                     .summary("Summary 2")
                     .imagePath("Path 2")
                     .publishDay(PublishDay.SUNDAY)
+                    .platform(Platform.NAVER)
                     .originalImageName("Image2.png")
                     .build())
         );
@@ -129,6 +135,44 @@ class WebtoonApiControllerTest {
         RequestBuilder reqBuilder = MockMvcRequestBuilders
             .get(url+"publish")
             .param("publishDay",publishDay)
+            .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(reqBuilder)
+            .andDo(print());
+
+    }
+
+    @DisplayName("플랫폼 별 웹툰 목록 조회")
+    @Test
+    void getWebtoonListByPlatform() throws Exception {
+        List<WebtoonRequest> webtoonList = List.of(
+            new WebtoonRequest(
+                Webtoon.builder()
+                    .title("Webtoon 1")
+                    .summary("Summary 1")
+                    .imagePath("Path 1")
+                    .publishDay(PublishDay.SUNDAY)
+                    .platform(Platform.NAVER)
+                    .originalImageName("Image1.png")
+                    .build()),
+            new WebtoonRequest(
+                Webtoon.builder()
+                    .title("Webtoon 2")
+                    .summary("Summary 2")
+                    .imagePath("Path 2")
+                    .publishDay(PublishDay.SUNDAY)
+                    .platform(Platform.NAVER)
+                    .originalImageName("Image2.png")
+                    .build())
+        );
+
+        when(webtoonService.findWebtoonByPlatform(Platform.NAVER)).thenReturn(webtoonList);
+
+        String platform = String.valueOf(Platform.NAVER);
+
+        RequestBuilder reqBuilder = MockMvcRequestBuilders
+            .get(url+"platform")
+            .param("platform",platform)
             .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(reqBuilder)
