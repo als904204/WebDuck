@@ -1,6 +1,7 @@
 package com.example.webduck.webtoon.controller.api;
 
 import com.example.webduck.webtoon.dto.WebtoonRequest;
+import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.service.WebtoonService;
 import java.util.List;
@@ -34,6 +35,12 @@ public class WebtoonApiController {
     @GetMapping("/publish")
     public ResponseEntity<List<WebtoonRequest>> getWebtoonListByPublish(@RequestParam("publishDay") PublishDay publishDay) {
         List<WebtoonRequest> webtoonList = webtoonService.findWebtoonByPublishDay(publishDay);
+        return ResponseEntity.ok(webtoonList);
+    }
+
+    @GetMapping("/platform")
+    public ResponseEntity<List<WebtoonRequest>> getWebtoonListByPlatform(@RequestParam("platform") Platform platform) {
+        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonByPlatform(platform);
         return ResponseEntity.ok(webtoonList);
     }
 
