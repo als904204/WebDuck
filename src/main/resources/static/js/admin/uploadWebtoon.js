@@ -15,9 +15,9 @@ function uploadWebtoon() {
       console.log("Response:", response);
       $('#uploadSuccessModal').modal('show');
 
-      // "웹툰 보기" 버튼 클릭 시 특정 페이지로 이동합니다.
+      // 업로드 후 확인 버튼 누르면 "/" 로 리턴
       $('#viewWebtoon').on('click', function() {
-        window.location.href = '/test'; // 여기에 웹툰 보기 페이지 URL을 입력하세요.
+        window.location.href = '/';
       });
     },
     error: function(xhr, status, error) {
