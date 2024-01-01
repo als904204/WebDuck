@@ -125,4 +125,27 @@ class WebtoonServiceTest {
             .allMatch(mondayWebtoon -> mondayWebtoon.getPublishDay() == PublishDay.SUNDAY);
 
     }
+
+    @DisplayName("플랫폼별 웹툰 목록 조회")
+    @Test
+    void findWebtoonsByPlatform() {
+        List<Webtoon> webtoons = List.of(
+            Webtoon.builder().title("Webtoon 3").summary("Summary 3").imagePath("Path 3")
+                .publishDay(PublishDay.SUNDAY).originalImageName("Image3.png").platform(Platform.NAVER).build(),
+
+            Webtoon.builder().title("Webtoon 4").summary("Summary 4").imagePath("Path 4")
+                .publishDay(PublishDay.SUNDAY).originalImageName("Image4.png").platform(Platform.NAVER).build()
+        );
+
+        when(webtoonRepository.findWebtoonByPlatform(Platform.NAVER)).thenReturn(webtoons);
+
+        List<WebtoonRequest> webtoonsByPlatform = webtoonService.findWebtoonByPlatform(Platform.NAVER);
+
+        assertThat(webtoonsByPlatform).isNotNull();
+        assertThat(webtoonsByPlatform).hasSize(2);
+
+        Assertions.assertThat(webtoonsByPlatform)
+            .allMatch(mondayWebtoon -> mondayWebtoon.getPlatform() == Platform.NAVER);
+
+    }
 }
