@@ -30,11 +30,12 @@ public class UploadService {
             log.info("imagePath={}",imagePath);
 
             Webtoon webtoon = Webtoon.builder()
-                .title(webtoonUpload.getTitle())
-                .summary(webtoonUpload.getSummary())
-                .publishDay(webtoonUpload.getPublishDay())
-                .originalImageName(originalFileName)
-                .imagePath(imagePath) // 상대 경로 저장
+                .title(webtoonUpload.getTitle())            // 제목
+                .summary(webtoonUpload.getSummary())        // 줄거리
+                .publishDay(webtoonUpload.getPublishDay())  // 요일
+                .originalImageName(originalFileName)        // 이미지 원본이름
+                .imagePath(imagePath) // 상대 경로 저장         // 이미지 경로
+                .platform(webtoonUpload.getPlatform())      // 플랫폼
                 .build();
 
             savedWebtoon = webtoonRepository.save(webtoon);

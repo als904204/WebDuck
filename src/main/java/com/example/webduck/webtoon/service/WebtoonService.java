@@ -1,6 +1,7 @@
 package com.example.webduck.webtoon.service;
 
 import com.example.webduck.webtoon.dto.WebtoonRequest;
+import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
@@ -39,6 +40,15 @@ public class WebtoonService {
     @Transactional(readOnly = true)
     public List<WebtoonRequest> findWebtoonByPublishDay(PublishDay publishDay) {
         List<Webtoon> webtoons = webtoonRepository.findWebtoonByPublishDay(publishDay);
+        return webtoons.stream()
+            .map(WebtoonRequest::new)
+            .toList();
+    }
+
+    // 요청에 따른 플랫폼 별 웹툰 목록 조회
+    @Transactional(readOnly = true)
+    public List<WebtoonRequest> findWebtoonByPlatform(Platform platform) {
+        List<Webtoon> webtoons = webtoonRepository.findWebtoonByPlatform(platform);
         return webtoons.stream()
             .map(WebtoonRequest::new)
             .toList();

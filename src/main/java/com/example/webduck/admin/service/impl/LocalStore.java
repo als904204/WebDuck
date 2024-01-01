@@ -29,6 +29,8 @@ public class LocalStore implements FileStore {
         "image/png",
     };
 
+    private final String UPLOAD_DIR = System.getProperty("user.home") + "/Desktop/img/";
+
 
     @Override
     public String upload(MultipartFile file) throws IOException {
@@ -46,33 +48,22 @@ public class LocalStore implements FileStore {
             throw new CustomException(INVALID_FILE_TYPE);
         }
 
-
-        String path = getLocalPath();
         String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path destinationFilePath = Paths.get(path, filename);
 
-        Files.copy(file.getInputStream(), destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
-        return getRelativePath(destinationFilePath);
-    }
+        // 바탕화면/img 로 경로 설정
+        Path storageDirectory = Paths.get(UPLOAD_DIR);
 
-    // 로컬 저장 경로 반환 (User/KIM/Project/src/main...)
-    private String getLocalPath() {
-        String path = System.getProperty("user.dir") + "/src/main/resources/static/temp";
-        File folder = new File(path);
-
-        if (!folder.exists()) {
-            log.warn("Create a local directory because it doesn't exist.");
-            boolean isCreated = folder.mkdirs();
-            log.info("directory is created={}",isCreated);
+        if (!Files.exists(storageDirectory)) {
+            log.warn("no dir /desktop/img");
+            Files.createDirectories(storageDirectory);
         }
-        return path;
+
+        // 바탕화면/img 폴더에 파일 업로드
+        Path destinationPath = storageDirectory.resolve(filename);
+        file.transferTo(destinationPath.toFile());
+
+        return "/images/" + filename;
     }
 
-    // 저장된 파일의 상대 경로 반환 (/temp/webtoonImage1.png)
-    private String getRelativePath(Path destinationFilePath) {
-        String imagePath = destinationFilePath.toString();
-
-        return "/static/temp/" + imagePath.substring(imagePath.lastIndexOf("/") + 1);
-    }
 
 }

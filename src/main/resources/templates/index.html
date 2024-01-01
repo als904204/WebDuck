@@ -93,11 +93,33 @@
                     </div>
                 </div>
                 <!-- 웹툰 목록을 표시할 컨테이너 -->
-                <div id="webtoonListContainer" class="row">
+                <div id="publishWebtoonList" class="row">
                 </div>
             </main>
         </div>
     </section>
+
+    <section class="text-white">
+        <div class="container">
+            <main>
+                <div class="mb-3">
+                    <div class="mt-4 mb-1">
+                        <h3>플랫폼별 웹툰</h3>
+                    </div>
+                    <div>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-platform="KAKAO"><span>카카오</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-platform="NAVER"><span>네이버</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-platform="TOPTOON"><span>탑툰</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-platform="ELSE"><span>그외</span></button>
+                    </div>
+                </div>
+                <!-- 웹툰 목록을 표시할 컨테이너 -->
+                <div id="platformWebtoonList" class="row">
+                </div>
+            </main>
+        </div>
+    </section>
+
 
 
     <section class="text-white">
@@ -143,7 +165,8 @@
             </main>
         </div>
     </section>
-<script th:src="@{/js/webtoon/webtoonList.js}"></script>
+<script th:src="@{/js/webtoon/publishWebtoonList.js}"></script>
+<script th:src="@{/js/webtoon/platformWebtoonList.js}"></script>
 </th:block>
 </html>
 
