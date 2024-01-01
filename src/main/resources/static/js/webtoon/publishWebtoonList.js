@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   // 첫 페이지 로딩 시 월요일 웹툰 목록을 불러옵니다.
-  loadWebtoonList('MONDAY');
+  loadPublishWebtoon('MONDAY');
   setActiveDayButton('MONDAY');
 });
 
@@ -8,25 +8,25 @@ document.addEventListener('DOMContentLoaded', function() {
 document.querySelectorAll('[data-publish-day]').forEach(button => {
   button.addEventListener('click', function() {
     const publishDay = this.getAttribute('data-publish-day');
-    loadWebtoonList(publishDay);
+    loadPublishWebtoon(publishDay);
     setActiveDayButton(publishDay);
   });
 });
 
 // 웹툰 목록을 불러오는 함수
-function loadWebtoonList(publishDay) {
+function loadPublishWebtoon(publishDay) {
   fetch(`/api/v1/webtoon/publish?publishDay=${publishDay}`)
   .then(response => response.json())
-  .then(webtoonList => updateWebtoonList(webtoonList))
+  .then(publishWebtoons => updateWebtoonList(publishWebtoons))
   .catch(error => console.error('Error:', error));
 }
 
 // 웹툰 목록을 업데이트하는 함수
-function updateWebtoonList(webtoonList) {
-  const container = document.getElementById('webtoonListContainer');
+function updateWebtoonList(publishWebtoons) {
+  const container = document.getElementById('publishWebtoonList');
   container.innerHTML = ''; // 목록 초기화
 
-  webtoonList.forEach(webtoon => {
+  publishWebtoons.forEach(webtoon => {
     const col = document.createElement('div');
     col.className = 'col-6 col-md-2';
     col.innerHTML = `
