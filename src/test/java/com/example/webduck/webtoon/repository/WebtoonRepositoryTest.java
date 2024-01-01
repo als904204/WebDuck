@@ -9,6 +9,7 @@ import com.example.webduck.webtoon.entity.Webtoon;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,17 +51,32 @@ class WebtoonRepositoryTest {
                 .originalImageName(originalImageName)
                 .build());
 
-
         // 웹툰 데이터 목록 생성
         this.webtoons = List.of(
-            Webtoon.builder().title("Webtoon 1").summary("Summary 1").imagePath("Path 1").publishDay(PublishDay.MONDAY).originalImageName("Image1.png").platform(Platform.NAVER).build(),
-            Webtoon.builder().title("Webtoon 2").summary("Summary 2").imagePath("Path 2").publishDay(PublishDay.FRIDAY).originalImageName("Image2.png").platform(Platform.NAVER).build(),
-            Webtoon.builder().title("Webtoon 3").summary("Summary 3").imagePath("Path 3").publishDay(PublishDay.SUNDAY).originalImageName("Image3.png").platform(Platform.NAVER).build(),
-            Webtoon.builder().title("Webtoon 4").summary("Summary 4").imagePath("Path 4").publishDay(PublishDay.SUNDAY).originalImageName("Image4.png").platform(Platform.NAVER).build()
+            Webtoon.builder().title("Webtoon 1").summary("Summary 1").imagePath("Path 1")
+                .publishDay(PublishDay.MONDAY).originalImageName("Image1.png")
+                .platform(Platform.NAVER).build(),
+            Webtoon.builder().title("Webtoon 2").summary("Summary 2").imagePath("Path 2")
+                .publishDay(PublishDay.FRIDAY).originalImageName("Image2.png")
+                .platform(Platform.NAVER).build(),
+            Webtoon.builder().title("Webtoon 3").summary("Summary 3").imagePath("Path 3")
+                .publishDay(PublishDay.SUNDAY).originalImageName("Image3.png")
+                .platform(Platform.NAVER).build(),
+            Webtoon.builder().title("Webtoon 4").summary("Summary 4").imagePath("Path 4")
+                .publishDay(PublishDay.SUNDAY).originalImageName("Image4.png")
+                .platform(Platform.NAVER).build()
         );
 
         webtoonRepository.saveAll(webtoons);
     }
+
+    @AfterEach
+    void tearDown() {
+        this.savedWebtoon = null;
+        this.webtoons = null;
+        webtoonRepository.deleteAll();
+    }
+
 
     @DisplayName("웹툰 저장")
     @Test
@@ -78,10 +94,14 @@ class WebtoonRepositoryTest {
     void findWebtoonByPublishDay() {
 
         // when
-        List<Webtoon> mondayWebtoons = webtoonRepository.findWebtoonByPublishDay(PublishDay.MONDAY);     // 1개
-        List<Webtoon> fridayWebtoons = webtoonRepository.findWebtoonByPublishDay(PublishDay.FRIDAY);     // 1개
-        List<Webtoon> thursdayWebtoons = webtoonRepository.findWebtoonByPublishDay(PublishDay.THURSDAY); // 1개
-        List<Webtoon> sundayWebtoons = webtoonRepository.findWebtoonByPublishDay(PublishDay.SUNDAY);     // 2개
+        List<Webtoon> mondayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+            PublishDay.MONDAY);     // 1개
+        List<Webtoon> fridayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+            PublishDay.FRIDAY);     // 1개
+        List<Webtoon> thursdayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+            PublishDay.THURSDAY); // 1개
+        List<Webtoon> sundayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+            PublishDay.SUNDAY);     // 2개
 
         // then
         Assertions.assertThat(mondayWebtoons).isNotNull();
@@ -110,9 +130,16 @@ class WebtoonRepositoryTest {
 
     }
 
+    @DisplayName("플랫폼 별 웹툰 조회")
+    @Test
+    void findWebtoonByPlatform() {
+        // 위에 NAVER 5개 저장됨
+        List<Webtoon> naverWebtoons = webtoonRepository.findWebtoonByPlatform(Platform.NAVER);
+        Assertions.assertThat(naverWebtoons).isNotNull();
+        Assertions.assertThat(naverWebtoons).hasSize(5);
 
+        Assertions.assertThat(naverWebtoons)
+            .allMatch(naver -> naver.getPlatform() == Platform.NAVER);
 
-
-
-
+    }
 }
