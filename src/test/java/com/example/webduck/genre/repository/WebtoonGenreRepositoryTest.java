@@ -10,6 +10,7 @@ import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,9 @@ class WebtoonGenreRepositoryTest {
     private WebtoonGenreRepository webtoonGenreRepository;
 
 
+    @DisplayName("웹툰장르<==>웹툰,장르 연관관계 테스트")
     @Test
-    void WebtoonGenre() {
+    void shouldPersistWebtoonGenreWithWebtoonAndGenre() {
 
         // given
 
