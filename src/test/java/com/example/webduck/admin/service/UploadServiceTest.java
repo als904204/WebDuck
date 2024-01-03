@@ -93,8 +93,8 @@ class UploadServiceTest {
         uploadService.uploadWebtoon(webtoonUpload);
         verify(fileStore).upload(any(MultipartFile.class));
         verify(webtoonRepository).save(any(Webtoon.class));
-        verify(genreRepository, times(webtoonUpload.getGenreTypes().size())).findByType(any(String.class));
-        verify(webtoonGenreRepository, times(webtoonUpload.getGenreTypes().size())).save(any(
+        verify(genreRepository, times(webtoonUpload.getGenreType().size())).findByType(any(String.class));
+        verify(webtoonGenreRepository, times(webtoonUpload.getGenreType().size())).save(any(
             WebtoonGenre.class));
     }
 
