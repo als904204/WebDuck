@@ -41,14 +41,15 @@ public class UploadService {
                 .summary(webtoonUpload.getSummary())        // 줄거리
                 .publishDay(webtoonUpload.getPublishDay())  // 요일
                 .originalImageName(originalFileName)        // 이미지 원본이름
-                .imagePath(imagePath) // 상대 경로 저장         // 이미지 경로
+                .imagePath(imagePath)                       // 이미지 경로
                 .platform(webtoonUpload.getPlatform())      // 플랫폼
                 .build();
 
+            webtoonRepository.save(webtoon);
 
             // (WebtoonGenre<=>Webtoon) 양방향 참조 연관관계 설정
             // (WebtoonGenre==>Genre) 단방향 참조 설정
-            for (String genreType : webtoonUpload.getGenreTypes()) {
+            for (String genreType : webtoonUpload.getGenreType()) {
                 Genre genre = genreRepository.findByType(genreType)
                     .orElseThrow(() -> new CustomException(ValidationExceptionCode.INVALID_GENRE_TYPE));
 
@@ -60,7 +61,6 @@ public class UploadService {
 
                 webtoonGenreRepository.save(webtoonGenre);
             }
-            webtoonRepository.save(webtoon);
         } catch (IOException e) {
             log.error("upload #e={}",e.getMessage());
             throw new CustomException(LogicExceptionCode.BAD_REQUEST);
