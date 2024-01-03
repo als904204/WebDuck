@@ -1,7 +1,6 @@
 package com.example.webduck.admin.service;
 
 import com.example.webduck.genre.entity.Genre;
-import com.example.webduck.genre.entity.GenreType;
 import com.example.webduck.genre.entity.WebtoonGenre;
 import com.example.webduck.genre.repository.GenreRepository;
 import com.example.webduck.genre.repository.WebtoonGenreRepository;
@@ -49,8 +48,8 @@ public class UploadService {
 
             // (WebtoonGenre<=>Webtoon) 양방향 참조 연관관계 설정
             // (WebtoonGenre==>Genre) 단방향 참조 설정
-            for (GenreType genreType : webtoonUpload.getGenreTypes()) {
-                Genre genre = genreRepository.findByGenreType(genreType)
+            for (String genreType : webtoonUpload.getGenreTypes()) {
+                Genre genre = genreRepository.findByType(genreType)
                     .orElseThrow(() -> new CustomException(ValidationExceptionCode.INVALID_GENRE_TYPE));
 
                 WebtoonGenre webtoonGenre = new WebtoonGenre();

@@ -18,7 +18,7 @@ public class GenreService {
 
     // 모든 장르 찾기
     @Transactional
-    public List<GenreResponse> findGenreTypes() {
+    public List<GenreResponse> findAllGenres() {
         List<Genre> genres = genreRepository.findAll();
         return genres.stream()
             .map(GenreResponse::new)
@@ -27,7 +27,7 @@ public class GenreService {
 
     // 새로운 장르 생성
     @Transactional
-    public void createGenreType(String type) {
+    public void saveGenreType(String type) {
 
         // 중복 검증
         genreRepository.findByType(type).ifPresent(genre -> {

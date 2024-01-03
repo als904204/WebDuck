@@ -1,6 +1,5 @@
 package com.example.webduck.webtoon.dto;
 
-import com.example.webduck.genre.entity.GenreType;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import java.util.List;
@@ -17,6 +16,6 @@ public class WebtoonUpload {
     private PublishDay publishDay;
     private MultipartFile imageFile;
     private Platform platform;
-    private List<GenreType> genreTypes; // 장르 타입 TODO : N+1 아마 터질거임
+    private List<String> genreTypes; // 장르 타입 TODO : N+1 아마 터질거임
 }
 

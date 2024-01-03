@@ -4,7 +4,6 @@ package com.example.webduck.genre.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.webduck.genre.entity.Genre;
-import com.example.webduck.genre.entity.GenreType;
 import com.example.webduck.genre.entity.WebtoonGenre;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
@@ -46,7 +45,7 @@ class WebtoonGenreRepositoryTest {
             .platform(Platform.NAVER).build();
         webtoonRepository.save(webtoon);
 
-        Genre genre = new Genre(GenreType.FANTASY);
+        Genre genre = new Genre("romance");
         genreRepository.save(genre);
 
         // 웹툰_장르 <==> 웹툰
@@ -65,7 +64,7 @@ class WebtoonGenreRepositoryTest {
         WebtoonGenre foundWebtoonGenre = webtoonGenreRepository.findById(1L).orElseThrow();
         assertThat(foundWebtoonGenre).isNotNull();
         assertThat(foundWebtoonGenre.getWebtoon().getId()).isEqualTo(webtoon.getId());
-        assertThat(foundWebtoonGenre.getGenre().getGenreType()).isEqualTo(genre.getGenreType());
+        assertThat(foundWebtoonGenre.getGenre().getType()).isEqualTo(genre.getType());
 
         WebtoonGenre wgFromWebtoon = webtoon.getWebtoonGenres().get(0);
         assertThat(wgFromWebtoon).isEqualTo(webtoonGenre);

@@ -1,16 +1,11 @@
 package com.example.webduck.admin.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.example.webduck.admin.service.impl.LocalStore;
 import com.example.webduck.genre.entity.Genre;
-import com.example.webduck.genre.entity.GenreType;
 import com.example.webduck.genre.entity.WebtoonGenre;
 import com.example.webduck.genre.repository.GenreRepository;
 import com.example.webduck.genre.repository.WebtoonGenreRepository;
@@ -23,15 +18,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.multipart.MultipartFile;
 
 @ExtendWith(MockitoExtension.class)
@@ -57,7 +49,7 @@ class UploadServiceTest {
     private final Platform platform = Platform.NAVER;
 
 
-    List<GenreType> genreTypes;
+    List<String> genreTypes;
     Webtoon webtoon;
 
     WebtoonUpload webtoonUpload;
@@ -69,6 +61,10 @@ class UploadServiceTest {
             "originalFileName",
             "image/png",
             "asdf".getBytes());
+
+        genreTypes = new ArrayList<>();
+        genreTypes.add("로맨스");
+        genreTypes.add("무협");
 
         webtoonUpload = new WebtoonUpload(
             title,
@@ -90,14 +86,14 @@ class UploadServiceTest {
 
         given(fileStore.upload(mockMultipartFile)).willReturn(path);
 
-        for (GenreType genreType : genreTypes) {
-            given(genreRepository.findByGenreType(genreType)).willReturn(Optional.of(new Genre(genreType)));
+        for (String genreType : genreTypes) {
+            given(genreRepository.findByType(genreType)).willReturn(Optional.of(new Genre(genreType)));
         }
 
         uploadService.uploadWebtoon(webtoonUpload);
         verify(fileStore).upload(any(MultipartFile.class));
         verify(webtoonRepository).save(any(Webtoon.class));
-        verify(genreRepository, times(webtoonUpload.getGenreTypes().size())).findByGenreType(any(GenreType.class));
+        verify(genreRepository, times(webtoonUpload.getGenreTypes().size())).findByType(any(String.class));
         verify(webtoonGenreRepository, times(webtoonUpload.getGenreTypes().size())).save(any(
             WebtoonGenre.class));
     }
