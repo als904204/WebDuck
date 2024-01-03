@@ -66,7 +66,7 @@ public class SecurityConfig {
             .oauth2Login(oauth2 -> oauth2
                 .loginPage("/auth/login")
                 .defaultSuccessUrl("/")
-                .userInfoEndpoint(point -> point
+                .userInfoEndpoint(point -> point // OAuth 액세스 토큰,외부 사용자 정보 처리하는 지점
                     .userService(customOAuth2UserService))
                 .successHandler(oAuth2LoginSuccessHandler)
                 .failureHandler(oAuth2LoginFailureHandle)
