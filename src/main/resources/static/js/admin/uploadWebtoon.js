@@ -2,6 +2,10 @@ function uploadWebtoon() {
   const formData = new FormData(document.getElementById('uploadForm'));
   const csrfToken = document.querySelector("input[name='_csrf']").value;
 
+  for (let [key, value] of formData.entries()) {
+    console.log(key, value);
+  }
+
   $.ajax({
     type: `POST`,
     url: `/api/v1/admin/webtoon`,
