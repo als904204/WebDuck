@@ -1,11 +1,16 @@
 package com.example.webduck.webtoon.entity;
 
+import com.example.webduck.genre.entity.WebtoonGenre;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Builder;
 
 @Entity
@@ -35,6 +40,10 @@ public class Webtoon{
     @Enumerated(EnumType.STRING)
     private Platform platform;
 
+    // 웹툰 장르
+    @OneToMany(mappedBy = "webtoon",fetch = FetchType.LAZY)
+    private List<WebtoonGenre> webtoonGenres = new ArrayList<>();
+
     protected Webtoon() {}
 
     @Builder
@@ -46,6 +55,14 @@ public class Webtoon{
         this.imagePath = imagePath;
         this.publishDay = publishDay;
         this.platform = platform;
+    }
+
+    // 양방향 관계 객체 연결 (+순환 참조 방지)
+    public void addWebtoonGenre(WebtoonGenre webtoonGenre) {
+        this.webtoonGenres.add(webtoonGenre);
+        if (webtoonGenre.getWebtoon() != this) {
+            webtoonGenre.setWebtoon(this);
+        }
     }
 
     public Long getId() {
@@ -74,5 +91,8 @@ public class Webtoon{
 
     public Platform getPlatform() {
         return platform;
+    }
+    public List<WebtoonGenre> getWebtoonGenres() {
+        return webtoonGenres;
     }
 }
