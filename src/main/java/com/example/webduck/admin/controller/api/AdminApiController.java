@@ -21,7 +21,7 @@ public class AdminApiController {
 
     @PostMapping("/webtoon")
     public ResponseEntity<Long> uploadWebtoon(@ModelAttribute WebtoonUpload webtoonUpload) {
-        Long uploadWebtoonId = uploadService.uploadWebtoon(webtoonUpload);
-        return ResponseEntity.ok(uploadWebtoonId);
+        uploadService.uploadWebtoon(webtoonUpload);
+        return ResponseEntity.noContent().build();
     }
 }

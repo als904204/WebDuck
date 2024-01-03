@@ -1,7 +1,13 @@
 package com.example.webduck.admin.service;
 
+import com.example.webduck.genre.entity.Genre;
+import com.example.webduck.genre.entity.GenreType;
+import com.example.webduck.genre.entity.WebtoonGenre;
+import com.example.webduck.genre.repository.GenreRepository;
+import com.example.webduck.genre.repository.WebtoonGenreRepository;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
+import com.example.webduck.global.exception.exceptionCode.ValidationExceptionCode;
 import com.example.webduck.webtoon.dto.WebtoonUpload;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
@@ -9,6 +15,7 @@ import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
@@ -18,11 +25,12 @@ public class UploadService {
 
     private final WebtoonRepository webtoonRepository;
     private final FileStore fileStore;
+    private final GenreRepository genreRepository;
+    private final WebtoonGenreRepository webtoonGenreRepository;
 
 
-    public Long uploadWebtoon(WebtoonUpload webtoonUpload) {
-        Webtoon savedWebtoon;
-
+    @Transactional
+    public void uploadWebtoon(WebtoonUpload webtoonUpload) {
         try {
             MultipartFile imageFile = webtoonUpload.getImageFile();
             String originalFileName = imageFile.getOriginalFilename();
@@ -38,13 +46,26 @@ public class UploadService {
                 .platform(webtoonUpload.getPlatform())      // 플랫폼
                 .build();
 
-            savedWebtoon = webtoonRepository.save(webtoon);
 
+            // (WebtoonGenre<=>Webtoon) 양방향 참조 연관관계 설정
+            // (WebtoonGenre==>Genre) 단방향 참조 설정
+            for (GenreType genreType : webtoonUpload.getGenreTypes()) {
+                Genre genre = genreRepository.findByGenreType(genreType)
+                    .orElseThrow(() -> new CustomException(ValidationExceptionCode.INVALID_GENRE_TYPE));
+
+                WebtoonGenre webtoonGenre = new WebtoonGenre();
+                webtoonGenre.setGenre(genre);
+                webtoonGenre.setWebtoon(webtoon);
+
+                webtoon.addWebtoonGenre(webtoonGenre);
+
+                webtoonGenreRepository.save(webtoonGenre);
+            }
+            webtoonRepository.save(webtoon);
         } catch (IOException e) {
             log.error("upload #e={}",e.getMessage());
             throw new CustomException(LogicExceptionCode.BAD_REQUEST);
         }
-        return savedWebtoon.getId();
     }
 
 }
