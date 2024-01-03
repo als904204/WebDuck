@@ -1,12 +1,11 @@
 package com.example.webduck.genre.repository;
 
 import com.example.webduck.genre.entity.Genre;
-import com.example.webduck.genre.entity.GenreType;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GenreRepository extends JpaRepository<Genre,Long> {
-    Optional<Genre> findByGenreType(GenreType genreType);
+    Optional<Genre> findByType(String type);
 }
