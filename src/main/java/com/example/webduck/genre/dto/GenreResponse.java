@@ -6,10 +6,10 @@ import lombok.Getter;
 @Getter
 public class GenreResponse {
 
-    private final String genreType;
+    private final String genreName;
 
     public GenreResponse(Genre genre) {
-        this.genreType = genre.getType();
+        this.genreName = genre.getName();
     }
 
 

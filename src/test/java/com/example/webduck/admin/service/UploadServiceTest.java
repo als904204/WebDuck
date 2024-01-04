@@ -87,14 +87,14 @@ class UploadServiceTest {
         given(fileStore.upload(mockMultipartFile)).willReturn(path);
 
         for (String genreType : genreTypes) {
-            given(genreRepository.findByType(genreType)).willReturn(Optional.of(new Genre(genreType)));
+            given(genreRepository.findByName(genreType)).willReturn(Optional.of(new Genre(genreType)));
         }
 
         uploadService.uploadWebtoon(webtoonUpload);
         verify(fileStore).upload(any(MultipartFile.class));
         verify(webtoonRepository).save(any(Webtoon.class));
-        verify(genreRepository, times(webtoonUpload.getGenreType().size())).findByType(any(String.class));
-        verify(webtoonGenreRepository, times(webtoonUpload.getGenreType().size())).save(any(
+        verify(genreRepository, times(webtoonUpload.getGenreName().size())).findByName(any(String.class));
+        verify(webtoonGenreRepository, times(webtoonUpload.getGenreName().size())).save(any(
             WebtoonGenre.class));
     }
 

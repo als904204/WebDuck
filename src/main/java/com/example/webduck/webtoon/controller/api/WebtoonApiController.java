@@ -34,13 +34,19 @@ public class WebtoonApiController {
 
     @GetMapping("/publish")
     public ResponseEntity<List<WebtoonRequest>> getWebtoonListByPublish(@RequestParam("publishDay") PublishDay publishDay) {
-        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonByPublishDay(publishDay);
+        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonsByPublishDay(publishDay);
         return ResponseEntity.ok(webtoonList);
     }
 
     @GetMapping("/platform")
     public ResponseEntity<List<WebtoonRequest>> getWebtoonListByPlatform(@RequestParam("platform") Platform platform) {
-        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonByPlatform(platform);
+        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonsByPlatform(platform);
+        return ResponseEntity.ok(webtoonList);
+    }
+
+    @GetMapping("/genre")
+    public ResponseEntity<List<WebtoonRequest>> getWebtoonListByGenreName(@RequestParam("name") String name) {
+        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonsByGenreName(name);
         return ResponseEntity.ok(webtoonList);
     }
 

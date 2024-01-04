@@ -28,9 +28,8 @@ public class GenreService {
     // 새로운 장르 생성
     @Transactional
     public void saveGenreType(String type) {
-
         // 중복 검증
-        genreRepository.findByType(type).ifPresent(genre -> {
+        genreRepository.findByName(type).ifPresent(genre -> {
             throw new CustomException(LogicExceptionCode.DUPLICATE_REQUEST);
         });
 

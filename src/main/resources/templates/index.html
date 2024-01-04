@@ -75,7 +75,7 @@
         </div>
     </section>
 
-    <section class="text-white">
+    <section class="text-white genre">
         <div class="container">
             <main>
                 <div class="mb-3">
@@ -83,43 +83,21 @@
                         <h3>장르별 웹툰</h3>
                     </div>
                     <div>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>판타지</span></button>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>무협</span></button>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>공포</span></button>
-                        <button class="btn btn-secondary btn-circle btn-xl"><span>로맨스</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-genre="MARTIALARTS"><span>무협</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-genre="FANTASY"><span>판타지</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-genre="ADULT"><span>성인</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-genre="ROMANCE"><span>로맨스</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-genre="GAG"><span>개그</span></button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon1.png}" alt="Java" />
-                        <p class="text-center">화산귀환</p>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon2.png}" alt="Java" />
-                        <p class="text-center">나혼자만 레벨업</p>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon3.png}" alt="Java" />
-                        <p class="text-center">해골병사는 던전을 지키지 못했다</p>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon4.png}" alt="Java" />
-                        <p class="text-center">나노마신</p>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon5.png}" alt="Java" />
-                        <p class="text-center">갓오브하이스쿨</p>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img class="img-fluid equal-height-img" th:src="@{/img/webtoon/toon6.png}" alt="Java" />
-                        <p class="text-center">전지적 독자시점</p>
-                    </div>
+                <!-- 웹툰 목록을 표시할 컨테이너 -->
+                <div id="genreWebtoonList" class="row">
                 </div>
             </main>
         </div>
     </section>
 
-    <section class="text-white">
+    <section class="text-white publishDay">
         <div class="container">
             <main>
                 <div class="mb-3">
@@ -143,7 +121,7 @@
         </div>
     </section>
 
-    <section class="text-white">
+    <section class="text-white platform">
         <div class="container">
             <main>
                 <div class="mb-3">
@@ -169,6 +147,7 @@
 
 <script th:src="@{/js/webtoon/publishWebtoonList.js}"></script>
 <script th:src="@{/js/webtoon/platformWebtoonList.js}"></script>
+<script th:src="@{/js/webtoon/genreWebtoonList.js}"></script>
 </th:block>
 </html>
 

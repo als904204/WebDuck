@@ -64,7 +64,7 @@ class WebtoonGenreRepositoryTest {
         WebtoonGenre foundWebtoonGenre = webtoonGenreRepository.findById(1L).orElseThrow();
         assertThat(foundWebtoonGenre).isNotNull();
         assertThat(foundWebtoonGenre.getWebtoon().getId()).isEqualTo(webtoon.getId());
-        assertThat(foundWebtoonGenre.getGenre().getType()).isEqualTo(genre.getType());
+        assertThat(foundWebtoonGenre.getGenre().getName()).isEqualTo(genre.getName());
 
         WebtoonGenre wgFromWebtoon = webtoon.getWebtoonGenres().get(0);
         assertThat(wgFromWebtoon).isEqualTo(webtoonGenre);

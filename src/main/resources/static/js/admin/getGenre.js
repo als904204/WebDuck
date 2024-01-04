@@ -4,12 +4,12 @@ $(document).ready(function() {
     url: '/api/v1/genre',
     success: function(genres) {
       genres.forEach(function(genre) {
-        console.log("genre.genreType",genre.genreType);
+        console.log("genre.genreName",genre.genreName);
         console.log("genre.toString",genre.toString());
         $('#genreContainer').append(
             `<div class="form-check">
-            <input class="form-check-input" type="checkbox" name="genreType[]" value="${genre.genreType}" id="genre-${genre.genreType}">
-            <label class="form-check-label" for="genre-${genre.genreType}">${genre.genreType}</label>
+            <input class="form-check-input" type="checkbox" name="genreName[]" value="${genre.genreName}" id="genre-${genre.genreName}">
+            <label class="form-check-label" for="genre-${genre.genreName}">${genre.genreName}</label>
           </div>`
         );
       });
