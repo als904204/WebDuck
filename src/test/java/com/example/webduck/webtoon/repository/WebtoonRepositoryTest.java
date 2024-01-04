@@ -3,6 +3,8 @@ package com.example.webduck.webtoon.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.example.webduck.genre.entity.Genre;
+import com.example.webduck.genre.entity.WebtoonGenre;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -27,6 +30,9 @@ class WebtoonRepositoryTest {
     @Autowired
     private WebtoonRepository webtoonRepository;
 
+    @Autowired
+    private TestEntityManager testEntityManager;
+
 
     private final String title = "화산귀환";
     private final String summary = "줄거리";
@@ -34,6 +40,8 @@ class WebtoonRepositoryTest {
     private final String originalImageName = "adfafd123.png";
 
     Webtoon savedWebtoon;
+    Webtoon martialArtsWebtoon;
+    Webtoon fantasyWebtoon;
 
     List<Webtoon> webtoons = new ArrayList<>();
 
@@ -140,6 +148,63 @@ class WebtoonRepositoryTest {
 
         Assertions.assertThat(naverWebtoons)
             .allMatch(naver -> naver.getPlatform() == Platform.NAVER);
+
+    }
+
+    @DisplayName("장르별 웹툰 조회")
+    @Test
+    void findWebtoonByGenreType() {
+        final String martialArts = "무협";
+        final String fantasy = "판타지";
+
+        // 장르 저장
+        Genre martialArtsGenre = new Genre(martialArts);
+        Genre fantasyGenre = new Genre(fantasy);
+        testEntityManager.persist(martialArtsGenre);
+        testEntityManager.persist(fantasyGenre);
+
+        // 웹툰 저장
+        martialArtsWebtoon = webtoonRepository.save(
+            Webtoon.builder()
+                .title(martialArts)
+                .summary(summary)
+                .imagePath(imagePath)
+                .publishDay(PublishDay.THURSDAY)
+                .platform(Platform.NAVER)
+                .originalImageName(originalImageName)
+                .build());
+
+        fantasyWebtoon = webtoonRepository.save(
+            Webtoon.builder()
+                .title(fantasy)
+                .summary(summary)
+                .imagePath(imagePath)
+                .publishDay(PublishDay.THURSDAY)
+                .platform(Platform.NAVER)
+                .originalImageName(originalImageName)
+                .build());
+
+        // 웹툰장르 생성 후 연관관계 설정
+        WebtoonGenre martialArtWebtoonGenre = new WebtoonGenre();
+        martialArtWebtoonGenre.setGenre(martialArtsGenre);
+        martialArtWebtoonGenre.setWebtoon(martialArtsWebtoon);
+
+        WebtoonGenre fantasyWebtoonGenre = new WebtoonGenre();
+        fantasyWebtoonGenre.setGenre(fantasyGenre);
+        fantasyWebtoonGenre.setWebtoon(fantasyWebtoon);
+
+        testEntityManager.persist(martialArtWebtoonGenre);
+        testEntityManager.persist(fantasyWebtoonGenre);
+
+        List<Webtoon> foundMartialWebtoons = webtoonRepository.findByGenreType(martialArts);
+        List<Webtoon> foundFantasyWebtoons = webtoonRepository.findByGenreType(fantasy);
+
+        assertThat(foundMartialWebtoons).hasSize(1);
+        assertThat(foundFantasyWebtoons).hasSize(1);
+
+        assertThat(foundFantasyWebtoons.get(0).getTitle()).isEqualTo(fantasy);
+        assertThat(foundMartialWebtoons.get(0).getTitle()).isEqualTo(martialArts);
+
 
     }
 }
