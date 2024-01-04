@@ -5,7 +5,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.webduck.webtoon.dto.WebtoonRequest;
+import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
@@ -36,13 +36,13 @@ class WebtoonApiControllerTest {
     @InjectMocks
     private WebtoonApiController webtoonApiController;
 
-    private List<WebtoonRequest> webtoonList;
+    private List<WebtoonResponse> webtoonList;
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(webtoonApiController).build();
 
         webtoonList = List.of(
-            new WebtoonRequest(
+            new WebtoonResponse(
                 Webtoon.builder()
                     .title("Webtoon 1")
                     .summary("Summary 1")
@@ -51,7 +51,7 @@ class WebtoonApiControllerTest {
                     .platform(Platform.NAVER)
                     .originalImageName("Image1.png")
                     .build()),
-            new WebtoonRequest(
+            new WebtoonResponse(
                 Webtoon.builder()
                     .title("Webtoon 2")
                     .summary("Summary 2")
@@ -69,7 +69,7 @@ class WebtoonApiControllerTest {
     @Test
     void getWebtoon() throws Exception {
         Long id = 1L;
-        WebtoonRequest webtoonRequest = new WebtoonRequest(
+        WebtoonResponse webtoonResponse = new WebtoonResponse(
             Webtoon.builder()
                 .title("Webtoon 1")
                 .summary("Summary 1")
@@ -79,7 +79,7 @@ class WebtoonApiControllerTest {
                 .originalImageName("Image1.png").build()
         );
 
-        when(webtoonService.findWebtoonById(id)).thenReturn(webtoonRequest);
+        when(webtoonService.findWebtoonById(id)).thenReturn(webtoonResponse);
 
         RequestBuilder reqBuilder = MockMvcRequestBuilders
             .get(url +id)

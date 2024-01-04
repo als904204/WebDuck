@@ -6,7 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.webduck.webtoon.dto.WebtoonRequest;
+import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
@@ -52,7 +52,7 @@ class WebtoonServiceTest {
         Long id = 1L;
         when(webtoonRepository.findById(id)).thenReturn(Optional.of(webtoon));
 
-        WebtoonRequest result = webtoonService.findWebtoonById(id);
+        WebtoonResponse result = webtoonService.findWebtoonById(id);
 
         assertThat(result).isNotNull();
         assertThat(result.getTitle()).isEqualTo("Webtoon 1");
@@ -87,17 +87,17 @@ class WebtoonServiceTest {
         when(webtoonRepository.findAll()).thenReturn(webtoons);
 
         // then
-        List<WebtoonRequest> result = webtoonService.findWebtoonList();
+        List<WebtoonResponse> result = webtoonService.findWebtoonList();
         assertThat(result).isNotNull();
         assertThat(result).hasSize(4);
 
-        WebtoonRequest webtoonRequest = result.get(0);
-        assertThat(webtoonRequest.getTitle()).isEqualTo("Webtoon 1");
-        assertThat(webtoonRequest.getSummary()).isEqualTo("Summary 1");
-        assertThat(webtoonRequest.getImagePath()).isEqualTo("Path 1");
-        assertThat(webtoonRequest.getPublishDay()).isEqualTo(PublishDay.MONDAY);
-        assertThat(webtoonRequest.getOriginalImageName()).isEqualTo("Image1.png");
-        assertThat(webtoonRequest.getPlatform()).isEqualTo(Platform.NAVER);
+        WebtoonResponse webtoonResponse = result.get(0);
+        assertThat(webtoonResponse.getTitle()).isEqualTo("Webtoon 1");
+        assertThat(webtoonResponse.getSummary()).isEqualTo("Summary 1");
+        assertThat(webtoonResponse.getImagePath()).isEqualTo("Path 1");
+        assertThat(webtoonResponse.getPublishDay()).isEqualTo(PublishDay.MONDAY);
+        assertThat(webtoonResponse.getOriginalImageName()).isEqualTo("Image1.png");
+        assertThat(webtoonResponse.getPlatform()).isEqualTo(Platform.NAVER);
 
         verify(webtoonRepository, times(1)).findAll();
     }
@@ -116,7 +116,7 @@ class WebtoonServiceTest {
 
         when(webtoonRepository.findWebtoonByPublishDay(PublishDay.SUNDAY)).thenReturn(webtoons);
 
-        List<WebtoonRequest> webtoonsByPublishDay = webtoonService.findWebtoonsByPublishDay(PublishDay.SUNDAY);
+        List<WebtoonResponse> webtoonsByPublishDay = webtoonService.findWebtoonsByPublishDay(PublishDay.SUNDAY);
 
         assertThat(webtoonsByPublishDay).isNotNull();
         assertThat(webtoonsByPublishDay).hasSize(2);
@@ -139,7 +139,7 @@ class WebtoonServiceTest {
 
         when(webtoonRepository.findWebtoonByPlatform(Platform.NAVER)).thenReturn(webtoons);
 
-        List<WebtoonRequest> webtoonsByPlatform = webtoonService.findWebtoonsByPlatform(Platform.NAVER);
+        List<WebtoonResponse> webtoonsByPlatform = webtoonService.findWebtoonsByPlatform(Platform.NAVER);
 
         assertThat(webtoonsByPlatform).isNotNull();
         assertThat(webtoonsByPlatform).hasSize(2);
@@ -165,7 +165,7 @@ class WebtoonServiceTest {
 
         when(webtoonRepository.findByWebtoonsGenreName(romance)).thenReturn(webtoons);
 
-        List<WebtoonRequest> foundWebtoonsByGenre = webtoonService.findWebtoonsByGenreName(romance);
+        List<WebtoonResponse> foundWebtoonsByGenre = webtoonService.findWebtoonsByGenreName(romance);
 
         assertThat(foundWebtoonsByGenre).isNotNull();
         assertThat(foundWebtoonsByGenre).hasSize(webtoons.size());

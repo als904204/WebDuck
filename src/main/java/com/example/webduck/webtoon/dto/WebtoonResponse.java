@@ -6,15 +6,20 @@ import com.example.webduck.webtoon.entity.Webtoon;
 import lombok.Getter;
 
 @Getter
-public class WebtoonRequest {
+public class WebtoonResponse {
 
     private final String title;
+
     private final String summary;
+
     private final String originalImageName;
+
     private final String imagePath;
+
     private final PublishDay publishDay;
+
     private final Platform platform;
-    public WebtoonRequest(Webtoon webtoon) {
+    public WebtoonResponse(Webtoon webtoon) {
         this.title = webtoon.getTitle();
         this.summary = webtoon.getSummary();
         this.originalImageName = webtoon.getOriginalImageName();
