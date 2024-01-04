@@ -52,7 +52,7 @@ class GenreServiceTest {
 
         Assertions.assertThat(foundAllGenres).isNotNull();
         Assertions.assertThat(foundAllGenres).hasSize(3);
-        Assertions.assertThat(foundAllGenres.get(0).getGenreType()).isEqualTo("무협");
+        Assertions.assertThat(foundAllGenres.get(0).getGenreName()).isEqualTo("무협");
 
     }
 
@@ -62,7 +62,7 @@ class GenreServiceTest {
         // given
         final String type = "무협";
         Genre genre = new Genre(type);
-        when(genreRepository.findByType(type)).thenReturn(Optional.empty());
+        when(genreRepository.findByName(type)).thenReturn(Optional.empty());
 
         // when
         genreService.saveGenreType(type);
@@ -78,7 +78,7 @@ class GenreServiceTest {
         final String duplicateType = "중복";
 
         // when
-        when(genreRepository.findByType(duplicateType)).thenReturn(
+        when(genreRepository.findByName(duplicateType)).thenReturn(
             Optional.of(new Genre(duplicateType)));
 
         // then

@@ -49,9 +49,9 @@ public class UploadService {
 
             // (WebtoonGenre<=>Webtoon) 양방향 참조 연관관계 설정
             // (WebtoonGenre==>Genre) 단방향 참조 설정
-            for (String genreType : webtoonUpload.getGenreType()) {
-                Genre genre = genreRepository.findByType(genreType)
-                    .orElseThrow(() -> new CustomException(ValidationExceptionCode.INVALID_GENRE_TYPE));
+            for (String genreName : webtoonUpload.getGenreName()) {
+                Genre genre = genreRepository.findByName(genreName)
+                    .orElseThrow(() -> new CustomException(ValidationExceptionCode.INVALID_GENRE_NAME));
 
                 WebtoonGenre webtoonGenre = new WebtoonGenre();
                 webtoonGenre.setGenre(genre);

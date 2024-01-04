@@ -1,10 +1,8 @@
 package com.example.webduck.genre.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.webduck.genre.entity.Genre;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,18 +41,18 @@ class GenreRepositoryTest {
     @DisplayName("장르 저장")
     @Test
     void testGenreSave() {
-        assertThat(genre.getType()).isNotNull();
-        assertThat(genre.getType()).isEqualTo(type);
+        assertThat(genre.getName()).isNotNull();
+        assertThat(genre.getName()).isEqualTo(type);
     }
 
-    @DisplayName("타입으로 장르 찾기")
+    @DisplayName("장르로 장르 찾기")
     @Test
     void testFindGenreByType() {
-        Genre foundGenre = genreRepository.findByType(type)
+        Genre foundGenre = genreRepository.findByName(type)
             .orElseThrow(() -> new IllegalArgumentException("can't find the genre type"));
 
         assertThat(foundGenre).isNotNull();
-        assertThat(foundGenre.getType()).isEqualTo(type);
+        assertThat(foundGenre.getName()).isEqualTo(type);
     }
 
 }

@@ -45,8 +45,8 @@ public class WebtoonApiController {
     }
 
     @GetMapping("/genre")
-    public ResponseEntity<List<WebtoonRequest>> getWebtoonListByPlatform(@RequestParam("name") String name) {
-        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonsByGenre(name);
+    public ResponseEntity<List<WebtoonRequest>> getWebtoonListByGenreName(@RequestParam("name") String name) {
+        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonsByGenreName(name);
         return ResponseEntity.ok(webtoonList);
     }
 

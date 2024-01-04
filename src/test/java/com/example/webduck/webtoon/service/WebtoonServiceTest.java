@@ -163,9 +163,9 @@ class WebtoonServiceTest {
                 .platform(Platform.NAVER).build()
         );
 
-        when(webtoonRepository.findByWebtoonsGenreType(romance)).thenReturn(webtoons);
+        when(webtoonRepository.findByWebtoonsGenreName(romance)).thenReturn(webtoons);
 
-        List<WebtoonRequest> foundWebtoonsByGenre = webtoonService.findWebtoonsByGenre(romance);
+        List<WebtoonRequest> foundWebtoonsByGenre = webtoonService.findWebtoonsByGenreName(romance);
 
         assertThat(foundWebtoonsByGenre).isNotNull();
         assertThat(foundWebtoonsByGenre).hasSize(webtoons.size());

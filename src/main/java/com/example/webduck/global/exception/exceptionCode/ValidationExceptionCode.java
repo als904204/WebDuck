@@ -9,7 +9,7 @@ public enum ValidationExceptionCode implements ExceptionCode {
     INVALID_LOCATION(400, "Invalid location value"),
     INVALID_STATE(400, "Invalid state value"),
     INVALID_OAUTH_TYPE(400, "Invalid oauth type"),
-    INVALID_GENRE_TYPE(400, "Invalid genre type"),
+    INVALID_GENRE_NAME(400, "Invalid genre name"),
 
 
     // 지원하지 않는 파일 확장자를 업로드 했을 때

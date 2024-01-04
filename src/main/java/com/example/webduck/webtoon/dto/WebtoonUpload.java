@@ -16,6 +16,6 @@ public class WebtoonUpload {
     private PublishDay publishDay;
     private MultipartFile imageFile;
     private Platform platform;
-    private List<String> genreType; // 장르 타입 TODO : N+1 아마 터질거임
+    private List<String> genreName; // 장르 타입 TODO : N+1 아마 터질거임
 }
 

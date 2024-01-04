@@ -145,7 +145,7 @@ class WebtoonApiControllerTest {
     @Test
     void getWebtoonListByGenre() throws Exception {
         final String name = "무협";
-        when(webtoonService.findWebtoonsByGenre(name)).thenReturn(webtoonList);
+        when(webtoonService.findWebtoonsByGenreName(name)).thenReturn(webtoonList);
 
         RequestBuilder reqBuilder = MockMvcRequestBuilders
             .get(url+"genre")

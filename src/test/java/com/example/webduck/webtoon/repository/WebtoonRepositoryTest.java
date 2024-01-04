@@ -196,8 +196,8 @@ class WebtoonRepositoryTest {
         testEntityManager.persist(martialArtWebtoonGenre);
         testEntityManager.persist(fantasyWebtoonGenre);
 
-        List<Webtoon> foundMartialWebtoons = webtoonRepository.findByWebtoonsGenreType(martialArts);
-        List<Webtoon> foundFantasyWebtoons = webtoonRepository.findByWebtoonsGenreType(fantasy);
+        List<Webtoon> foundMartialWebtoons = webtoonRepository.findByWebtoonsGenreName(martialArts);
+        List<Webtoon> foundFantasyWebtoons = webtoonRepository.findByWebtoonsGenreName(fantasy);
 
         assertThat(foundMartialWebtoons).hasSize(1);
         assertThat(foundFantasyWebtoons).hasSize(1);

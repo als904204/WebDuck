@@ -22,7 +22,7 @@ public interface WebtoonRepository extends JpaRepository<Webtoon, Long> {
         + "FROM Webtoon w "
         + "INNER JOIN WebtoonGenre wg ON wg.webtoon.id = w.id "
         + "INNER JOIN Genre g ON wg.genre.id = g.id "
-        + "WHERE g.type = :type")
-    List<Webtoon> findByGenreType(@Param("type") String type);
+        + "WHERE g.name = :name")
+    List<Webtoon> findByWebtoonsGenreName(@Param("name") String name);
 
 }

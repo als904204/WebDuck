@@ -11,15 +11,15 @@ public class Genre{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;
+    private String name;
 
-    public Genre(String type) {
-        this.type = type;
+    public Genre(String name) {
+        this.name = name;
     }
 
     protected Genre() {}
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 }

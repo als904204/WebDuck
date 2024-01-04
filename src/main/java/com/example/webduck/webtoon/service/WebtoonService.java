@@ -56,8 +56,11 @@ public class WebtoonService {
 
     // 요청에 따른 장르별 웹툰 목록 조회 (무협,로맨스..)
     @Transactional(readOnly = true)
-    public List<WebtoonRequest> findWebtoonsByGenre(String genre) {
-        List<Webtoon> webtoonsByGenre = webtoonRepository.findByGenreType(genre);
+    public List<WebtoonRequest> findWebtoonsByGenreName(String name) {
+        System.out.println("WebtoonService.findWebtoonsByGenreName");
+        name.toLowerCase();
+        System.out.println("name = " + name);
+        List<Webtoon> webtoonsByGenre = webtoonRepository.findByWebtoonsGenreName(name);
         return webtoonsByGenre.stream()
             .map(WebtoonRequest::new)
             .toList();
