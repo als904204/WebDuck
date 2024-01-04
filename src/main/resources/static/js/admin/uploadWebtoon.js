@@ -2,6 +2,12 @@ function uploadWebtoon() {
   const formData = new FormData(document.getElementById('uploadForm'));
   const csrfToken = document.querySelector("input[name='_csrf']").value;
 
+  // 입력 필드 검증
+  if (!validateFormData(formData)) {
+    alert("빈값이 있습니다");
+    return;
+  }
+
   for (let [key, value] of formData.entries()) {
     console.log(key, value);
   }
@@ -25,7 +31,14 @@ function uploadWebtoon() {
       });
     },
     error: function(xhr, status, error) {
-      console.error("Error:", error);
+      if (xhr.status === 400) {
+        alert("빈 값이 있습니다");
+      } else if (xhr.status === 413) {
+        alert("이미지 용량 최대 크기는 1MB 입니다");
+      } else {
+        alert("알 수 없는 에러 발생: " + xhr.status);
+        console.error("Error:", error);
+      }
     }
   });
 }
@@ -48,3 +61,15 @@ document.getElementById('imageFile').addEventListener('change', function(event) 
     imagePreview.style.display = 'none'; // 이미지가 없는 경우 미리보기 숨김
   }
 });
+
+function validateFormData(formData) {
+  // 필수 입력 필드의 이름
+  const requiredFields = ['title', 'summary', 'genreName', 'imageFile', 'publishDay', 'platform'];
+
+  for (let field of requiredFields) {
+    if (!formData.has(field) || formData.get(field).trim() === '' || formData.get(field) === null) {
+      return false;
+    }
+  }
+  return true;
+}
