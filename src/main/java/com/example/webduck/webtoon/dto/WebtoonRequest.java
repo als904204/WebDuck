@@ -9,10 +9,15 @@ import lombok.Getter;
 public class WebtoonRequest {
 
     private final String title;
+
     private final String summary;
+
     private final String originalImageName;
+
     private final String imagePath;
+
     private final PublishDay publishDay;
+
     private final Platform platform;
     public WebtoonRequest(Webtoon webtoon) {
         this.title = webtoon.getTitle();
