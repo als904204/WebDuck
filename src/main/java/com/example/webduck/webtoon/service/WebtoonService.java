@@ -1,5 +1,7 @@
 package com.example.webduck.webtoon.service;
 
+import com.example.webduck.global.exception.CustomException;
+import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
@@ -22,8 +24,7 @@ public class WebtoonService {
     @Transactional(readOnly = true)
     public WebtoonResponse findWebtoonById(Long id) {
         Webtoon webtoon = webtoonRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException(
-                "can't find the webtoon"));
+            .orElseThrow(() -> new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND));
         return new WebtoonResponse(webtoon);
     }
 
