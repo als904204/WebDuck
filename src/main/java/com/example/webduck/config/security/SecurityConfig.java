@@ -33,7 +33,8 @@ public class SecurityConfig {
         "/img/**",
         "/js/**",
         "/auth/login",
-        "/images/**"
+        "/images/**",
+        "/publish/**"
     };
 
     private static final String[] WHITE_API_LIST_URL = {
