@@ -33,6 +33,11 @@ public class SecurityConfig {
         "/img/**",
         "/js/**",
         "/auth/login",
+        "/images/**"
+    };
+
+    private static final String[] WHITE_API_LIST_URL = {
+        "/api/v1/webtoon/**"
     };
 
     private static final String[] ADMIN_URL = {
@@ -47,11 +52,12 @@ public class SecurityConfig {
             .authorizeHttpRequests((req) ->
                 req.requestMatchers(WHITE_LIST_URL)
                     .permitAll()
-
+                    .requestMatchers(GET,WHITE_API_LIST_URL)
+                    .permitAll()
                     .requestMatchers(ADMIN_URL)
                     .hasRole(ADMIN.name())
 
-                     // ex) 권한 세부 설정
+                    // ex) 권한 세부 설정
                     .requestMatchers(GET, "/api/v1/management/**")
                     .hasAnyAuthority(ADMIN.name(), MANAGER.name())
 
