@@ -3,6 +3,7 @@ package com.example.webduck.webtoon.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.example.webduck.config.QueryDslConfigTest;
 import com.example.webduck.genre.entity.Genre;
 import com.example.webduck.genre.entity.WebtoonGenre;
 import com.example.webduck.webtoon.entity.Platform;
@@ -19,9 +20,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+
+@Import(QueryDslConfigTest.class)
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -42,6 +46,7 @@ class WebtoonRepositoryTest {
     Webtoon savedWebtoon;
     Webtoon martialArtsWebtoon;
     Webtoon fantasyWebtoon;
+    Webtoon romanceWebtoon;
 
     List<Webtoon> webtoons = new ArrayList<>();
 
@@ -151,7 +156,7 @@ class WebtoonRepositoryTest {
 
     }
 
-    @DisplayName("장르별 웹툰 조회")
+    @DisplayName("단건 장르별 웹툰 조회")
     @Test
     void findWebtoonByGenreType() {
         final String martialArts = "무협";
@@ -207,4 +212,6 @@ class WebtoonRepositoryTest {
 
 
     }
+
+
 }

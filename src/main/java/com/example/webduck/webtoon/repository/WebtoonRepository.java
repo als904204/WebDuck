@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WebtoonRepository extends JpaRepository<Webtoon, Long> {
+public interface WebtoonRepository extends JpaRepository<Webtoon, Long>,WebtoonGenreCustom{
 
     List<Webtoon> findWebtoonByPublishDay(PublishDay publishDay);
 
