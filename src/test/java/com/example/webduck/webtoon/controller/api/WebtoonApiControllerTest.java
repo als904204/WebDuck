@@ -5,11 +5,13 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.service.WebtoonService;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -150,6 +152,29 @@ class WebtoonApiControllerTest {
         RequestBuilder reqBuilder = MockMvcRequestBuilders
             .get(url+"genre")
             .param("name",name)
+            .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(reqBuilder)
+            .andDo(print());
+
+    }
+    @DisplayName("해당하는 장르목록별 웹툰 목록 조회")
+    @Test
+    void getWebtoonListByGenreNames() throws Exception {
+        final String gag = "개그";
+        final String romance = "로맨스";
+
+        List<String> reqGenres = Arrays.asList(gag, romance);
+        List<WebtoonGenreResponse> responses = List.of(
+            new WebtoonGenreResponse(1L, romance, "imgPath", "originaImgName"),
+            new WebtoonGenreResponse(2L, gag, "imgPath", "originaImgName")
+        );
+
+        when(webtoonService.findWebtoonsByGenreNames(reqGenres)).thenReturn(responses);
+
+        RequestBuilder reqBuilder = MockMvcRequestBuilders
+            .get(url + "genres")
+            .param("names", reqGenres.toArray(new String[0]))
             .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(reqBuilder)
