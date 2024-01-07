@@ -116,7 +116,7 @@ class WebtoonServiceTest {
                 .publishDay(PublishDay.SUNDAY).originalImageName("Image4.png").platform(Platform.NAVER).build()
         );
 
-        when(webtoonRepository.findWebtoonByPublishDay(PublishDay.SUNDAY)).thenReturn(webtoons);
+        when(webtoonRepository.findWebtoonsByPublishDay(PublishDay.SUNDAY)).thenReturn(webtoons);
 
         List<WebtoonResponse> webtoonsByPublishDay = webtoonService.findWebtoonsByPublishDay(PublishDay.SUNDAY);
 
@@ -139,7 +139,7 @@ class WebtoonServiceTest {
                 .publishDay(PublishDay.SUNDAY).originalImageName("Image4.png").platform(Platform.NAVER).build()
         );
 
-        when(webtoonRepository.findWebtoonByPlatform(Platform.NAVER)).thenReturn(webtoons);
+        when(webtoonRepository.findWebtoonsByPlatform(Platform.NAVER)).thenReturn(webtoons);
 
         List<WebtoonResponse> webtoonsByPlatform = webtoonService.findWebtoonsByPlatform(Platform.NAVER);
 
@@ -165,7 +165,7 @@ class WebtoonServiceTest {
                 .platform(Platform.NAVER).build()
         );
 
-        when(webtoonRepository.findByWebtoonsGenreName(romance)).thenReturn(webtoons);
+        when(webtoonRepository.findWebtoonsByGenreName(romance)).thenReturn(webtoons);
 
         List<WebtoonResponse> foundWebtoonsByGenre = webtoonService.findWebtoonsByGenreName(romance);
 

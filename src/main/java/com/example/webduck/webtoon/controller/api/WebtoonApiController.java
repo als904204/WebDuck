@@ -51,8 +51,9 @@ public class WebtoonApiController {
         return ResponseEntity.ok(webtoonList);
     }
 
+    // TODO : 아무런 값 없을경우 모든 웹툰목록 return
     @GetMapping("/genres")
-    public ResponseEntity<List<WebtoonGenreResponse>> getWebtoonListByGenreName(@RequestParam("names") List<String> names) {
+    public ResponseEntity<List<WebtoonGenreResponse>> getWebtoonListByGenreNames(@RequestParam("names") List<String> names) {
         List<WebtoonGenreResponse> webtoonsByGenreNames = webtoonService.findWebtoonsByGenreNames(
             names);
         return ResponseEntity.ok(webtoonsByGenreNames);

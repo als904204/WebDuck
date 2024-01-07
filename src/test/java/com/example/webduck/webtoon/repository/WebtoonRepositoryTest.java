@@ -107,13 +107,13 @@ class WebtoonRepositoryTest {
     void findWebtoonByPublishDay() {
 
         // when
-        List<Webtoon> mondayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+        List<Webtoon> mondayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
             PublishDay.MONDAY);     // 1개
-        List<Webtoon> fridayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+        List<Webtoon> fridayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
             PublishDay.FRIDAY);     // 1개
-        List<Webtoon> thursdayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+        List<Webtoon> thursdayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
             PublishDay.THURSDAY); // 1개
-        List<Webtoon> sundayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+        List<Webtoon> sundayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
             PublishDay.SUNDAY);     // 2개
 
         // then
@@ -147,7 +147,7 @@ class WebtoonRepositoryTest {
     @Test
     void findWebtoonByPlatform() {
         // 위에 NAVER 5개 저장됨
-        List<Webtoon> naverWebtoons = webtoonRepository.findWebtoonByPlatform(Platform.NAVER);
+        List<Webtoon> naverWebtoons = webtoonRepository.findWebtoonsByPlatform(Platform.NAVER);
         Assertions.assertThat(naverWebtoons).isNotNull();
         Assertions.assertThat(naverWebtoons).hasSize(5);
 
@@ -201,8 +201,8 @@ class WebtoonRepositoryTest {
         testEntityManager.persist(martialArtWebtoonGenre);
         testEntityManager.persist(fantasyWebtoonGenre);
 
-        List<Webtoon> foundMartialWebtoons = webtoonRepository.findByWebtoonsGenreName(martialArts);
-        List<Webtoon> foundFantasyWebtoons = webtoonRepository.findByWebtoonsGenreName(fantasy);
+        List<Webtoon> foundMartialWebtoons = webtoonRepository.findWebtoonsByGenreName(martialArts);
+        List<Webtoon> foundFantasyWebtoons = webtoonRepository.findWebtoonsByGenreName(fantasy);
 
         assertThat(foundMartialWebtoons).hasSize(1);
         assertThat(foundFantasyWebtoons).hasSize(1);

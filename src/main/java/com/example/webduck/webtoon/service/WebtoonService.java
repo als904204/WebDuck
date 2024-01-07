@@ -41,7 +41,7 @@ public class WebtoonService {
     // 요청에 따른 요일 웹툰 목록 조회 (MONDAY,SUNDAY..)
     @Transactional(readOnly = true)
     public List<WebtoonResponse> findWebtoonsByPublishDay(PublishDay publishDay) {
-        List<Webtoon> webtoons = webtoonRepository.findWebtoonByPublishDay(publishDay);
+        List<Webtoon> webtoons = webtoonRepository.findWebtoonsByPublishDay(publishDay);
         return webtoons.stream()
             .map(WebtoonResponse::new)
             .toList();
@@ -50,7 +50,7 @@ public class WebtoonService {
     // 요청에 따른 플랫폼 별 웹툰 목록 조회 (NAVER,KAKAO..)
     @Transactional(readOnly = true)
     public List<WebtoonResponse> findWebtoonsByPlatform(Platform platform) {
-        List<Webtoon> webtoons = webtoonRepository.findWebtoonByPlatform(platform);
+        List<Webtoon> webtoons = webtoonRepository.findWebtoonsByPlatform(platform);
         return webtoons.stream()
             .map(WebtoonResponse::new)
             .toList();
@@ -59,7 +59,7 @@ public class WebtoonService {
     // 단건 장르 웹툰 목록 조회 (무협 웹툰만 조회,로맨스 웹툰만 조회)
     @Transactional(readOnly = true)
     public List<WebtoonResponse> findWebtoonsByGenreName(String name) {
-        List<Webtoon> webtoonsByGenre = webtoonRepository.findByWebtoonsGenreName(name);
+        List<Webtoon> webtoonsByGenre = webtoonRepository.findWebtoonsByGenreName(name);
         return webtoonsByGenre.stream()
             .map(WebtoonResponse::new)
             .toList();
