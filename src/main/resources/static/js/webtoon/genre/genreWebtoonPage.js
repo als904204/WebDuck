@@ -2,27 +2,58 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchGenres();
 });
 
+let selectedGenres = new Set();
+
+
 function fetchGenres() {
   fetch('/api/v1/genre')
   .then(response => response.json())
   .then(genres => {
-    const genreContainer = document.querySelector('.genre div:nth-child(2)');
-    genreContainer.innerHTML = ''; // 기존 버튼 초기화
+    const genreButtonsContainer = document.querySelector('#genreButtons');
+    genreButtonsContainer.innerHTML = '';
 
     genres.forEach((genre, index) => {
       const button = document.createElement('button');
-      button.className = 'btn btn-secondary btn-circle btn-xl me-2 mb-2';
-      button.dataset.genre = genre.genreName.toUpperCase();
-      button.innerHTML = `<span>${translateGenre(genre.genreName)}</span>`;
-      button.addEventListener('click', () => fetchWebtoonsByGenre(genre.genreName));
+      button.classList.add('btn', 'btn-genre', 'me-2', 'mb-2');
+      button.dataset.genre = genre.genreName;
+      button.textContent = translateGenre(genre.genreName);
+      button.addEventListener('click', () => toggleGenreSelection(genre.genreName));
 
-      genreContainer.appendChild(button);
+      genreButtonsContainer.appendChild(button);
 
-      // 첫 화면에서 첫 번째 장르의 웹툰 목록을 가져옵니다.
+      // 첫 번째 장르 버튼을 활성화합니다.
       if (index === 0) {
-        fetchWebtoonsByGenre(genre.genreName);
+        button.click();
       }
     });
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function toggleGenreSelection(genreName) {
+  const button = document.querySelector(`button[data-genre='${genreName}']`);
+  if (selectedGenres.has(genreName)) {
+    selectedGenres.delete(genreName);
+    button.classList.remove('active');
+  } else {
+    selectedGenres.add(genreName);
+    button.classList.add('active');
+  }
+  fetchWebtoonsBySelectedGenres(); // 해당 장르로 필터링된 웹툰 목록을 가져오는 함수
+}
+
+
+
+
+function fetchWebtoonsBySelectedGenres() {
+  const genresArray = Array.from(selectedGenres);
+  const queryParams = genresArray.map(genre => `names=${genre}`).join('&');
+  const url = `/api/v1/webtoon/genres?${queryParams}`;
+
+  fetch(url)
+  .then(response => response.json())
+  .then(webtoons => {
+    getWebtoonList(webtoons); // 웹툰 목록 업데이트 함수 호출
   })
   .catch(error => console.error('Error:', error));
 }
@@ -34,14 +65,35 @@ function translateGenre(genreName) {
     'ADULT': '성인',
     'ROMANCE': '로맨스',
     'GAG': '개그'
-    // 필요한 추가 장르 번역을 여기에 추가합니다.
   };
   return genreTranslations[genreName] || genreName;
 }
 
-function fetchWebtoonsByGenre(genre) {
-  fetch(`/api/v1/webtoon/genre?name=${genre}`)
-  .then(response => response.json())
-  .then(genreWebtoons => updateWebtoonGenreList(genreWebtoons))
-  .catch(error => console.error('Error:', error));
+function getWebtoonList(webtoons) {
+  const webtoonListContainer = document.querySelector('#webtoonList');
+  webtoonListContainer.innerHTML = ''; // 기존 목록을 비웁니다.
+
+  webtoons.forEach(webtoon => {
+    // 각 웹툰에 대한 HTML 요소를 생성합니다.
+    const webtoonElement = document.createElement('div');
+    webtoonElement.className = 'col-md-4'; // Bootstrap 그리드 클래스 적용
+
+    // 웹툰 정보를 표시하는 HTML 구조를 생성합니다.
+    webtoonElement.innerHTML = `
+      <div class="card mb-4 shadow-sm">
+        <img src="${webtoon.imagePath}" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="${webtoon.title}">
+        <div class="card-body">
+          <p class="card-text">${webtoon.title}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-secondary">리뷰 보기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // 생성된 요소를 웹툰 목록 컨테이너에 추가합니다.
+    webtoonListContainer.appendChild(webtoonElement);
+  });
 }

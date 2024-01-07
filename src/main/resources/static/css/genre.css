@@ -1,0 +1,19 @@
+.btn-genre {
+  background-color: #6c757d; /* 기본 상태는 회색으로 설정 */
+  color: white;
+  border: none;
+}
+
+.btn-genre.active {
+  background-color: #5cb85c; /* 활성화 상태는 녹색으로 설정 */
+  color: white;
+}
+
+.btn-active {
+  background-color: #5cb85c; /* 원래의 녹색 */
+  /* 기타 스타일 설정 */
+}
+
+/*.btn-active:hover {*/
+/*  background-color: rgba(92, 184, 92, 0.7); !* 녹색에 30%의 투명도를 추가 *!*/
+/*}*/

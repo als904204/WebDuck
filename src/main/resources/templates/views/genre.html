@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
-<th:block layout:fragment="content">
 
+<th:block layout:fragment="content">
+  <link th:href="@{/css/genre.css}" rel="stylesheet">
 
   <section class="text-white genre">
     <div class="container">
@@ -12,7 +13,7 @@
             <h3>장르별 웹툰</h3>
           </div>
           <div id="genreButtons" class="d-flex flex-wrap">
-            <!-- 여기에 자바스크립트로 동적으로 장르 버튼이 추가됩니다 -->
+            <!-- 자바스크립트로 동적으로 장르 버튼이 추가됩니다 -->
           </div>
         </div>
         <!-- 웹툰 목록을 표시할 컨테이너 -->
@@ -22,6 +23,7 @@
       </main>
     </div>
   </section>
+
 
   <script th:src="@{/js/webtoon/genre/genreWebtoonPage.js}"></script>
 
