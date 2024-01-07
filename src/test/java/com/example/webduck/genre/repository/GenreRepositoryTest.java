@@ -2,6 +2,7 @@ package com.example.webduck.genre.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.example.webduck.config.QueryDslConfigTest;
 import com.example.webduck.genre.entity.Genre;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,9 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@Import(QueryDslConfigTest.class)
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

@@ -1,5 +1,6 @@
 package com.example.webduck.webtoon.controller.api;
 
+import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
@@ -48,6 +49,14 @@ public class WebtoonApiController {
     public ResponseEntity<List<WebtoonResponse>> getWebtoonListByGenreName(@RequestParam("name") String name) {
         List<WebtoonResponse> webtoonList = webtoonService.findWebtoonsByGenreName(name);
         return ResponseEntity.ok(webtoonList);
+    }
+
+    // TODO : 아무런 값 없을경우 모든 웹툰목록 return
+    @GetMapping("/genres")
+    public ResponseEntity<List<WebtoonGenreResponse>> getWebtoonListByGenreNames(@RequestParam("names") List<String> names) {
+        List<WebtoonGenreResponse> webtoonsByGenreNames = webtoonService.findWebtoonsByGenreNames(
+            names);
+        return ResponseEntity.ok(webtoonsByGenreNames);
     }
 
 }

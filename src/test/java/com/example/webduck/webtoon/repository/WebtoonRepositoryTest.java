@@ -3,6 +3,7 @@ package com.example.webduck.webtoon.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.example.webduck.config.QueryDslConfigTest;
 import com.example.webduck.genre.entity.Genre;
 import com.example.webduck.genre.entity.WebtoonGenre;
 import com.example.webduck.webtoon.entity.Platform;
@@ -19,9 +20,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+
+@Import(QueryDslConfigTest.class)
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -42,6 +46,7 @@ class WebtoonRepositoryTest {
     Webtoon savedWebtoon;
     Webtoon martialArtsWebtoon;
     Webtoon fantasyWebtoon;
+    Webtoon romanceWebtoon;
 
     List<Webtoon> webtoons = new ArrayList<>();
 
@@ -102,13 +107,13 @@ class WebtoonRepositoryTest {
     void findWebtoonByPublishDay() {
 
         // when
-        List<Webtoon> mondayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+        List<Webtoon> mondayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
             PublishDay.MONDAY);     // 1개
-        List<Webtoon> fridayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+        List<Webtoon> fridayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
             PublishDay.FRIDAY);     // 1개
-        List<Webtoon> thursdayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+        List<Webtoon> thursdayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
             PublishDay.THURSDAY); // 1개
-        List<Webtoon> sundayWebtoons = webtoonRepository.findWebtoonByPublishDay(
+        List<Webtoon> sundayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
             PublishDay.SUNDAY);     // 2개
 
         // then
@@ -142,7 +147,7 @@ class WebtoonRepositoryTest {
     @Test
     void findWebtoonByPlatform() {
         // 위에 NAVER 5개 저장됨
-        List<Webtoon> naverWebtoons = webtoonRepository.findWebtoonByPlatform(Platform.NAVER);
+        List<Webtoon> naverWebtoons = webtoonRepository.findWebtoonsByPlatform(Platform.NAVER);
         Assertions.assertThat(naverWebtoons).isNotNull();
         Assertions.assertThat(naverWebtoons).hasSize(5);
 
@@ -151,7 +156,7 @@ class WebtoonRepositoryTest {
 
     }
 
-    @DisplayName("장르별 웹툰 조회")
+    @DisplayName("단건 장르별 웹툰 조회")
     @Test
     void findWebtoonByGenreType() {
         final String martialArts = "무협";
@@ -196,8 +201,8 @@ class WebtoonRepositoryTest {
         testEntityManager.persist(martialArtWebtoonGenre);
         testEntityManager.persist(fantasyWebtoonGenre);
 
-        List<Webtoon> foundMartialWebtoons = webtoonRepository.findByWebtoonsGenreName(martialArts);
-        List<Webtoon> foundFantasyWebtoons = webtoonRepository.findByWebtoonsGenreName(fantasy);
+        List<Webtoon> foundMartialWebtoons = webtoonRepository.findWebtoonsByGenreName(martialArts);
+        List<Webtoon> foundFantasyWebtoons = webtoonRepository.findWebtoonsByGenreName(fantasy);
 
         assertThat(foundMartialWebtoons).hasSize(1);
         assertThat(foundFantasyWebtoons).hasSize(1);
@@ -207,4 +212,6 @@ class WebtoonRepositoryTest {
 
 
     }
+
+
 }

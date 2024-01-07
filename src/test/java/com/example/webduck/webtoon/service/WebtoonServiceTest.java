@@ -6,11 +6,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
@@ -114,7 +116,7 @@ class WebtoonServiceTest {
                 .publishDay(PublishDay.SUNDAY).originalImageName("Image4.png").platform(Platform.NAVER).build()
         );
 
-        when(webtoonRepository.findWebtoonByPublishDay(PublishDay.SUNDAY)).thenReturn(webtoons);
+        when(webtoonRepository.findWebtoonsByPublishDay(PublishDay.SUNDAY)).thenReturn(webtoons);
 
         List<WebtoonResponse> webtoonsByPublishDay = webtoonService.findWebtoonsByPublishDay(PublishDay.SUNDAY);
 
@@ -137,7 +139,7 @@ class WebtoonServiceTest {
                 .publishDay(PublishDay.SUNDAY).originalImageName("Image4.png").platform(Platform.NAVER).build()
         );
 
-        when(webtoonRepository.findWebtoonByPlatform(Platform.NAVER)).thenReturn(webtoons);
+        when(webtoonRepository.findWebtoonsByPlatform(Platform.NAVER)).thenReturn(webtoons);
 
         List<WebtoonResponse> webtoonsByPlatform = webtoonService.findWebtoonsByPlatform(Platform.NAVER);
 
@@ -163,7 +165,7 @@ class WebtoonServiceTest {
                 .platform(Platform.NAVER).build()
         );
 
-        when(webtoonRepository.findByWebtoonsGenreName(romance)).thenReturn(webtoons);
+        when(webtoonRepository.findWebtoonsByGenreName(romance)).thenReturn(webtoons);
 
         List<WebtoonResponse> foundWebtoonsByGenre = webtoonService.findWebtoonsByGenreName(romance);
 
@@ -175,7 +177,29 @@ class WebtoonServiceTest {
         assertThat(foundWebtoonsByGenre).allMatch(
             romanceWebtoon -> romanceWebtoon.getTitle().equals(romance));
 
+    }
 
+    @DisplayName("장르필터별 웹툰 목록 조회")
+    @Test
+    void findWebtoonsByGenreNames() {
+        final String romance = "로맨스";
+        final String gag = "개그";
+
+        List<String> requestGenres = Arrays.asList(romance, gag);
+
+        List<WebtoonGenreResponse> responses = List.of(
+            new WebtoonGenreResponse(1L, romance, "imgPath", "originaImgName"),
+            new WebtoonGenreResponse(2L, gag, "imgPath", "originaImgName")
+        );
+
+        when(webtoonRepository.findWebtoonsByGenres(requestGenres)).thenReturn(responses);
+
+        List<WebtoonGenreResponse> foundWebtoonsByGenreNames = webtoonService.findWebtoonsByGenreNames(
+            requestGenres);
+
+        assertThat(foundWebtoonsByGenreNames).isNotNull();
+        assertThat(foundWebtoonsByGenreNames).hasSize(requestGenres.size());
+        assertThat(foundWebtoonsByGenreNames.get(0).getTitle()).isEqualTo(romance);
     }
 
 

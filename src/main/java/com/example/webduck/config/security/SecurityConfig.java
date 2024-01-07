@@ -34,11 +34,13 @@ public class SecurityConfig {
         "/js/**",
         "/auth/login",
         "/images/**",
-        "/publish/**"
+        "/publish/**",
+        "/genre/**"
     };
 
     private static final String[] WHITE_API_LIST_URL = {
-        "/api/v1/webtoon/**"
+        "/api/v1/webtoon/**",
+        "/api/v1/genre/**"
     };
 
     private static final String[] ADMIN_URL = {

@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.webduck.genre.controller.api.GenreApiController;
 import com.example.webduck.genre.dto.GenreResponse;
 import com.example.webduck.genre.entity.Genre;
 import com.example.webduck.genre.service.GenreService;

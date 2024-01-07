@@ -1,4 +1,4 @@
-package com.example.webduck.genre.controller;
+package com.example.webduck.genre.controller.api;
 
 import com.example.webduck.genre.dto.GenreResponse;
 import com.example.webduck.genre.service.GenreService;
