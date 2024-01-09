@@ -54,7 +54,7 @@ document.getElementById('imageFile').addEventListener('change', function(event) 
 
 // 입력 데이터 유효성 검증
 function validateFormData(formData) {
-  const requiredFields = ['title', 'summary', 'publishDay', 'platform'];
+  const requiredFields = ['title','author' ,'summary', 'publishDay', 'platform'];
   for (let field of requiredFields) {
     if (!formData.has(field) || formData.get(field).trim() === '') {
       alert(convertToUserFriendlyFieldName(field) + " 필드를 채워주세요.");
