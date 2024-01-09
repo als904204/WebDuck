@@ -45,8 +45,8 @@ class UploadServiceTest {
     private final String path = "testPath";
     private final String imageName = "imgName";
     private final PublishDay publishDay = PublishDay.FRIDAY;
-
     private final Platform platform = Platform.NAVER;
+    private final String author = "작가";
 
 
     List<String> genreTypes;
@@ -72,7 +72,8 @@ class UploadServiceTest {
             publishDay,
             mockMultipartFile,
             platform,
-            genreTypes
+            genreTypes,
+            author
         );
 
         webtoon = Webtoon.builder()

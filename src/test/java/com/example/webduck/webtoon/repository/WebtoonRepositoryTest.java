@@ -43,10 +43,11 @@ class WebtoonRepositoryTest {
     private final String imagePath = "화산귀환";
     private final String originalImageName = "adfafd123.png";
 
+    private final String author = "작가";
+
     Webtoon savedWebtoon;
     Webtoon martialArtsWebtoon;
     Webtoon fantasyWebtoon;
-    Webtoon romanceWebtoon;
 
     List<Webtoon> webtoons = new ArrayList<>();
 
@@ -62,20 +63,28 @@ class WebtoonRepositoryTest {
                 .publishDay(PublishDay.THURSDAY)
                 .platform(Platform.NAVER)
                 .originalImageName(originalImageName)
+                .author(author)
                 .build());
 
         // 웹툰 데이터 목록 생성
         this.webtoons = List.of(
             Webtoon.builder().title("Webtoon 1").summary("Summary 1").imagePath("Path 1")
+                .author(author)
                 .publishDay(PublishDay.MONDAY).originalImageName("Image1.png")
                 .platform(Platform.NAVER).build(),
+
             Webtoon.builder().title("Webtoon 2").summary("Summary 2").imagePath("Path 2")
+                .author(author)
                 .publishDay(PublishDay.FRIDAY).originalImageName("Image2.png")
                 .platform(Platform.NAVER).build(),
+
             Webtoon.builder().title("Webtoon 3").summary("Summary 3").imagePath("Path 3")
+                .author(author)
                 .publishDay(PublishDay.SUNDAY).originalImageName("Image3.png")
                 .platform(Platform.NAVER).build(),
+
             Webtoon.builder().title("Webtoon 4").summary("Summary 4").imagePath("Path 4")
+                .author(author)
                 .publishDay(PublishDay.SUNDAY).originalImageName("Image4.png")
                 .platform(Platform.NAVER).build()
         );
@@ -173,6 +182,7 @@ class WebtoonRepositoryTest {
             Webtoon.builder()
                 .title(martialArts)
                 .summary(summary)
+                .author(author)
                 .imagePath(imagePath)
                 .publishDay(PublishDay.THURSDAY)
                 .platform(Platform.NAVER)
@@ -181,6 +191,7 @@ class WebtoonRepositoryTest {
 
         fantasyWebtoon = webtoonRepository.save(
             Webtoon.builder()
+                .author(author)
                 .title(fantasy)
                 .summary(summary)
                 .imagePath(imagePath)

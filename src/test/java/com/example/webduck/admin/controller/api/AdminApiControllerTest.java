@@ -33,9 +33,11 @@ class AdminApiControllerTest {
 
     private final String title = "제목";
     private final String summary = "줄거리";
+    private final String author = "작가";
     private final PublishDay publishDay = PublishDay.SUNDAY;
 
     private final Platform platform = Platform.NAVER;
+
     private final List<String> genres = List.of("ROMANCE", "FANTASY");
 
     private final String uri = "/api/v1/admin/";
@@ -60,7 +62,8 @@ class AdminApiControllerTest {
             publishDay,
             file,
             platform,
-            genres
+            genres,
+            author
         );
         doNothing().when(uploadService).uploadWebtoon(any(WebtoonUpload.class));
 
@@ -71,6 +74,7 @@ class AdminApiControllerTest {
                 .param("publishDay", publishDay.name())
                 .param("platform", platform.name())
                 .param("genreName", genres.toArray(new String[0]))
+                .param("author", author)
                 .with(request -> {
                     request.setMethod("POST");
                     return request;
