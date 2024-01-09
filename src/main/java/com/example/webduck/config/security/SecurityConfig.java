@@ -35,7 +35,9 @@ public class SecurityConfig {
         "/auth/login",
         "/images/**",
         "/publish/**",
-        "/genre/**"
+        "/genre/**",
+        "/naver/**",
+        "/kakao/**"
     };
 
     private static final String[] WHITE_API_LIST_URL = {
