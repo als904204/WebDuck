@@ -52,7 +52,7 @@ public class Webtoon{
     private List<WebtoonGenre> webtoonGenres = new ArrayList<>();
 
     // 웹툰 작가
-    @Column(nullable = false,length = 15)
+    @Column(nullable = false,length = 30)
     private String author;
 
     protected Webtoon() {}
