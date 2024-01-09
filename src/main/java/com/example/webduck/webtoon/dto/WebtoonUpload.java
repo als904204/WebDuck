@@ -34,5 +34,10 @@ public class WebtoonUpload {
 
     @NotEmpty(message = "한가지 이상의 장르를 선택해야 됩니다")
     private List<String> genreName;
+
+    @NotBlank(message = "작가는 빈칸이 될 수 없습니다")
+    @Size(max = 15, message = "작가는 최대 15자까지 가능합니다")
+    private String author;
+
 }
 
