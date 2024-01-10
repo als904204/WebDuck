@@ -2,10 +2,7 @@ package com.example.webduck.config.security;
 
 import static com.example.webduck.member.entity.Role.ADMIN;
 import static com.example.webduck.member.entity.Role.MANAGER;
-import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
 
 import com.example.webduck.config.security.oauth.handler.OAuth2LoginFailureHandler;
 import com.example.webduck.config.security.oauth.handler.OAuth2LoginSuccessHandler;
@@ -40,7 +37,7 @@ public class SecurityConfig {
         "/kakao/**"
     };
 
-    private static final String[] WHITE_API_LIST_URL = {
+    private static final String[] WHITE_GET_API_LIST_URL = {
         "/api/v1/webtoon/**",
         "/api/v1/genre/**"
     };
@@ -57,7 +54,7 @@ public class SecurityConfig {
             .authorizeHttpRequests((req) ->
                 req.requestMatchers(WHITE_LIST_URL)
                     .permitAll()
-                    .requestMatchers(GET,WHITE_API_LIST_URL)
+                    .requestMatchers(GET, WHITE_GET_API_LIST_URL)
                     .permitAll()
                     .requestMatchers(ADMIN_URL)
                     .hasRole(ADMIN.name())
@@ -82,12 +79,20 @@ public class SecurityConfig {
                 .successHandler(oAuth2LoginSuccessHandler)
                 .failureHandler(oAuth2LoginFailureHandle)
             )
+            .sessionManagement(session -> session
+                .invalidSessionUrl("/auth/login") // 세션이 무효화됐을 때의 리디렉션 URL
+                .maximumSessions(1) // 동시 세션 제한
+
+            )
             .logout(logout -> logout
                 .logoutUrl("/auth/logout")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true) // 로그아웃 시 세션 날리기
                 .clearAuthentication(true)   // 시큐리티 컨텍스트 홀더 인증정보 날리기
-                .logoutSuccessUrl("/"));
+                .logoutSuccessUrl("/")
+
+            );
+
 
 
         return http.build();
