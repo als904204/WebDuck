@@ -51,17 +51,22 @@ public class Webtoon{
     @OneToMany(mappedBy = "webtoon",fetch = FetchType.LAZY)
     private List<WebtoonGenre> webtoonGenres = new ArrayList<>();
 
+    // 웹툰 작가
+    @Column(nullable = false,length = 30)
+    private String author;
+
     protected Webtoon() {}
 
     @Builder
     public Webtoon(String title, String summary, String originalImageName, String imagePath,
-        PublishDay publishDay, Platform platform) {
+        PublishDay publishDay, Platform platform,String author) {
         this.title = title;
         this.summary = summary;
         this.originalImageName = originalImageName;
         this.imagePath = imagePath;
         this.publishDay = publishDay;
         this.platform = platform;
+        this.author = author;
     }
 
     // 양방향 관계 객체 연결 (+순환 참조 방지)
@@ -102,4 +107,9 @@ public class Webtoon{
     public List<WebtoonGenre> getWebtoonGenres() {
         return webtoonGenres;
     }
+
+    public String getAuthor() {
+        return author;
+    }
 }
+

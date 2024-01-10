@@ -45,7 +45,9 @@ class WebtoonGenreRepositoryTest {
             .summary("Summary 1").imagePath("Path 1")
             .publishDay(PublishDay.MONDAY)
             .originalImageName("Image1.png")
+            .author("author")
             .platform(Platform.NAVER).build();
+
         webtoonRepository.save(webtoon);
 
         Genre genre = new Genre("romance");

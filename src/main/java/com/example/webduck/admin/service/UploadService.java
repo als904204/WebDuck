@@ -43,6 +43,7 @@ public class UploadService {
                 .originalImageName(originalFileName)        // 이미지 원본이름
                 .imagePath(imagePath)                       // 이미지 경로
                 .platform(webtoonUpload.getPlatform())      // 플랫폼
+                .author(webtoonUpload.getAuthor())          // 작가
                 .build();
 
             webtoonRepository.save(webtoon);

@@ -64,7 +64,13 @@ function translateGenre(genreName) {
     'FANTASY': '판타지',
     'ADULT': '성인',
     'ROMANCE': '로맨스',
-    'GAG': '개그'
+    'GAG': '개그',
+    'ACTION': '액션',
+    'DAILYLIFE': '일상',
+    'THRILLER': '스릴러',
+    'DRAMA': '드라마',
+    'EMOTION': '감성',
+    'SPORTS': '스포츠'
   };
   return genreTranslations[genreName] || genreName;
 }

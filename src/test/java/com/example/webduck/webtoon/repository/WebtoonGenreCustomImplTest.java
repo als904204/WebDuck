@@ -55,6 +55,7 @@ class WebtoonGenreCustomImplTest {
     // 장르 (개그,판타지)
     final String gag = "GAG";
     final String fantasy = "FANTASY";
+    final String author = "AUTHOR";
 
     @BeforeEach
     void init() {
@@ -74,6 +75,7 @@ class WebtoonGenreCustomImplTest {
                 .imagePath(imagePath)
                 .publishDay(PublishDay.THURSDAY)
                 .platform(Platform.NAVER)
+                .author(author)
                 .originalImageName(originalImageName)
                 .build());
 
@@ -82,6 +84,7 @@ class WebtoonGenreCustomImplTest {
                 .title(gWebtoonTitle)
                 .summary(summary)
                 .imagePath(imagePath)
+                .author(author)
                 .publishDay(PublishDay.THURSDAY)
                 .platform(Platform.NAVER)
                 .originalImageName(originalImageName)
