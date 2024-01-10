@@ -56,8 +56,22 @@ public class Member {
     }
 
     public String getRoleKey() {
-        return  this.role.getKey();
+        return this.role.getKey();
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
 }
