@@ -2,6 +2,10 @@ package com.example.webduck.webtoon.service;
 
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
+import com.example.webduck.review.dto.ReviewResponse;
+import com.example.webduck.review.entity.Review;
+import com.example.webduck.review.repository.ReviewRepository;
+import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.entity.Platform;
@@ -21,6 +25,8 @@ public class WebtoonService {
 
     private final WebtoonRepository webtoonRepository;
 
+    private final ReviewRepository reviewRepository;
+
     // ID로 웹툰 조회
     @Transactional(readOnly = true)
     public WebtoonResponse findWebtoonById(Long id) {
@@ -29,7 +35,23 @@ public class WebtoonService {
         return new WebtoonResponse(webtoon);
     }
 
-    // 모든 웹툰 조회 TODO : 페이징 적용 해야 함 나중에
+    // 웹툰 상세정보
+    // 웹툰정보와 해당 웹툰의 리뷰 목록을 리턴
+    @Transactional(readOnly = true)
+    public WebtoonDetails getWebtoonDetails(Long webtoonId) {
+        Webtoon webtoon = webtoonRepository.findById(webtoonId)
+            .orElseThrow(() -> new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND));
+
+        List<Review> reviews = reviewRepository.findReviewsByWebtoonId(webtoonId);
+
+        List<ReviewResponse> reviewDto = reviews.stream()
+            .map(ReviewResponse::new)
+            .toList();
+
+        return new WebtoonDetails(webtoon,reviewDto);
+    }
+
+    // 모든 웹툰 조회
     @Transactional(readOnly = true)
     public List<WebtoonResponse> findWebtoonList() {
         List<Webtoon> webtoons = webtoonRepository.findAll();
