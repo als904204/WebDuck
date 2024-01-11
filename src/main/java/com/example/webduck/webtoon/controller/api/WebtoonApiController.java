@@ -21,11 +21,14 @@ public class WebtoonApiController {
 
     private final WebtoonService webtoonService;
 
+
+    @Deprecated
     @GetMapping("/{id}")
     public ResponseEntity<WebtoonResponse> getWebtoon(@PathVariable Long id) {
         WebtoonResponse request = webtoonService.findWebtoonById(id);
         return ResponseEntity.ok(request);
     }
+
 
     @GetMapping
     public ResponseEntity<List<WebtoonResponse>> getWebtoonList() {
