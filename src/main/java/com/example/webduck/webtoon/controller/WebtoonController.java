@@ -1,5 +1,6 @@
 package com.example.webduck.webtoon.controller;
 
+import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.service.WebtoonService;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +38,8 @@ public class WebtoonController {
 
     @GetMapping("/webtoon/details/{id}")
     public String webtoonDetails(Model model, @PathVariable("id") Long id) {
-        WebtoonResponse webtoonById = webtoonService.findWebtoonById(id);
-        model.addAttribute("webtoon", webtoonById);
+        WebtoonDetails webtoonDetails = webtoonService.getWebtoonDetails(id);
+        model.addAttribute("webtoon", webtoonDetails);
         return "views/webtoonDetails";
     }
 }
