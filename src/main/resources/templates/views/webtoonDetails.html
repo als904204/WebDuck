@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 
 <th:block layout:fragment="content">
@@ -35,18 +36,42 @@
       </header>
 
       <main>
-        <div class="row">
-          <div class="col-md-4">
+        <div class="container py-5 mb-4">
+
+          <!-- 리뷰 작성 -->
+          <div class="row mb-5" th:if="${#authorization.expression('isAuthenticated()')}">
+            <div class="col-12">
+              <h3 class="mb-3 text-secondary">한줄 리뷰 등록</h3>
+              <div class="card">
+                <div class="card-body">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                    <input type="hidden" class="form-control" id="webtoonId" th:value="${webtoon.webtoonId}" required>
+                    <div class="mb-3">
+                      <label for="content" class="form-label">리뷰 내용</label>
+                      <textarea class="form-control" id="content" rows="3" maxlength="255" required></textarea>
+                    </div>
+                  <button type="submit" id="submitReviewButton" class="btn btn-outline-dark">리뷰 등록</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-md-8 flex-column justify-content-center bg-info">
-            회원리뷰
+
+          <div th:unless="${#authorization.expression('isAuthenticated()')}">
+            <p>로그인 후에 리뷰를 작성할 수 있습니다. <a th:href="@{/auth/login}">로그인</a> 해주세요.</p>
           </div>
-          <div class="col-md-4">
+
+          <!-- 리뷰 목록 -->
+          <div class="row mb-5">
+            <div class="col-12">
+              <h3 class="mb-3 text-secondary text-white">웹툰 한줄평</h3>
+              <div class="list-group" id="reviewList">
+                <!-- 여기에 리뷰 목록이 동적으로 표시됨 -->
+              </div>
+            </div>
           </div>
-          <div class="col-md-8 flex-column justify-content-center bg-info">
-            한줄리뷰등록
-          </div>
+
         </div>
+
       </main>
 
     </div>
@@ -54,8 +79,7 @@
   </section>
 
 
-<!--  <script th:src="@{/js/webtoon/platform/kakaoWebtoonList.js}"></script>-->
-
+  <script th:src="@{/js/webtoon/details/webtoonDetails.js}"></script>
 
 </th:block>
 </html>
