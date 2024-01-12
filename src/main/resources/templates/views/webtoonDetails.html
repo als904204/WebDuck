@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="content">
+  <!--  <link th:href="@{/css/platform.css}" rel="stylesheet">-->
+
+  <section class="text-white genre">
+
+    <div class="container my-4">
+      <header class="mb-4">
+        <div class="row">
+          <div class="col-md-4">
+            <img th:src="${webtoon.imagePath}" class="img-fluid" alt="웹툰 이미지" style="height: 350px; object-fit: cover;">
+          </div>
+          <div class="col-md-8 d-flex flex-column justify-content-center">
+            <h2 th:text="${webtoon.title}">웹툰 제목</h2>
+            <p>
+              <span th:text="${webtoon.author}">작가</span> /
+              <span th:text="${webtoon.platform}">플랫폼</span>
+            </p>
+            <p th:text="${webtoon.summary}">웹툰 줄거리</p>
+
+            <!-- TODO : 링크 백엔드에서 가져와야 함 -->
+            <a th:href="@{https://naver.com}" target="_blank"
+               class="btn mt-3"
+               th:classappend="${webtoon.platform.toString() == 'NAVER' ? 'btn-success' :
+                   webtoon.platform.toString() == 'KAKAO' ? 'btn-warning' :
+                   webtoon.platform.toString() == 'TOPTOON' ? 'btn-danger' :
+                   'btn-primary'}"
+               style="width: 100px;"
+            >보러가기</a>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <div class="container py-5 mb-4">
+
+          <!-- 리뷰 등록 부분 -->
+          <div class="row mb-5" th:if="${#authorization.expression('isAuthenticated()')}">
+            <div class="col-12">
+              <h3 class="mb-3 text-secondary">한줄 리뷰 등록</h3>
+              <div class="card">
+                <div class="card-body">
+                  <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                  <input type="hidden" class="form-control" id="webtoonId" th:value="${webtoon.webtoonId}" required>
+                  <div class="mb-3">
+                    <label for="content" class="form-label">리뷰 내용</label>
+                    <textarea class="form-control" id="content" rows="3" maxlength="100" required></textarea>
+                  </div>
+                  <button type="submit" id="submitReviewButton" class="btn btn-outline-dark">리뷰 등록</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div th:unless="${#authorization.expression('isAuthenticated')}">
+            <p>로그인 후에 리뷰를 작성할 수 있습니다. <a th:href="@{/auth/login}">로그인</a> 해주세요.</p>
+          </div>
+
+          <!-- 리뷰 목록 -->
+          <div class="row mb-5">
+            <div class="col-12">
+              <h3 class="mb-3 text-secondary text-white">웹툰 한줄평</h3>
+              <input type="hidden" id="webtoonIdForList" th:value="${webtoon.webtoonId}">
+              <div class="list-group" id="reviewList">
+                <!-- 여기에 리뷰 목록이 동적으로 표시됨 -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+  </section>
+
+
+  <script th:src="@{/js/webtoon/details/webtoonDetails.js}"></script>
+
+</th:block>
+</html>

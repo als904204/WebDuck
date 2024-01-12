@@ -2,11 +2,14 @@ package com.example.webduck.config.security;
 
 import static com.example.webduck.member.entity.Role.ADMIN;
 import static com.example.webduck.member.entity.Role.MANAGER;
+import static com.example.webduck.member.entity.Role.USER;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 import com.example.webduck.config.security.oauth.handler.OAuth2LoginFailureHandler;
 import com.example.webduck.config.security.oauth.handler.OAuth2LoginSuccessHandler;
 import com.example.webduck.config.security.oauth.service.CustomOAuth2UserService;
+import com.example.webduck.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,13 +37,21 @@ public class SecurityConfig {
         "/publish/**",
         "/genre/**",
         "/naver/**",
-        "/kakao/**"
+        "/kakao/**",
+        "/webtoon/details/**"
+
     };
 
     private static final String[] WHITE_GET_API_LIST_URL = {
         "/api/v1/webtoon/**",
-        "/api/v1/genre/**"
+        "/api/v1/genre/**",
+        "/api/v1/review/**"
     };
+
+    private static final String[] WHITE_POST_API_LIST_URL = {
+        "/api/v1/review/**"
+    };
+
 
     private static final String[] ADMIN_URL = {
         "/api/v1/admin/**",
@@ -56,6 +67,8 @@ public class SecurityConfig {
                     .permitAll()
                     .requestMatchers(GET, WHITE_GET_API_LIST_URL)
                     .permitAll()
+                    .requestMatchers(POST, WHITE_POST_API_LIST_URL)
+                    .hasAnyRole(ADMIN.name(),USER.name(),MANAGER.name())
                     .requestMatchers(ADMIN_URL)
                     .hasRole(ADMIN.name())
 
@@ -82,6 +95,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session
                 .invalidSessionUrl("/auth/login") // 세션이 무효화됐을 때의 리디렉션 URL
                 .maximumSessions(1) // 동시 세션 제한
+                .expiredUrl("/session-expired") // 동시 로그인 시 기존로그인 한 사람 리다이렉트
 
             )
             .logout(logout -> logout
