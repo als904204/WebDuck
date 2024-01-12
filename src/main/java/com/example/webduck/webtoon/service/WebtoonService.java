@@ -42,7 +42,7 @@ public class WebtoonService {
         Webtoon webtoon = webtoonRepository.findById(webtoonId)
             .orElseThrow(() -> new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND));
 
-        List<Review> reviews = reviewRepository.findReviewsByWebtoonId(webtoonId);
+        List<Review> reviews = reviewRepository.findReviewsByWebtoonIdOrderByCreatedAtDesc(webtoonId);
 
         List<ReviewResponse> reviewDto = reviews.stream()
             .map(ReviewResponse::new)

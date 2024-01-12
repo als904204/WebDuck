@@ -42,7 +42,7 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public List<ReviewResponse> getReviewsByWebtoonId(Long id) {
         webtoonIsExists(id);
-        List<Review> reviews = reviewRepository.findReviewsByWebtoonId(id);
+        List<Review> reviews = reviewRepository.findReviewsByWebtoonIdOrderByCreatedAtDesc(id);
         return reviews.stream()
             .map(ReviewResponse::new)
             .toList();
