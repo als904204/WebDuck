@@ -1,5 +1,6 @@
 package com.example.webduck.review.entity;
 
+import com.example.webduck.global.common.BaseTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +10,7 @@ import lombok.Builder;
 
 
 @Entity
-public class Review {
+public class Review extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
