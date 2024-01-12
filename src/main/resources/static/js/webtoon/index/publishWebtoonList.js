@@ -22,24 +22,20 @@ function loadPublishWebtoon(publishDay) {
 }
 
 // 웹툰 목록을 업데이트하는 함수
-function updateWebtoonList(webtoons) {
+function updateWebtoonList(publishWebtoons) {
   const container = document.getElementById('publishWebtoonList');
   container.innerHTML = ''; // 목록 초기화
 
-  webtoons.forEach(webtoon => {
+  publishWebtoons.forEach(webtoon => {
     const col = document.createElement('div');
     col.className = 'col-6 col-md-2';
     col.innerHTML = `
-     <a href="/webtoon/details/${webtoon.id}">
-        <img class="img-fluid equal-height-img" src="${webtoon.imagePath}" alt="${webtoon.title}" />
-      </a>
-      <p>${webtoon.title}</p>
+      <img class="img-fluid equal-height-img" src="${webtoon.imagePath}" alt="${webtoon.title}" />
+      <p class="text-center">${webtoon.title}</p>
     `;
     container.appendChild(col);
   });
 }
-
-
 
 // 활성화된 요일 버튼을 설정하는 함수
 function setActiveDayButton(publishDay) {
