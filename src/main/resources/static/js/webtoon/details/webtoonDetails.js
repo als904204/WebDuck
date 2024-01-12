@@ -1,11 +1,21 @@
-document.getElementById('submitReviewButton').addEventListener('click', function (event) {
-  event.preventDefault();
-  submitReview();
-});
+document.addEventListener('DOMContentLoaded', function () {
+  // 이 부분은 DOM이 로드된 후에 실행됩니다.
 
-// 최초 로딩 시 리뷰 목록 불러오기
-const webtoonId = document.getElementById('webtoonId').value;
-refreshReviewList(webtoonId);
+  // submitReviewButton에 대한 이벤트 리스너 추가
+  const submitReviewButton = document.getElementById('submitReviewButton');
+  if (submitReviewButton) {
+    submitReviewButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      submitReview();
+    });
+  }
+  // 리뷰 목록 불러오기를 위한 코드 수정
+  const webtoonIdElement = document.getElementById('webtoonIdForList');
+  if (webtoonIdElement) {
+    const webtoonId = webtoonIdElement.value;
+    refreshReviewList(webtoonId);
+  }
+});
 
 function submitReview() {
   const webtoonId = document.getElementById('webtoonId').value;
@@ -35,20 +45,21 @@ function refreshReviewList(webtoonId) {
   .then(response => response.json())
   .then(reviews => {
     const reviewListElement = document.getElementById('reviewList');
-    reviewListElement.innerHTML = ''; // 기존 내용을 비움
+    if (reviewListElement) {
+      reviewListElement.innerHTML = ''; // 기존 내용을 비움
 
-    reviews.forEach(review => {
-      const reviewItem = document.createElement('div');
-      reviewItem.className = 'list-group-item list-group-item-action flex-column align-items-start';
-      reviewItem.innerHTML = `
-                <div class="d-flex w-100 justify-content-between">
-                    <p class="mb-1">${review.content}</p>
-                    <small class="text-muted">${review.reviewerNickname}</small>
-                </div>
-            `;
-      reviewListElement.appendChild(reviewItem);
-    });
+      reviews.forEach(review => {
+        const reviewItem = document.createElement('div');
+        reviewItem.className = 'list-group-item list-group-item-action flex-column align-items-start';
+        reviewItem.innerHTML = `
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1">${review.content}</p>
+                        <small class="text-muted">${review.reviewerNickname}</small>
+                    </div>
+                `;
+        reviewListElement.appendChild(reviewItem);
+      });
+    }
   })
   .catch(error => console.error('Error:', error));
 }
-

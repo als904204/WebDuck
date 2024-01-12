@@ -38,25 +38,25 @@
       <main>
         <div class="container py-5 mb-4">
 
-          <!-- 리뷰 작성 -->
+          <!-- 리뷰 등록 부분 -->
           <div class="row mb-5" th:if="${#authorization.expression('isAuthenticated()')}">
             <div class="col-12">
               <h3 class="mb-3 text-secondary">한줄 리뷰 등록</h3>
               <div class="card">
                 <div class="card-body">
-                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                    <input type="hidden" class="form-control" id="webtoonId" th:value="${webtoon.webtoonId}" required>
-                    <div class="mb-3">
-                      <label for="content" class="form-label">리뷰 내용</label>
-                      <textarea class="form-control" id="content" rows="3" maxlength="255" required></textarea>
-                    </div>
+                  <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                  <input type="hidden" class="form-control" id="webtoonId" th:value="${webtoon.webtoonId}" required>
+                  <div class="mb-3">
+                    <label for="content" class="form-label">리뷰 내용</label>
+                    <textarea class="form-control" id="content" rows="3" maxlength="100" required></textarea>
+                  </div>
                   <button type="submit" id="submitReviewButton" class="btn btn-outline-dark">리뷰 등록</button>
                 </div>
               </div>
             </div>
           </div>
 
-          <div th:unless="${#authorization.expression('isAuthenticated()')}">
+          <div th:unless="${#authorization.expression('isAuthenticated')}">
             <p>로그인 후에 리뷰를 작성할 수 있습니다. <a th:href="@{/auth/login}">로그인</a> 해주세요.</p>
           </div>
 
@@ -64,6 +64,7 @@
           <div class="row mb-5">
             <div class="col-12">
               <h3 class="mb-3 text-secondary text-white">웹툰 한줄평</h3>
+              <input type="hidden" id="webtoonIdForList" th:value="${webtoon.webtoonId}">
               <div class="list-group" id="reviewList">
                 <!-- 여기에 리뷰 목록이 동적으로 표시됨 -->
               </div>
@@ -71,9 +72,7 @@
           </div>
 
         </div>
-
       </main>
-
     </div>
 
   </section>
