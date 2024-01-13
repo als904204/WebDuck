@@ -16,6 +16,7 @@ public class WebtoonDetails {
     private final PublishDay publishDay;
     private final Platform platform;
     private final String author;
+    private final String webtoonUrl;
     private final List<ReviewResponse> reviews;
 
 
@@ -29,6 +30,7 @@ public class WebtoonDetails {
         this.platform = webtoon.getPlatform();
         this.author = webtoon.getAuthor();
         this.reviews = reviews;
+        this.webtoonUrl = webtoon.getWebtoonUrl();
     }
 
     public Long getWebtoonId() {
@@ -65,5 +67,9 @@ public class WebtoonDetails {
 
     public List<ReviewResponse> getReviews() {
         return reviews;
+    }
+
+    public String getWebtoonUrl() {
+        return webtoonUrl;
     }
 }

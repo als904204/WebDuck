@@ -40,6 +40,7 @@ public class Member {
     private SocialType socialType;
 
 
+
     @Builder
     public Member(String username, String email, Role role, SocialType socialType,String socialId, String socialPk) {
         this.username = username;

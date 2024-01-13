@@ -55,6 +55,8 @@ public class Webtoon{
     @Column(nullable = false,length = 30)
     private String author;
 
+    private String webtoonUrl;
+
     protected Webtoon() {}
 
     @Builder
@@ -110,6 +112,10 @@ public class Webtoon{
 
     public String getAuthor() {
         return author;
+    }
+
+    public String getWebtoonUrl() {
+        return webtoonUrl;
     }
 }
 

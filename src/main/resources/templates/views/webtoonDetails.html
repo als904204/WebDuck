@@ -23,7 +23,7 @@
             <p th:text="${webtoon.summary}">웹툰 줄거리</p>
 
             <!-- TODO : 링크 백엔드에서 가져와야 함 -->
-            <a th:href="@{https://naver.com}" target="_blank"
+            <a  th:href="@{${webtoon.getWebtoonUrl()}}" target="_blank"
                class="btn mt-3"
                th:classappend="${webtoon.platform.toString() == 'NAVER' ? 'btn-success' :
                    webtoon.platform.toString() == 'KAKAO' ? 'btn-warning' :
