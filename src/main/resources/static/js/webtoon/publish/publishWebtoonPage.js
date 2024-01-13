@@ -25,16 +25,22 @@ function updateWebtoonList(webtoonList, englishDay) {
     const webtoonItem = document.createElement('div');
     webtoonItem.className = 'webtoon-item my-2';
 
+    // a 태그를 생성하여 링크 추가
+    const link = document.createElement('a');
+    link.href = `/webtoon/details/${webtoon.id}`;
+
     const image = document.createElement('img');
     image.src = webtoon.imagePath;
     image.alt = webtoon.title;
     image.className = 'img-fluid';
 
+    link.appendChild(image); // 이미지를 a 태그 안에 넣음
+    webtoonItem.appendChild(link); // a 태그를 웹툰 아이템 안에 넣음
+
     const title = document.createElement('p');
     title.textContent = webtoon.title;
-
-    webtoonItem.appendChild(image);
     webtoonItem.appendChild(title);
+
     container.appendChild(webtoonItem);
   });
 }
