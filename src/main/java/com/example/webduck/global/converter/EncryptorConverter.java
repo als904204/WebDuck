@@ -12,11 +12,11 @@ import jakarta.persistence.Converter;
  * String username
  */
 @Converter
-public class CryptoConverter implements AttributeConverter<String, String> {
+public class EncryptorConverter implements AttributeConverter<String, String> {
 
     private final AttributeEncryptor encryptor;
 
-    public CryptoConverter(AttributeEncryptor encryptor) {
+    public EncryptorConverter(AttributeEncryptor encryptor) {
         this.encryptor = encryptor;
     }
 

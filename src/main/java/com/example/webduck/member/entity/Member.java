@@ -1,6 +1,6 @@
 package com.example.webduck.member.entity;
 
-import com.example.webduck.global.converter.CryptoConverter;
+import com.example.webduck.global.converter.EncryptorConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -10,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 
 @Entity
 public class Member {
@@ -23,15 +22,15 @@ public class Member {
     @Column(nullable = false)
     private String username;
 
-    @Convert(converter = CryptoConverter.class)
+    @Convert(converter = EncryptorConverter.class)
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Convert(converter = CryptoConverter.class)
+    @Convert(converter = EncryptorConverter.class)
     @Column(nullable = false)
     private String socialPk;
 
-    @Convert(converter = CryptoConverter.class)
+    @Convert(converter = EncryptorConverter.class)
     @Column(nullable = false)
     private String socialId;
 
