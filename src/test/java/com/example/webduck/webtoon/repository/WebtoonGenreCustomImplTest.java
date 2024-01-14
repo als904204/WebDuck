@@ -4,6 +4,7 @@ package com.example.webduck.webtoon.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.example.webduck.config.ConverterConfigTest;
 import com.example.webduck.config.QueryDslConfigTest;
 
 import com.example.webduck.genre.entity.Genre;
@@ -31,7 +32,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@Import(QueryDslConfigTest.class)
+@Import({QueryDslConfigTest.class, ConverterConfigTest.class})
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

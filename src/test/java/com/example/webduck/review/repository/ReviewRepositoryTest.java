@@ -1,14 +1,12 @@
 package com.example.webduck.review.repository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
+import com.example.webduck.config.ConverterConfigTest;
 import com.example.webduck.config.QueryDslConfigTest;
 import com.example.webduck.review.entity.Review;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +17,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@Import(QueryDslConfigTest.class)
+@Import({QueryDslConfigTest.class, ConverterConfigTest.class})
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
