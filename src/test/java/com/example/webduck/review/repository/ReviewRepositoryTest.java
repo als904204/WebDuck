@@ -33,8 +33,20 @@ class ReviewRepositoryTest {
     @BeforeEach
     void setUp() {
         List<Review> reviews = Arrays.asList(
-            new Review(1L, 1L, "Webduck", firstReview),
-            new Review(1L, 1L, "Webduck", lastReview)
+            Review.builder()
+                .webtoonId(1L)
+                .memberId(1L)
+                .reviewerNickname("nickname")
+                .content(firstReview)
+                .rating(1)
+                .build(),
+            Review.builder()
+                .webtoonId(1L)
+                .memberId(1L)
+                .reviewerNickname("nickname")
+                .content(lastReview)
+                .rating(1)
+                .build()
         );
         reviewRepository.saveAll(reviews);
     }

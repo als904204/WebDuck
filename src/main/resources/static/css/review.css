@@ -1,0 +1,24 @@
+.star-rating .star {
+  font-size: 2em;
+  color: grey;
+  cursor: pointer;
+}
+
+.star-rating .star.selected {
+  color: gold;
+}
+
+.star-rating .star.hover {
+  color: gold;
+}
+
+.star-rating .star.selected {
+  color: gold;
+}
+
+.review-text {
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #333; /* 텍스트 색상 설정 */
+}
