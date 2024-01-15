@@ -3,8 +3,9 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 
+
 <th:block layout:fragment="content">
-  <!--  <link th:href="@{/css/platform.css}" rel="stylesheet">-->
+  <link th:href="@{/css/review.css}" rel="stylesheet">
 
   <section class="text-white genre">
 
@@ -40,8 +41,8 @@
 
           <!-- 리뷰 등록 부분 -->
           <div class="row mb-5" th:if="${#authorization.expression('isAuthenticated()')}">
-            <div class="col-12">
-              <h3 class="mb-3 text-secondary">한줄 리뷰 등록</h3>
+            <div class="col-8">
+              <h3 class="mb-3 text-white">한줄 리뷰 등록</h3>
               <div class="card">
                 <div class="card-body">
                   <input type="hidden" name="_csrf" value="${_csrf.token}"/>
@@ -50,10 +51,27 @@
                     <label for="content" class="form-label">리뷰 내용</label>
                     <textarea class="form-control" id="content" rows="3" maxlength="100" required></textarea>
                   </div>
-                  <button type="submit" id="submitReviewButton" class="btn btn-outline-dark">리뷰 등록</button>
                 </div>
               </div>
             </div>
+
+
+            <!--평점 등록 부분-->
+            <div class="col-md-4">
+              <h3 class="mb-3 text-white">평점 등록</h3>
+              <div class="card">
+                <div class="card-body">
+                  <div id="rating" class="star-rating">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <div th:unless="${#authorization.expression('isAuthenticated')}">
@@ -79,6 +97,7 @@
 
 
   <script th:src="@{/js/webtoon/details/webtoonDetails.js}"></script>
+  <script th:src="@{/js/webtoon/details/rating.js}"></script>
 
 </th:block>
 </html>
