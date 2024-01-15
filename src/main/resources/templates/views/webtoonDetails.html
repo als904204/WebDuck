@@ -51,6 +51,7 @@
                     <label for="content" class="form-label">리뷰 내용</label>
                     <textarea class="form-control" id="content" rows="3" maxlength="100" required></textarea>
                   </div>
+                  <button type="submit" id="submitReviewButton" class="btn btn-outline-dark">리뷰 등록</button>
                 </div>
               </div>
             </div>
@@ -59,15 +60,16 @@
             <!--평점 등록 부분-->
             <div class="col-md-4">
               <h3 class="mb-3 text-white">평점 등록</h3>
-              <div class="card">
-                <div class="card-body">
-                  <div id="rating" class="star-rating">
+              <div class="card h-75">
+                <div class="card-body d-flex flex-column justify-content-between">
+                  <div id="rating" class="star-rating text-center"> <!-- 별점을 중앙에 배치 -->
                     <span class="star" data-value="1">&#9733;</span>
                     <span class="star" data-value="2">&#9733;</span>
                     <span class="star" data-value="3">&#9733;</span>
                     <span class="star" data-value="4">&#9733;</span>
                     <span class="star" data-value="5">&#9733;</span>
                   </div>
+                  <div id="reviewOutput"></div>
                 </div>
               </div>
             </div>

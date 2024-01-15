@@ -21,6 +21,8 @@ function submitReview() {
   const webtoonId = document.getElementById('webtoonId').value;
   const content = document.getElementById('content').value;
   const csrfToken = document.querySelector("input[name='_csrf']").value;
+  const rating = selectedStarValue;
+
 
   fetch('/api/v1/review', {
     method: 'POST',
@@ -28,7 +30,11 @@ function submitReview() {
       'Content-Type': 'application/json',
       'X-CSRF-TOKEN': csrfToken
     },
-    body: JSON.stringify({ webtoonId: webtoonId, content: content })
+    body: JSON.stringify({
+      webtoonId: webtoonId,
+      content: content ,
+      rating : rating
+    })
   })
   .then(response => response.json())
   .then(data => {
