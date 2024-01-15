@@ -23,6 +23,18 @@ function submitReview() {
   const csrfToken = document.querySelector("input[name='_csrf']").value;
   const rating = selectedStarValue;
 
+  // 입력값 검증
+  if (!webtoonId || !content || !rating) {
+    let missingFields = [];
+
+    if (!webtoonId) missingFields.push("webtoon ID");
+    if (!content) missingFields.push("리뷰 내용");
+    if (!rating) missingFields.push("평점");
+
+    // 누락된 필드가 있을 경우 경고 메시지를 표시
+    alert(missingFields.join(", ") + "을 입력해주세요");
+    return; // 검증 실패시 함수 종료
+  }
 
   fetch('/api/v1/review', {
     method: 'POST',
@@ -61,6 +73,7 @@ function refreshReviewList(webtoonId) {
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1">${review.content}</p>
                         <small class="text-muted">${review.reviewerNickname}</small>
+                        <small class="text-muted">${review.rating}</small>
                     </div>
                 `;
         reviewListElement.appendChild(reviewItem);
