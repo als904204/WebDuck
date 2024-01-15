@@ -40,7 +40,6 @@ $(document).ready(function(){
   });
 
 
-
   // 별 클릭시 텍스트 출력
   $(star).on('click', function () {
     const onStar = parseInt($(this).data('value'), 10); // 클릭된 별의 값

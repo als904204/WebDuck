@@ -58,6 +58,7 @@ function submitReview() {
   .catch(error => console.error('Error:', error));
 }
 
+
 function refreshReviewList(webtoonId) {
   fetch(`/api/v1/review/${webtoonId}`)
   .then(response => response.json())
@@ -65,20 +66,32 @@ function refreshReviewList(webtoonId) {
     const reviewListElement = document.getElementById('reviewList');
     if (reviewListElement) {
       reviewListElement.innerHTML = ''; // 기존 내용을 비움
+        reviews.forEach(review => {
+          const reviewItem = document.createElement('div');
+          reviewItem.className = 'list-group-item flex-column align-items-start';
 
-      reviews.forEach(review => {
-        const reviewItem = document.createElement('div');
-        reviewItem.className = 'list-group-item list-group-item-action flex-column align-items-start';
-        reviewItem.innerHTML = `
-                    <div class="d-flex w-100 justify-content-between">
-                        <p class="mb-1">${review.content}</p>
-                        <small class="text-muted">${review.reviewerNickname}</small>
-                        <small class="text-muted">${review.rating}</small>
-                    </div>
-                `;
+          const starsDisplay = getStars(review.rating);
+
+          reviewItem.innerHTML = `
+            <div class="w-100">
+              <small class="text-muted">${starsDisplay}</small>
+            </div>
+            <p class="mb-1">${review.content}</p>
+            <div class="w-100">
+              <small class="text-muted">${review.reviewerNickname}</small>
+        </div>`;
         reviewListElement.appendChild(reviewItem);
-      });
+        });
     }
   })
   .catch(error => console.error('Error:', error));
 }
+
+
+function getStars(rating) {
+  // 평점만큼의 별(★)을 생성하고, 5에서 평점을 뺀 나머지는 빈 별(☆)로 채웁니다.
+  const fullStar = '★';
+  const emptyStar = '☆';
+  return fullStar.repeat(rating) + emptyStar.repeat(5 - rating);
+}
+
