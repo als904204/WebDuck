@@ -16,24 +16,35 @@ public class Review extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 웹툰 ID
     @Column(nullable = false)
     private Long webtoonId;
 
-    @Column(nullable = false)
-    private String reviewerNickname;
-
+    // 작성자 ID
     @Column(nullable = false)
     private Long memberId;
 
-    @Column(nullable = false,length = 255)
+    // 작성자 nickname
+    @Column(nullable = false)
+    private String reviewerNickname;
+
+    // 리뷰 내용
+    @Column(nullable = false)
     private String content;
 
+    // 리뷰 점수
+    @Column(nullable = false)
+    private Integer rating;
+
+
     // todo : 세션맴버에서 닉네임 추가하고 리뷰 생성할 때 닉네임으로 설정
-    public Review(Long webtoonId, Long memberId,String reviewerNickname ,String content) {
+    @Builder
+    public Review(Long webtoonId, Long memberId,String reviewerNickname ,String content,Integer rating) {
         this.webtoonId = webtoonId;
         this.memberId = memberId;
         this.reviewerNickname = reviewerNickname;
         this.content = content;
+        this.rating = rating;
     }
 
     protected Review() {}
@@ -54,6 +65,10 @@ public class Review extends BaseTime {
 
     public String getReviewerNickname() {
         return reviewerNickname;
+    }
+
+    public Integer getRating() {
+        return rating;
     }
 }
 

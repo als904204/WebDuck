@@ -29,12 +29,20 @@ public class ReviewService {
         webtoonIsExists(webtoonId);
 
         Long memberId = sessionMember.getId();
+
         // todo : 닉네임으로 변경
         String email = sessionMember.getEmail();
         String content = reviewRequest.getContent();
+        Integer rating = reviewRequest.getRating();
 
+        Review review = Review.builder()
+            .webtoonId(webtoonId)
+            .memberId(memberId)
+            .reviewerNickname(email)
+            .content(content)
+            .rating(rating)
+            .build();
 
-        Review review = new Review(webtoonId,memberId,email,content);
         review = reviewRepository.save(review);
         return review.getId();
     }
