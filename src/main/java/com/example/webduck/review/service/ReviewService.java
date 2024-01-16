@@ -56,6 +56,11 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
+    public Integer getReviewCount(Long webtoonId) {
+        return reviewRepository.findReviewsByWebtoonId(webtoonId).size();
+    }
+
+    @Transactional(readOnly = true)
     public List<ReviewResponse> getReviewsByWebtoonId(Long id) {
         webtoonIsExists(id);
         List<Review> reviews = reviewRepository.findReviewsByWebtoonIdOrderByCreatedAtDesc(id);

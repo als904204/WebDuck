@@ -37,4 +37,17 @@ public class ReviewApiController {
         List<ReviewResponse> reviews = reviewService.getReviewsByWebtoonId(webtoonId);
         return ResponseEntity.ok(reviews);
     }
+
+    @GetMapping("{webtoonId}/avg")
+    public ResponseEntity<Double> getReviewAvgByWebtoonId(@PathVariable Long webtoonId) {
+        Double reviewAvg = reviewService.getReviewAvg(webtoonId);
+        return ResponseEntity.ok(reviewAvg);
+    }
+
+    @GetMapping("{webtoonId}/count")
+    public ResponseEntity<Integer> getReviewCountByWebtoonId(@PathVariable Long webtoonId) {
+        int reviewCount = reviewService.getReviewCount(webtoonId);
+        return ResponseEntity.ok(reviewCount);
+    }
+
 }
