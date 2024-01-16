@@ -5,7 +5,6 @@ import com.example.webduck.genre.entity.QWebtoonGenre;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.review.entity.QReview;
-import com.example.webduck.review.entity.Review;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonSortCondition.WebtoonConditionResponse;
 import com.example.webduck.webtoon.entity.QWebtoon;
