@@ -2,6 +2,7 @@ package com.example.webduck.webtoon.controller.api;
 
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
+import com.example.webduck.webtoon.dto.WebtoonSortCondition.WebtoonConditionResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.service.WebtoonService;
@@ -60,6 +61,15 @@ public class WebtoonApiController {
         List<WebtoonGenreResponse> webtoonsByGenreNames = webtoonService.findWebtoonsByGenreNames(
             names);
         return ResponseEntity.ok(webtoonsByGenreNames);
+    }
+
+    // TODO : 새로고침 빨리하면 11개 나옴가끔
+    @GetMapping("/popular")
+    public ResponseEntity<List<WebtoonConditionResponse>> getPopularWebtoonListByCondition(
+        @RequestParam String sortBy) {
+        List<WebtoonConditionResponse> webtoonsByWebtoonCondition = webtoonService.findWebtoonsByWebtoonCondition(
+            sortBy);
+        return ResponseEntity.ok(webtoonsByWebtoonCondition);
     }
 
 }

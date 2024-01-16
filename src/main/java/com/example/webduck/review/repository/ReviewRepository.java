@@ -10,5 +10,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findReviewsByWebtoonIdOrderByCreatedAtDesc(Long webtoonId);
 
-
+    List<Review> findReviewsByWebtoonId(Long webtoonId);
 }

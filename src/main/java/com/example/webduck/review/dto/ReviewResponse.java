@@ -9,6 +9,7 @@ public class ReviewResponse {
     private final Long authorId;
 
     private final Integer rating;
+
     public ReviewResponse(Review review) {
         this.content = review.getContent();
         this.authorId = review.getMemberId();

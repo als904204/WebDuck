@@ -8,6 +8,7 @@ import com.example.webduck.review.repository.ReviewRepository;
 import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
+import com.example.webduck.webtoon.dto.WebtoonSortCondition.WebtoonConditionResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
@@ -91,5 +92,11 @@ public class WebtoonService {
     @Transactional(readOnly = true)
     public List<WebtoonGenreResponse> findWebtoonsByGenreNames(List<String> genreNames) {
         return webtoonRepository.findWebtoonsByGenres(genreNames);
+    }
+
+    @Transactional(readOnly = true)
+    public List<WebtoonConditionResponse> findWebtoonsByWebtoonCondition(
+        String condition) {
+        return webtoonRepository.findPopularWebtoonsByCondition(condition);
     }
 }

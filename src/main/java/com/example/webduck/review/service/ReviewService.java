@@ -7,12 +7,15 @@ import com.example.webduck.review.dto.ReviewRequest;
 import com.example.webduck.review.dto.ReviewResponse;
 import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.repository.ReviewRepository;
+import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ReviewService {
@@ -24,13 +27,14 @@ public class ReviewService {
 
     @Transactional
     public Long saveReview(SessionMember sessionMember, ReviewRequest reviewRequest) {
-
         Long webtoonId = reviewRequest.getWebtoonId();
-        webtoonIsExists(webtoonId);
 
-        Long memberId = sessionMember.getId();
+        Webtoon webtoon = webtoonRepository.findById(webtoonId)
+            .orElseThrow(() -> new CustomException(
+                LogicExceptionCode.WEBTOON_NOT_FOUND));
 
         // todo : 닉네임으로 변경
+        Long memberId = sessionMember.getId();
         String email = sessionMember.getEmail();
         String content = reviewRequest.getContent();
         Integer rating = reviewRequest.getRating();
@@ -43,8 +47,22 @@ public class ReviewService {
             .rating(rating)
             .build();
 
+        // 리뷰 저장 시, 해당 웹툰 리뷰 개수를 증가한다.
+        webtoon.incrementReviewCount();
         review = reviewRepository.save(review);
         return review.getId();
+    }
+
+    // 리뷰 점수평균을 구한다
+    @Transactional(readOnly = true)
+    public Double getReviewAvg(Long webtoonId) {
+        List<Review> reviews = reviewRepository.findReviewsByWebtoonId(webtoonId);
+        return Review.calculateRatingAvg(reviews);
+    }
+
+    @Transactional(readOnly = true)
+    public Integer getReviewCount(Long webtoonId) {
+        return reviewRepository.findReviewsByWebtoonId(webtoonId).size();
     }
 
     @Transactional(readOnly = true)

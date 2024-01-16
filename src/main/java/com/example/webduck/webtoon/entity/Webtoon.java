@@ -55,7 +55,11 @@ public class Webtoon{
     @Column(nullable = false,length = 30)
     private String author;
 
+    // 웹툰 바로가기 주소
     private String webtoonUrl;
+
+    @Column(nullable = false)
+    private int reviewCount = 0;
 
     protected Webtoon() {}
 
@@ -69,6 +73,10 @@ public class Webtoon{
         this.publishDay = publishDay;
         this.platform = platform;
         this.author = author;
+    }
+
+    public void incrementReviewCount() {
+        ++this.reviewCount;
     }
 
     // 양방향 관계 객체 연결 (+순환 참조 방지)
@@ -116,6 +124,10 @@ public class Webtoon{
 
     public String getWebtoonUrl() {
         return webtoonUrl;
+    }
+
+    public int getReviewCount() {
+        return reviewCount;
     }
 }
 
