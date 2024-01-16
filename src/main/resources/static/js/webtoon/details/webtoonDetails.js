@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
   if (webtoonIdElement) {
     const webtoonId = webtoonIdElement.value;
     refreshReviewList(webtoonId);
+    fetchReviewAvg(webtoonId);
+    fetchReviewCount(webtoonId);
   }
 });
 
@@ -27,7 +29,7 @@ function submitReview() {
   if (!webtoonId || !content || !rating) {
     let missingFields = [];
 
-    if (!webtoonId) missingFields.push("webtoon ID");
+    if (!webtoonId) missingFields.push("존재하지 않는 웹툰");
     if (!content) missingFields.push("리뷰 내용");
     if (!rating) missingFields.push("평점");
 
@@ -50,8 +52,10 @@ function submitReview() {
   })
   .then(response => response.json())
   .then(data => {
-    // 리뷰 목록 새로고침
+    // 리뷰 (목록,평균,리뷰개수) 새로고침
     refreshReviewList(webtoonId);
+    fetchReviewAvg(webtoonId);
+    fetchReviewCount(webtoonId);
     // 입력 필드 초기화
     document.getElementById('content').value = '';
   })
@@ -66,32 +70,26 @@ function refreshReviewList(webtoonId) {
     const reviewListElement = document.getElementById('reviewList');
     if (reviewListElement) {
       reviewListElement.innerHTML = ''; // 기존 내용을 비움
-        reviews.forEach(review => {
-          const reviewItem = document.createElement('div');
-          reviewItem.className = 'list-group-item flex-column align-items-start';
+      reviews.forEach(review => {
+        const reviewItem = document.createElement('div');
+        reviewItem.className = 'list-group-item flex-column align-items-start';
+        const starsDisplay = getStars(review.rating);
 
-          const starsDisplay = getStars(review.rating);
-
-          reviewItem.innerHTML = `
-            <div class="w-100">
-              <small class="text-muted">${starsDisplay}</small>
-            </div>
-            <p class="mb-1">${review.content}</p>
-            <div class="w-100">
-              <small class="text-muted">${review.reviewerNickname}</small>
-        </div>`;
+        reviewItem.innerHTML = `
+              <div class="w-100">
+                <small class="text-muted">${starsDisplay}</small>
+              </div>
+              <p class="mb-1">${review.content}</p>
+              <div class="w-100">
+                <small class="text-muted">${review.reviewerNickname}</small>
+              </div>`;
         reviewListElement.appendChild(reviewItem);
-        });
+      });
     }
   })
   .catch(error => console.error('Error:', error));
 }
 
 
-function getStars(rating) {
-  // 평점만큼의 별(★)을 생성하고, 5에서 평점을 뺀 나머지는 빈 별(☆)로 채웁니다.
-  const fullStar = '★';
-  const emptyStar = '☆';
-  return fullStar.repeat(rating) + emptyStar.repeat(5 - rating);
-}
+
 

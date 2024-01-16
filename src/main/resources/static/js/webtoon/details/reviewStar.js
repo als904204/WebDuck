@@ -36,7 +36,6 @@ $(document).ready(function(){
     });
     // 클릭된 별의 값을 변수에 저장
     selectedStarValue = onStar;
-    console.log('선택된 별의 값: ' + selectedStarValue); // 콘솔에 출력 예시
   });
 
 
@@ -67,4 +66,12 @@ function displayReviewText(starValue) {
   }
   return reviewText;
 }
+
+// 리뷰 목록 별 채우기
+function getStars(rating) {
+  const fullStar = '★';
+  const emptyStar = '☆';
+  return fullStar.repeat(rating) + emptyStar.repeat(5 - rating);
+}
+
 
