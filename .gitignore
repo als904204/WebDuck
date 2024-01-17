@@ -35,5 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### yml ###
 **/src/main/resources/application-dev.yml
 **/src/main/generated/**
+
+### log files ###
+spy.log
