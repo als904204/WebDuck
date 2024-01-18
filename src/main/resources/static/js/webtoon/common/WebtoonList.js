@@ -12,7 +12,8 @@ function createWebtoonElement(webtoon) {
   return webtoonElement;
 }
 
-function updateWebtoonList(containerId, webtoons) {
+// 장르별,카카오 웹툰
+function updateGenreAndKakao(containerId, webtoons) {
   const container = document.querySelector(containerId);
   container.innerHTML = ''; // 기존 목록을 비웁니다.
 

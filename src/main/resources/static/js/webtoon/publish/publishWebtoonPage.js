@@ -1,11 +1,11 @@
 function loadWebtoonsForDay(englishDay) {
   fetch(`/api/v1/webtoon/publish?publishDay=${englishDay}`)
   .then(response => response.json())
-  .then(webtoonList => updateWebtoonList(webtoonList, englishDay))
+  .then(webtoonList => updatePopularWebtoonList(webtoonList, englishDay))
   .catch(error => console.error('Error:', error));
 }
 
-function updateWebtoonList(webtoonList, englishDay) {
+function updatePopularWebtoonList(webtoonList, englishDay) {
   const container = document.getElementById(englishDay);
 
   const koreanDays = {
