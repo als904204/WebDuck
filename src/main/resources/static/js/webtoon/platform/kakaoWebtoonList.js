@@ -14,5 +14,6 @@ function fetchKakao() {
 
 
 function getKakaoWebtoonList(webtoons) {
-  updateWebtoonList('#kakaoWebtoonListContainer', webtoons);
+  // common/WebtoonList
+  updateGenreAndKakao('#kakaoWebtoonListContainer', webtoons);
 }

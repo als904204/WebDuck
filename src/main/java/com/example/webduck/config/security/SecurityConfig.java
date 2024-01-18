@@ -93,7 +93,6 @@ public class SecurityConfig {
                 .failureHandler(oAuth2LoginFailureHandle)
             )
             .sessionManagement(session -> session
-                .invalidSessionUrl("/auth/login") // 세션이 무효화됐을 때의 리디렉션 URL
                 .maximumSessions(1) // 동시 세션 제한
                 .expiredUrl("/session-expired") // 동시 로그인 시 기존로그인 한 사람 리다이렉트
 

@@ -75,25 +75,8 @@ function translateGenre(genreName) {
   return genreTranslations[genreName] || genreName;
 }
 
-// function getWebtoonList(webtoons) {
-//   const container = document.querySelector('#webtoonList');
-//   container.innerHTML = ''; // 기존 목록을 비웁니다.
-//
-//   webtoons.forEach(webtoon => {
-//     const webtoonElement = document.createElement('div');
-//     webtoonElement.className = 'col-6 col-md-2 mb-4'; // Bootstrap 그리드 클래스 적용
-//
-//     webtoonElement.innerHTML = `
-//       <a href="/webtoon/details/${webtoon.id}">
-//         <img class="img-fluid" src="${webtoon.imagePath}" alt="${webtoon.title}" style="height: 225px; object-fit: cover;">
-//       </a>
-//       <p>${webtoon.title}</p>
-//     `;
-//
-//     container.appendChild(webtoonElement);
-//   });
-// }
 
 function getWebtoonList(webtoons) {
-  updateWebtoonList('#webtoonList', webtoons);
+  // common/WebtoonList
+  updateGenreAndKakao('#webtoonList', webtoons);
 }

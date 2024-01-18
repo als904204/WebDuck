@@ -17,12 +17,12 @@ document.querySelectorAll('[data-publish-day]').forEach(button => {
 function loadPublishWebtoon(publishDay) {
   fetch(`/api/v1/webtoon/publish?publishDay=${publishDay}`)
   .then(response => response.json())
-  .then(publishWebtoons => updateWebtoonList(publishWebtoons))
+  .then(publishWebtoons => updatePublishWebtoonList(publishWebtoons))
   .catch(error => console.error('Error:', error));
 }
 
 // 웹툰 목록을 업데이트하는 함수
-function updateWebtoonList(webtoons) {
+function updatePublishWebtoonList(webtoons) {
   const container = document.getElementById('publishWebtoonList');
   container.innerHTML = ''; // 목록 초기화
 

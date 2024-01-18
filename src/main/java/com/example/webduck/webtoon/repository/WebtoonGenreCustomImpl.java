@@ -61,7 +61,7 @@ public class WebtoonGenreCustomImpl implements WebtoonGenreCustom{
             .innerJoin(review).on(webtoon.id.eq(review.webtoonId))
             .groupBy(webtoon.id)
             .orderBy(sortByRatingOrReviewCount(condition))
-            .limit(10)
+            .limit(12)
             .fetch();
     }
 

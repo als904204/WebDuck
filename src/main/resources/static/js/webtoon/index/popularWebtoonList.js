@@ -26,7 +26,9 @@ function updateWebtoonList(webtoons) {
     const col = document.createElement('div');
     col.className = 'col-6 col-md-2';
     col.innerHTML = `
+     <a href="/webtoon/details/${webtoon.id}">
       <img class="img-fluid equal-height-img" src="${webtoon.imagePath}" alt="${webtoon.title}" />
+    </a>
       <p class="text-center">${webtoon.title}</p>
     `;
     container.appendChild(col);
