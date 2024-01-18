@@ -104,5 +104,11 @@ function getWebtoonList(webtoons) {
 
 function displayNoWebtoonsFoundMessage() {
   const container = document.getElementById('webtoonList');
-  container.innerHTML = '<p class="text-center">찾는 웹툰이 없습니다.</p>';
+  container.innerHTML = `
+    <div class="text-center">
+      <i class="fa-solid fa-xmark fa-3x"></i> 
+      <h1 class="display-6 mt-3">원하시는 결과가 없어요</h1>
+      <p>장르를 다시 선택해주세요</p>
+    </div>
+  `;
 }
