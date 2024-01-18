@@ -47,16 +47,37 @@ function toggleGenreSelection(genreName) {
 
 function fetchWebtoonsBySelectedGenres() {
   const genresArray = Array.from(selectedGenres);
+
+  // 장르가 선택되지 않았으면 함수를 종료합니다.
+  if (genresArray.length === 0) {
+    console.log("장르를 선택해주세요.");
+    return;
+  }
+
   const queryParams = genresArray.map(genre => `names=${genre}`).join('&');
   const url = `/api/v1/webtoon/genres?${queryParams}`;
 
   fetch(url)
-  .then(response => response.json())
+  .then(response => {
+    if (response.status === 404) {
+      // 장르에 해당하는 웹툰 목록이 없을 경우
+      displayNoWebtoonsFoundMessage();
+      return null; // 추가 처리를 중단합니다.
+    }
+    if (!response.ok) {
+      console.error('Unknown error:', response.statusText);
+      return null; // 추가 처리를 중단합니다.
+    }
+    return response.json(); // 응답을 JSON으로 파싱합니다.
+  })
   .then(webtoons => {
-    getWebtoonList(webtoons); // 웹툰 목록 업데이트 함수 호출
+    if (webtoons) {
+      getWebtoonList(webtoons); // 웹툰 목록 업데이트 함수 호출
+    }
   })
   .catch(error => console.error('Error:', error));
 }
+
 
 function translateGenre(genreName) {
   const genreTranslations = {
@@ -79,4 +100,9 @@ function translateGenre(genreName) {
 function getWebtoonList(webtoons) {
   // common/WebtoonList
   updateGenreAndKakao('#webtoonList', webtoons);
+}
+
+function displayNoWebtoonsFoundMessage() {
+  const container = document.getElementById('webtoonList');
+  container.innerHTML = '<p class="text-center">찾는 웹툰이 없습니다.</p>';
 }

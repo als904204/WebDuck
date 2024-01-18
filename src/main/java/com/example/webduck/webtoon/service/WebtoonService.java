@@ -91,7 +91,13 @@ public class WebtoonService {
     // 장르 요청에 따른 웹툰 목록 조회 (무협,개그,판타지 장르를 포함한 웹툰)
     @Transactional(readOnly = true)
     public List<WebtoonGenreResponse> findWebtoonsByGenreNames(List<String> genreNames) {
-        return webtoonRepository.findWebtoonsByGenres(genreNames);
+        List<WebtoonGenreResponse> webtoonsByGenres = webtoonRepository.findWebtoonsByGenres(
+            genreNames);
+        if (webtoonsByGenres.isEmpty()) {
+            log.warn("There are no webtoons in the genre. client genre request ={}", genreNames);
+            throw new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND);
+        }
+        return webtoonsByGenres;
     }
 
     @Transactional(readOnly = true)
