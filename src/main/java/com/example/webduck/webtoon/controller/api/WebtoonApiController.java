@@ -63,7 +63,6 @@ public class WebtoonApiController {
         return ResponseEntity.ok(webtoonsByGenreNames);
     }
 
-    // TODO : 새로고침 빨리하면 11개 나옴가끔
     @GetMapping("/popular")
     public ResponseEntity<List<WebtoonConditionResponse>> getPopularWebtoonListByCondition(
         @RequestParam String sortBy) {
