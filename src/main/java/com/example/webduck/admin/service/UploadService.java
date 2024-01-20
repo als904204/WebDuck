@@ -28,6 +28,7 @@ public class UploadService {
     private final WebtoonGenreRepository webtoonGenreRepository;
 
 
+    // TODO : @Transactional 안에 try catch 안전한가?
     @Transactional
     public void uploadWebtoon(WebtoonUpload webtoonUpload) {
         try {

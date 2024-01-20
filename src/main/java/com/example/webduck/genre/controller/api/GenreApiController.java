@@ -23,6 +23,7 @@ public class GenreApiController {
         return ResponseEntity.ok(genreList);
     }
 
+    @Deprecated
     @PostMapping
     public ResponseEntity<Void> saveGenre(String type) {
         genreService.saveGenreType(type);
