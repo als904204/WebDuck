@@ -104,6 +104,18 @@
     - JPA Converter를 이용해 암호화&복호화 적용
 ---
 
+## 1/15 ~ 1/16 완료
+- [백엔드]
+  - 회원 리뷰
+
+---
+
+## 1/20 ~ 진행중
+- [백엔드]
+  - RestDocs 적용
+  - Webtoon API Document
+  - Genre API Document
+
 
 
 ## - 미완료
