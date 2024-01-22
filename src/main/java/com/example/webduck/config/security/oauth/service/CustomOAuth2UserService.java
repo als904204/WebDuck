@@ -89,7 +89,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private Member createOrUpdateMember(OAuth2UserInfo oAuth2UserInfo) {
         log.debug("attr={}",oAuth2UserInfo.getAttributes());
         return memberRepository.findByEmailAndSocialType(oAuth2UserInfo.getEmail(), oAuth2UserInfo.getSocialType())
-//            .map(entity -> entity.update(oAuth2UserInfo.getName()))
             .orElseGet(() -> createMember(oAuth2UserInfo));
     }
 

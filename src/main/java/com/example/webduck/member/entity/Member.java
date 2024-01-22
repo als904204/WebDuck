@@ -56,11 +56,6 @@ public class Member {
         this.socialType = socialType;
     }
 
-    public Member update(String username) {
-        this.username = username;
-        return this;
-    }
-
     public String getRoleKey() {
         return this.role.getKey();
     }
