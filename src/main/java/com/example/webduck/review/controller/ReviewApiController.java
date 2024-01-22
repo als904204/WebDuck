@@ -4,6 +4,9 @@ import com.example.webduck.config.security.oauth.dto.LoginMember;
 import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.review.dto.ReviewRequest;
 import com.example.webduck.review.dto.ReviewResponse;
+import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
+import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
+import com.example.webduck.review.dto.ReviewResponse.ReviewId;
 import com.example.webduck.review.service.ReviewService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -26,10 +29,10 @@ public class ReviewApiController {
     private final ReviewService reviewService;
 
     @PostMapping
-    public ResponseEntity<Long> createReview(@LoginMember SessionMember member,@Valid @RequestBody
+    public ResponseEntity<ReviewId> createReview(@LoginMember SessionMember member,@Valid @RequestBody
     ReviewRequest reviewRequest) {
-        Long reviewId = reviewService.saveReview(member, reviewRequest);
-        return ResponseEntity.ok(reviewId);
+        ReviewId response = reviewService.saveReview(member, reviewRequest);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{webtoonId}")
@@ -39,15 +42,15 @@ public class ReviewApiController {
     }
 
     @GetMapping("{webtoonId}/avg")
-    public ResponseEntity<Double> getReviewAvgByWebtoonId(@PathVariable Long webtoonId) {
-        Double reviewAvg = reviewService.getReviewAvg(webtoonId);
-        return ResponseEntity.ok(reviewAvg);
+    public ResponseEntity<ReviewAvg> getReviewAvgByWebtoonId(@PathVariable Long webtoonId) {
+        ReviewAvg response = reviewService.getReviewAvg(webtoonId);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("{webtoonId}/count")
-    public ResponseEntity<Integer> getReviewCountByWebtoonId(@PathVariable Long webtoonId) {
-        int reviewCount = reviewService.getReviewCount(webtoonId);
-        return ResponseEntity.ok(reviewCount);
+    public ResponseEntity<ReviewCount> getReviewCountByWebtoonId(@PathVariable Long webtoonId) {
+        ReviewCount response = reviewService.getReviewCount(webtoonId);
+        return ResponseEntity.ok(response);
     }
 
 }

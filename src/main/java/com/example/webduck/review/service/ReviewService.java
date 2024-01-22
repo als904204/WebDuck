@@ -5,6 +5,9 @@ import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.review.dto.ReviewRequest;
 import com.example.webduck.review.dto.ReviewResponse;
+import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
+import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
+import com.example.webduck.review.dto.ReviewResponse.ReviewId;
 import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.repository.ReviewRepository;
 import com.example.webduck.webtoon.entity.Webtoon;
@@ -26,7 +29,7 @@ public class ReviewService {
 
 
     @Transactional
-    public Long saveReview(SessionMember sessionMember, ReviewRequest reviewRequest) {
+    public ReviewId saveReview(SessionMember sessionMember, ReviewRequest reviewRequest) {
         Long webtoonId = reviewRequest.getWebtoonId();
 
         Webtoon webtoon = webtoonRepository.findById(webtoonId)
@@ -50,19 +53,20 @@ public class ReviewService {
         // 리뷰 저장 시, 해당 웹툰 리뷰 개수를 증가한다.
         webtoon.incrementReviewCount();
         review = reviewRepository.save(review);
-        return review.getId();
+        return new ReviewId(review.getId());
     }
 
     // 리뷰 점수평균을 구한다
     @Transactional(readOnly = true)
-    public Double getReviewAvg(Long webtoonId) {
+    public ReviewAvg getReviewAvg(Long webtoonId) {
         List<Review> reviews = reviewRepository.findReviewsByWebtoonId(webtoonId);
-        return Review.calculateRatingAvg(reviews);
+        return new ReviewAvg(Review.calculateRatingAvg(reviews));
     }
 
     @Transactional(readOnly = true)
-    public Integer getReviewCount(Long webtoonId) {
-        return reviewRepository.findReviewsByWebtoonId(webtoonId).size();
+    public ReviewCount getReviewCount(Long webtoonId) {
+        int size = reviewRepository.findReviewsByWebtoonId(webtoonId).size();
+        return new ReviewCount(size);
     }
 
     @Transactional(readOnly = true)

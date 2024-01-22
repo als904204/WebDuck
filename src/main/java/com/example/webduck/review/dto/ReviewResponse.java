@@ -32,6 +32,13 @@ public class ReviewResponse {
     public Integer getRating() {
         return rating;
     }
+
+    public record ReviewId(Long reviewId) {}
+
+    public record ReviewAvg(Double rating) { }
+    public record ReviewCount(int count) { }
+
+
 }
 
 
