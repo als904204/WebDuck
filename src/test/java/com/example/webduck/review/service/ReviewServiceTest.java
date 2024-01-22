@@ -58,7 +58,7 @@ class ReviewServiceTest {
         Long webtoonId = 1L;
         when(reviewRepository.findReviewsByWebtoonId(webtoonId)).thenReturn(reviews);
         ReviewAvg avgRating = reviewService.getReviewAvg(webtoonId);
-        assertThat(avgRating.reviewAvg()).isEqualTo(4.5);
+        assertThat(avgRating.rating()).isEqualTo(4.5);
     }
 
     @DisplayName("리뷰점수 평균 계산 서비스 잘못된 계산 검증")
