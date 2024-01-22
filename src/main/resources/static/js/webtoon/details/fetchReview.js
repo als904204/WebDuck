@@ -6,7 +6,7 @@ function fetchReviewAvg(webtoonId) {
     const ratingAvg = document.getElementById('ratingAvg');
     const ratingStars = document.getElementById('ratingStars');
     if (ratingAvg) {
-      const reviewAvgScore = avg.toFixed(1);
+      const reviewAvgScore = avg.rating.toFixed(1);
       ratingStars.innerHTML = `회원리뷰 ${drawStars(reviewAvgScore)}`;
       ratingAvg.textContent = reviewAvgScore
 
@@ -23,7 +23,7 @@ function fetchReviewCount(webtoonId) {
   .then(count => {
     const reviewCount = document.getElementById('reviewCount');
     if (reviewCount) {
-      reviewCount.textContent = `(${count}건)`; // 리뷰 개수를 표시
+      reviewCount.textContent = `(${count.count}건)`; // 리뷰 개수를 표시
     }
 
 
