@@ -17,12 +17,12 @@ public class CustomMockUserTest {
 
     @DisplayName("커스텀 MockMember 동작 확인")
     @Test
-    @WithMockCustomUser(email="testEmail@test.com")
+    @WithMockCustomUser(username="testUser")
     public void testCreateReview() throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SessionMember sessionMember = (SessionMember) authentication.getPrincipal();
 
-        assertThat(sessionMember.getEmail()).isEqualTo("testEmail@test.com");
+        assertThat(sessionMember.getUsername()).isEqualTo("testUser");
 
     }
 

@@ -38,7 +38,7 @@ public class ReviewService {
 
         // todo : 닉네임으로 변경
         Long memberId = sessionMember.getId();
-        String email = sessionMember.getEmail();
+        String email = sessionMember.getUsername();
         String content = reviewRequest.getContent();
         Integer rating = reviewRequest.getRating();
 

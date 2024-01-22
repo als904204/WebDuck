@@ -17,20 +17,19 @@ public class SessionMember implements Serializable {
     @Serial
     private static final long serialVersionUID = -3094014404731310385L;
     private final Long id;
-    private final String email;
+    private final String username;
 
     public SessionMember(Member member) {
         this.id = member.getId();
-        this.email = member.getEmail();
+        this.username = member.getUsername();
     }
 
     public Long getId() {
         return id;
     }
 
-
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
 }
