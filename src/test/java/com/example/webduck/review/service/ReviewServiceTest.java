@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.example.webduck.global.exception.CustomException;
+import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.repository.ReviewRepository;
 import java.util.Arrays;
@@ -56,8 +57,8 @@ class ReviewServiceTest {
     void calculateReviewAvg_success() {
         Long webtoonId = 1L;
         when(reviewRepository.findReviewsByWebtoonId(webtoonId)).thenReturn(reviews);
-        Double avgRating = reviewService.getReviewAvg(webtoonId);
-        assertThat(avgRating).isEqualTo(4.5);
+        ReviewAvg avgRating = reviewService.getReviewAvg(webtoonId);
+        assertThat(avgRating.reviewAvg()).isEqualTo(4.5);
     }
 
     @DisplayName("리뷰점수 평균 계산 서비스 잘못된 계산 검증")
@@ -65,7 +66,7 @@ class ReviewServiceTest {
     void calculateReviewAvg_fail() {
         Long webtoonId = 1L;
         when(reviewRepository.findReviewsByWebtoonId(webtoonId)).thenReturn(reviews);
-        Double avgRating = reviewService.getReviewAvg(webtoonId);
+        ReviewAvg avgRating = reviewService.getReviewAvg(webtoonId);
         assertThat(avgRating).isNotEqualTo(4);
     }
 
