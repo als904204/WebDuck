@@ -14,8 +14,8 @@ public class NicknameGenerator {
     private final MemberRepository memberRepository;
 
     private static final String[] NAME_LIST = {
-        "글로벌툰",
-        "툰크리에이터",
+        "박독자",
+        "최독자",
         "감상러",
         "웃긴툰",
         "툰파티",
@@ -25,12 +25,10 @@ public class NicknameGenerator {
         "마술사",
         "창의력툰",
         "감동맨",
-        "툰코믹",
-        "툰예술가",
-        "툰덕귀신",
-        "툰마스터",
-        "툰스토리텔러",
-        "툰예언자",
+        "웹툰코믹",
+        "엡툰예술가",
+        "웹덕귀신",
+        "웹툰예언자",
         "캐릭터디자이너",
         "드라마티스트",
         "비주얼매니아",
