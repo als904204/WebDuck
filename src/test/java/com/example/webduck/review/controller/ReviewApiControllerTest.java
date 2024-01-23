@@ -37,7 +37,6 @@ class ReviewApiControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-
     @MockBean
     private ReviewService reviewService;
 
