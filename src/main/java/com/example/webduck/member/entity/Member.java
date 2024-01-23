@@ -1,5 +1,6 @@
 package com.example.webduck.member.entity;
 
+import com.example.webduck.global.common.BaseTime;
 import com.example.webduck.global.converter.EncryptorConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -12,7 +13,7 @@ import jakarta.persistence.Id;
 import lombok.Builder;
 
 @Entity
-public class Member {
+public class Member extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,11 +55,6 @@ public class Member {
         this.socialPk = socialPk;
         this.socialId = socialId;
         this.socialType = socialType;
-    }
-
-    public Member update(String username) {
-        this.username = username;
-        return this;
     }
 
     public String getRoleKey() {

@@ -11,6 +11,7 @@ import com.example.webduck.config.security.oauth.entity.userInfo.GoogleUserInfo;
 import com.example.webduck.config.security.oauth.entity.userInfo.KakaoUserInfo;
 import com.example.webduck.config.security.oauth.entity.userInfo.NaverUserInfo;
 import com.example.webduck.config.security.oauth.entity.userInfo.OAuth2UserInfo;
+import com.example.webduck.member.service.NicknameGenerator;
 import jakarta.servlet.http.HttpSession;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final MemberRepository memberRepository;
     private final HttpSession httpSession;
+    private final NicknameGenerator nicknameGenerator;
 
     private static final String NAVER = "naver";
     private static final String KAKAO = "kakao";
@@ -87,15 +89,17 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private Member createOrUpdateMember(OAuth2UserInfo oAuth2UserInfo) {
         log.debug("attr={}",oAuth2UserInfo.getAttributes());
         return memberRepository.findByEmailAndSocialType(oAuth2UserInfo.getEmail(), oAuth2UserInfo.getSocialType())
-            .map(entity -> entity.update(oAuth2UserInfo.getName()))
-            .orElseGet(() -> toEntity(oAuth2UserInfo));
+            .orElseGet(() -> createMember(oAuth2UserInfo));
     }
 
 
-    private Member toEntity(OAuth2UserInfo oAuth2UserInfo){
+    private Member createMember(OAuth2UserInfo oAuth2UserInfo){
         log.info("new user");
+
+        String randomNickname = nicknameGenerator.getRandomNickname();
+
         Member newMember = Member.builder()
-            .username(oAuth2UserInfo.getName())
+            .username(randomNickname)
             .email(oAuth2UserInfo.getEmail())
             .socialType(oAuth2UserInfo.getSocialType())
             .role(Role.USER)
