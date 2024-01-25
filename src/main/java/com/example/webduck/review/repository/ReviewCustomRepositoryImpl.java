@@ -18,6 +18,12 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
 
     private final JPAQueryFactory queryFactory;
 
+    /**
+     * @param webtoonId 조회할 webtoon
+     * @param nextIdReq 불러올 review
+     * @param pageable  페이징 조건
+     * @return          no offset 페이징 리뷰 목록
+     */
     @Override
     public SliceResponse<SliceReviewResponse> findSliceReviews(Long webtoonId,Long nextIdReq,
         Pageable pageable) {
@@ -39,8 +45,6 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
             .limit(pageSize + 1)
             .orderBy(review.id.desc())
             .fetch();
-
-
         /**
          * True
          *      item 이 15개고 size 요청이 10이면 limit(pageSize + 1) 11개의 item 조회
@@ -52,8 +56,6 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
          *      실제론 5개의 item이 존재함
          *      item.size() = 5 < size(10) 성립이 안되므로 hasNext = false
          */
-
-
         boolean hasNext = false;
         Long nextIdRes = null;
 
@@ -63,9 +65,6 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
             nextIdRes = lastReview.getReviewId();
             hasNext = true;
         }
-
-
-
         return new SliceResponse<>(content, pageable, hasNext,nextIdRes);
     }
 
