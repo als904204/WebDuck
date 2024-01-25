@@ -7,13 +7,12 @@ public class ReviewResponse {
     private final String content;
     private final String reviewerNickname;
     private final Long authorId;
-
     private final Integer rating;
 
     public ReviewResponse(Review review) {
         this.content = review.getContent();
-        this.authorId = review.getMemberId();
         this.reviewerNickname = review.getReviewerNickname();
+        this.authorId = review.getMemberId();
         this.rating = review.getRating();
     }
 
