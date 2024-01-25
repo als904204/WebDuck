@@ -1,7 +1,9 @@
-document.addEventListener('DOMContentLoaded', function () {
-  // 이 부분은 DOM이 로드된 후에 실행됩니다.
+let currentPage = 0;
+let hasNextPage = true;
+let isLoading = false;
+let nextId = null;
 
-  // submitReviewButton에 대한 이벤트 리스너 추가
+document.addEventListener('DOMContentLoaded', function () {
   const submitReviewButton = document.getElementById('submitReviewButton');
   if (submitReviewButton) {
     submitReviewButton.addEventListener('click', function (event) {
@@ -9,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
       submitReview();
     });
   }
-  // 리뷰 목록 불러오기를 위한 코드 수정
+
   const webtoonIdElement = document.getElementById('webtoonIdForList');
   if (webtoonIdElement) {
     const webtoonId = webtoonIdElement.value;
@@ -19,13 +21,64 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+function loadMoreReviews(webtoonId) {
+  if (!hasNextPage || isLoading) return;
+
+  isLoading = true;
+  let url = `/api/v1/review/${webtoonId}?size=5&page=${currentPage}`;
+  if (nextId) url += `&nextId=${nextId}`;
+
+  fetch(url)
+  .then(response => response.json())
+  .then(slice => {
+    if (slice.content && slice.content.length > 0) {
+      slice.content.forEach(review => appendReviewItem(review));
+      currentPage++;
+      nextId = slice.nextId;
+      hasNextPage = slice.hasNext;
+    }
+    isLoading = false;
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    isLoading = false;
+  });
+}
+
+function appendReviewItem(review) {
+  const reviewListElement = document.getElementById('reviewList');
+  const reviewItem = document.createElement('div');
+  reviewItem.className = 'list-group-item flex-column align-items-start';
+  const starsDisplay = getStars(review.rating);
+
+  reviewItem.innerHTML = `
+        <div class="w-100">
+            <small class="text-danger">${starsDisplay}</small>
+        </div>
+        <p class="mb-1">${review.summary}</p>
+        <div class="w-100">
+            <small class="text-muted">${review.reviewerNickname}</small>
+            <small class="text-muted">${review.createdAt}</small>
+        </div>`;
+  reviewListElement.appendChild(reviewItem);
+}
+
+window.addEventListener('scroll', () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    const webtoonIdElement = document.getElementById('webtoonIdForList');
+    const webtoonId = webtoonIdElement ? webtoonIdElement.value : null;
+    if (webtoonId) {
+      loadMoreReviews(webtoonId);
+    }
+  }
+});
+
 function submitReview() {
   const webtoonId = document.getElementById('webtoonId').value;
   const content = document.getElementById('content').value;
   const csrfToken = document.querySelector("input[name='_csrf']").value;
   const rating = selectedStarValue;
 
-  // 입력값 검증
   if (!webtoonId || !content || !rating) {
     let missingFields = [];
 
@@ -33,9 +86,8 @@ function submitReview() {
     if (!content) missingFields.push("리뷰 내용");
     if (!rating) missingFields.push("평점");
 
-    // 누락된 필드가 있을 경우 경고 메시지를 표시
     alert(missingFields.join(", ") + "을 입력해주세요");
-    return; // 검증 실패시 함수 종료
+    return;
   }
 
   fetch('/api/v1/review', {
@@ -52,6 +104,7 @@ function submitReview() {
   })
   .then(response => response.json())
   .then(data => {
+    window.alert("리뷰 등록이 완료되었습니다")
     // 리뷰 (목록,평균,리뷰개수) 새로고침
     refreshReviewList(webtoonId);
     fetchReviewAvg(webtoonId);
@@ -66,29 +119,24 @@ function submitReview() {
 function refreshReviewList(webtoonId) {
   fetch(`/api/v1/review/${webtoonId}`)
   .then(response => response.json())
-  .then(reviews => {
+  .then(slice => {
     const reviewListElement = document.getElementById('reviewList');
-    if (reviewListElement) {
+    if (reviewListElement && slice.content) {
       reviewListElement.innerHTML = ''; // 기존 내용을 비움
-      reviews.forEach(review => {
-        const reviewItem = document.createElement('div');
-        reviewItem.className = 'list-group-item flex-column align-items-start';
-        const starsDisplay = getStars(review.rating);
-
-        reviewItem.innerHTML = `
-              <div class="w-100">
-                <small class="text-muted">${starsDisplay}</small>
-              </div>
-              <p class="mb-1">${review.content}</p>
-              <div class="w-100">
-                <small class="text-muted">${review.reviewerNickname}</small>
-              </div>`;
-        reviewListElement.appendChild(reviewItem);
+      slice.content.forEach(review => {
+        appendReviewItem(review);
       });
+
+      // 현재 페이지 업데이트
+      currentPage = 1;
+      nextId = slice.nextId; // 다음 리뷰 ID 업데이트
+      hasNextPage = slice.hasNext; // 다음 페이지 존재 여부 업데이트
     }
   })
   .catch(error => console.error('Error:', error));
 }
+
+
 
 
 

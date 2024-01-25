@@ -1,4 +1,3 @@
-// TODO : 리뷰 평균,개수 동적으로 뿌려
 function fetchReviewAvg(webtoonId) {
   fetch(`/api/v1/review/${webtoonId}/avg`)
   .then(response => response.json())
