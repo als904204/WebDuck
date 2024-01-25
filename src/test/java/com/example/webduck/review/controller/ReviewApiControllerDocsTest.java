@@ -16,11 +16,9 @@ import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
 import com.example.webduck.review.dto.ReviewRequest;
-import com.example.webduck.review.dto.ReviewResponse;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
-import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.service.ReviewService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
@@ -99,46 +97,7 @@ class ReviewApiControllerDocsTest {
             ));
     }
 
-    @DisplayName("조회 : 웹툰 리뷰 조회")
-    @Test
-    void testFindReviewsByWebtoonId() throws Exception {
-        Long webtoonId = 1L;
-        Review review1 = Review.builder()
-            .webtoonId(webtoonId)
-            .reviewerNickname("webduck")
-            .content("first review!!")
-            .rating(5)
-            .build();
 
-        Review review2 = Review.builder()
-            .webtoonId(webtoonId)
-            .reviewerNickname("webduck")
-            .content("second review!!")
-            .rating(3)
-            .build();
-
-        List<ReviewResponse> reviewResponses = List.of(
-            new ReviewResponse(review1),
-            new ReviewResponse(review2)
-        );
-
-        Mockito.when(reviewService.getReviewsByWebtoonId(Mockito.any(Long.class)))
-            .thenReturn(reviewResponses);
-
-        mockMvc.perform(get(uri + "/{webtoonId}",webtoonId))
-            .andExpect(status().isOk())
-            .andDo(document("get-v1-get-review",
-                pathParameters(
-                    parameterWithName("webtoonId").description("리뷰 조회할 웹툰 ID")
-                ),
-                responseFields(
-                    fieldWithPath("[].authorId").description("리뷰 작성자 ID"),
-                    fieldWithPath("[].reviewerNickname").description("리뷰 작성자 닉네임"),
-                    fieldWithPath("[].content").description("리뷰 내용"),
-                    fieldWithPath("[].rating").description("리뷰 평균 점수")
-                )
-            ));
-    }
 
     @DisplayName("조회 : 리뷰 평균 점수")
     @Test

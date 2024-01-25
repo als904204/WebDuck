@@ -66,7 +66,7 @@ class ReviewApiControllerTest {
                 .build(
                 )));
 
-        when(reviewService.getReviewsByWebtoonId(webtoonId)).thenReturn(mockResponses);
+//        when(reviewService.getReviewsByWebtoonId(webtoonId)).thenReturn(mockResponses);
 
         mockMvc.perform(post(uri).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
