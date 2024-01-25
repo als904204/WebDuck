@@ -72,18 +72,27 @@ public class ReviewService {
         return new ReviewCount(size);
     }
 
-    public SliceResponse<SliceReviewResponse> findReviewsByWebtoonId(Long webtoonId,Long nextId,int page,int size) {
+    @Transactional(readOnly = true)
+    public SliceResponse<SliceReviewResponse> findReviewsByWebtoonId(Long webtoonId,
+        Long nextReviewId, int page, int size) {
+
         Pageable pageable = PageRequest.of(page, size);
 
-        webtoonIsExists(webtoonId);
+        if (nextReviewId != null) {
+            if (!reviewRepository.existsById(nextReviewId)) {
+                log.warn("not exists nextReviewId={}",nextReviewId);
+                throw new CustomException(LogicExceptionCode.REVIEW_NOT_FOUND);
+            }
+        }
 
-        return reviewRepository.findSliceReviews(webtoonId, nextId, pageable);
+        webtoonIsExists(webtoonId);
+        return reviewRepository.findSliceReviews(webtoonId, nextReviewId, pageable);
     }
 
     private void webtoonIsExists(Long id) {
         boolean webtoonIsExists = webtoonRepository.existsById(id);
         if (!webtoonIsExists) {
-            log.error("not exists webtoon={}",id);
+            log.warn("not exists webtoon={}",id);
             throw new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND);
         }
     }
