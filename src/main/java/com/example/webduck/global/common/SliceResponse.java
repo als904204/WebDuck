@@ -7,18 +7,18 @@ import org.springframework.data.domain.Pageable;
 @Getter
 public class SliceResponse<T> {
 
-    private List<T> content;
+    private List<T> item;
     private int pageNumber;
     private int pageSize;
     private boolean hasNext;
     private int count;
     private Long nextId;
-    public SliceResponse(List<T> content, Pageable pageable, boolean hasNext,Long nextId) {
-        this.content = content;
+    public SliceResponse(List<T> item, Pageable pageable, boolean hasNext,Long nextId) {
+        this.item = item;
         this.pageNumber = pageable.getPageNumber();
         this.pageSize = pageable.getPageSize();
         this.hasNext = hasNext;
-        this.count = content.size();
+        this.count = item.size();
         this.nextId = nextId;
     }
 }

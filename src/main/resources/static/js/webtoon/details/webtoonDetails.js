@@ -31,8 +31,8 @@ function loadMoreReviews(webtoonId) {
   fetch(url)
   .then(response => response.json())
   .then(slice => {
-    if (slice.content && slice.content.length > 0) {
-      slice.content.forEach(review => appendReviewItem(review));
+    if (slice.item && slice.item.length > 0) {
+      slice.item.forEach(review => appendReviewItem(review));
       currentPage++;
       nextId = slice.nextId;
       hasNextPage = slice.hasNext;
@@ -55,7 +55,7 @@ function appendReviewItem(review) {
         <div class="w-100">
             <small class="text-danger">${starsDisplay}</small>
         </div>
-        <p class="mb-1">${review.summary}</p>
+        <p class="mb-1">${review.content}</p>
         <div class="w-100">
             <small class="text-muted">${review.reviewerNickname}</small>
             <small class="text-muted">${review.createdAt}</small>
@@ -121,9 +121,9 @@ function refreshReviewList(webtoonId) {
   .then(response => response.json())
   .then(slice => {
     const reviewListElement = document.getElementById('reviewList');
-    if (reviewListElement && slice.content) {
+    if (reviewListElement && slice.item) {
       reviewListElement.innerHTML = ''; // 기존 내용을 비움
-      slice.content.forEach(review => {
+      slice.item.forEach(review => {
         appendReviewItem(review);
       });
 

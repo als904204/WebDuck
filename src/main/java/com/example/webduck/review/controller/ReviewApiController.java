@@ -41,7 +41,10 @@ public class ReviewApiController {
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(value = "size", defaultValue = "5") int size,
         @RequestParam(value = "nextId", required = false) Long nextId) {
-        SliceResponse<SliceReviewResponse> reviews = reviewService.findReviewsByWebtoonId(webtoonId,nextId, page,size);
+
+        SliceResponse<SliceReviewResponse> reviews = reviewService.findReviewsByWebtoonId(webtoonId,
+            nextId, page, size);
+
         return ResponseEntity.ok(reviews);
     }
 
