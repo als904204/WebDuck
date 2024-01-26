@@ -1,13 +1,14 @@
 package com.example.webduck.review.service;
 
 import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.common.SliceResponse;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.review.dto.ReviewRequest;
-import com.example.webduck.review.dto.ReviewResponse;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
+import com.example.webduck.review.dto.SliceReviewResponse;
 import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.repository.ReviewRepository;
 import com.example.webduck.webtoon.entity.Webtoon;
@@ -15,6 +16,8 @@ import com.example.webduck.webtoon.repository.WebtoonRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,17 +73,26 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReviewResponse> getReviewsByWebtoonId(Long id) {
-        webtoonIsExists(id);
-        List<Review> reviews = reviewRepository.findReviewsByWebtoonIdOrderByCreatedAtDesc(id);
-        return reviews.stream()
-            .map(ReviewResponse::new)
-            .toList();
+    public SliceResponse<SliceReviewResponse> findReviewsByWebtoonId(Long webtoonId,
+        Long nextReviewId, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        if (nextReviewId != null) {
+            if (!reviewRepository.existsById(nextReviewId)) {
+                log.warn("not exists nextReviewId={}",nextReviewId);
+                throw new CustomException(LogicExceptionCode.REVIEW_NOT_FOUND);
+            }
+        }
+
+        webtoonIsExists(webtoonId);
+        return reviewRepository.findSliceReviews(webtoonId, nextReviewId, pageable);
     }
 
     private void webtoonIsExists(Long id) {
         boolean webtoonIsExists = webtoonRepository.existsById(id);
         if (!webtoonIsExists) {
+            log.warn("not exists webtoon={}",id);
             throw new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND);
         }
     }

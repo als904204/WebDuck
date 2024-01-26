@@ -2,7 +2,6 @@
 웹툰 리뷰 사이트 
 ---
 
-![img_2.png](img/img_2.png)
 
 ##  ~ 12/29 완료 
   - [백엔드]
@@ -110,22 +109,21 @@
 
 ---
 
-## 1/20 ~ 진행중
+## 1/20 ~ 1/26
 - [백엔드]
   - RestDocs 적용
   - Webtoon API Document
   - Genre API Document
+  - Review API Document
+  - 리팩토링 & Review 목록 전체조회 무한 페이징 적용
 
 
 
 ## - 미완료
   - [백엔드]
     - DB 설계 확장
-    - 메모리 세션 기반 -> JWT OR Redis OR 서버DB
-    - 인기 웹툰 API
-    - 웹툰 리뷰 API 
     - 회원 커뮤니티 [미정]
-    - 자주 접근하는 API 캐싱(아마 레디스)
+    - 자주 접근하는 API 캐싱(레디스X,스프링 내부 캐시 OR 외부 라이브러리)
   - [프론트]
     - 인기 웹툰 동적 출력
     - 웹툰 리뷰 화면
