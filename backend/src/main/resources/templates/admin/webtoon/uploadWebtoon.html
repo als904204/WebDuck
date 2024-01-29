@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="content">
+  <section class="text-white container mb-4 ">
+      <h1>웹툰 업로드</h1>
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+      <div class="row g-3">
+        <div class="col-12">
+          <label for="title" class="form-label">웹툰 제목
+            <input type="text" name="title" id="title" class="form-control" placeholder="제목을 입력해 주세요">
+          </label>
+
+          <label for="author" class="form-label">웹툰 작가
+            <input type="text" name="author" id="author" class="form-control" placeholder="작가를 입력해 주세요">
+          </label>
+        </div>
+
+        <div>
+          <label for="publishDay" class="form-label">웹툰 요일
+          <select name="publishDay" id="publishDay" class="form-control">
+            <option value="MONDAY">월요일</option>
+            <option value="TUESDAY">화요일</option>
+            <option value="WEDNESDAY">수요일</option>
+            <option value="THURSDAY">목요일</option>
+            <option value="FRIDAY">금요일</option>
+            <option value="SATURDAY">토요일</option>
+            <option value="SUNDAY">일요일</option>
+          </select>
+          </label>
+
+          <label for="platform" class="form-label">웹툰 플랫폼
+            <select name="platform" id="platform" class="form-control">
+              <option value="KAKAO">카카오</option>
+              <option value="NAVER">네이버</option>
+              <option value="TOPTOON">탑툰</option>
+              <option value="ELSE">그 외</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="genreContainer">
+        </div>
+
+
+
+
+
+        <div class="col-md-6">
+          <label for="imageFile" class="form-label">웹툰 이미지
+            <input type="file" name="imageFile" id="imageFile" class="form-control">
+          </label>
+        </div>
+        <div class="col-12">
+          <img id="imagePreview" src="#" alt="이미지 미리보기" style="max-width: 100%; height: auto; display: none;">
+        </div>
+        <div class="col-12">
+          <label for="summary" class="form-label">웹툰 줄거리</label>
+            <textarea name="summary" id="summary" class="form-control" placeholder="줄거리를 입력해 주세요" rows="4"></textarea>
+        </div>
+        <div>
+          <button type="button" class="btn btn-primary" onclick="uploadWebtoon()">업로드</button>
+        </div>
+      </div>
+    </form>
+
+  </section>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="uploadSuccessModal" tabindex="-1" role="dialog" aria-labelledby="uploadSuccessModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadSuccessModalLabel">업로드 성공</h5>
+        </div>
+        <div class="modal-body">
+          웹툰이 성공적으로 업로드 되었습니다.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          <button type="button" class="btn btn-primary" id="viewWebtoon">웹툰 보기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script th:src="@{/js/admin/uploadWebtoon.js}"></script>
+  <script th:src="@{/js/admin/getGenre.js}"></script>
+</th:block>
+</html>
