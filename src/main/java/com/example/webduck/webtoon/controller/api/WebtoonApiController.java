@@ -1,6 +1,8 @@
 package com.example.webduck.webtoon.controller.api;
 
-import com.example.webduck.webtoon.dto.WebtoonRequest;
+import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
+import com.example.webduck.webtoon.dto.WebtoonResponse;
+import com.example.webduck.webtoon.dto.WebtoonSortCondition.WebtoonConditionResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.service.WebtoonService;
@@ -20,28 +22,53 @@ public class WebtoonApiController {
 
     private final WebtoonService webtoonService;
 
+
+    @Deprecated
     @GetMapping("/{id}")
-    public ResponseEntity<WebtoonRequest> getWebtoon(@PathVariable Long id) {
-        WebtoonRequest request = webtoonService.findWebtoonById(id);
+    public ResponseEntity<WebtoonResponse> getWebtoon(@PathVariable Long id) {
+        WebtoonResponse request = webtoonService.findWebtoonById(id);
         return ResponseEntity.ok(request);
     }
 
+
     @GetMapping
-    public ResponseEntity<List<WebtoonRequest>> getWebtoonList() {
-        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonList();
+    public ResponseEntity<List<WebtoonResponse>> getWebtoonList() {
+        List<WebtoonResponse> webtoonList = webtoonService.findWebtoonList();
         return ResponseEntity.ok(webtoonList);
     }
 
     @GetMapping("/publish")
-    public ResponseEntity<List<WebtoonRequest>> getWebtoonListByPublish(@RequestParam("publishDay") PublishDay publishDay) {
-        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonByPublishDay(publishDay);
+    public ResponseEntity<List<WebtoonResponse>> getWebtoonListByPublish(@RequestParam("publishDay") PublishDay publishDay) {
+        List<WebtoonResponse> webtoonList = webtoonService.findWebtoonsByPublishDay(publishDay);
         return ResponseEntity.ok(webtoonList);
     }
 
     @GetMapping("/platform")
-    public ResponseEntity<List<WebtoonRequest>> getWebtoonListByPlatform(@RequestParam("platform") Platform platform) {
-        List<WebtoonRequest> webtoonList = webtoonService.findWebtoonByPlatform(platform);
+    public ResponseEntity<List<WebtoonResponse>> getWebtoonListByPlatform(@RequestParam("platform") Platform platform) {
+        List<WebtoonResponse> webtoonList = webtoonService.findWebtoonsByPlatform(platform);
         return ResponseEntity.ok(webtoonList);
+    }
+
+    @GetMapping("/genre")
+    public ResponseEntity<List<WebtoonResponse>> getWebtoonListByGenreName(@RequestParam("name") String name) {
+        List<WebtoonResponse> webtoonList = webtoonService.findWebtoonsByGenreName(name);
+        return ResponseEntity.ok(webtoonList);
+    }
+
+    // TODO : 아무런 값 없을경우 모든 웹툰목록 return
+    @GetMapping("/genres")
+    public ResponseEntity<List<WebtoonGenreResponse>> getWebtoonListByGenreNames(@RequestParam("names") List<String> names) {
+        List<WebtoonGenreResponse> webtoonsByGenreNames = webtoonService.findWebtoonsByGenreNames(
+            names);
+        return ResponseEntity.ok(webtoonsByGenreNames);
+    }
+
+    @GetMapping("/popular")
+    public ResponseEntity<List<WebtoonConditionResponse>> getPopularWebtoonListByCondition(
+        @RequestParam String sortBy) {
+        List<WebtoonConditionResponse> webtoonsByWebtoonCondition = webtoonService.findWebtoonsByWebtoonCondition(
+            sortBy);
+        return ResponseEntity.ok(webtoonsByWebtoonCondition);
     }
 
 }

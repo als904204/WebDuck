@@ -1,0 +1,29 @@
+웹툰 정보 추출
+제목
+작가
+장르
+연재주기
+썸네일 이미지 주소
+를 알려줘 썸네일 이미지 주소는 Db 에 저장해야 하므로 이미지 미리보기나 하이퍼링크가아닌 주소문자 자체를 보여줘
+
+---
+
+DB 쿼리 추출
+난 너의 db 쿼리문 생성 도움이 필요해 내가 웹툰 정보를 보내면 내가 보낸 예시 쿼리문을 기준으로 쿼리문을 생성해줘
+웹툰을 넣으면 해당 웹툰에 대해 웹툰_장르 테이블에다가 해당 웹툰의 장르를 설정해야돼
+
+제목: 철혈검가 사냥개의 회귀
+작가: 이산책(REDICE STUDIO), 설아랑, 레고밟았어
+장르: 웹툰 (판타지)
+이미지 주소: https://dn-img-page.kakao.com/download/resource?kid=cWu2nJ/hzVqKMVQuF/hSeVf9wqXVZsal7kjHn9tk&filename=th3
+연재 주기: 월 연재
+
+이렇게 정보가 있고 예시쿼리문은
+-- 왕과의 야행
+INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title)
+VALUES ('보리', 'https://image-comic.pstatic.net/webtoon/817859/thumbnail/thumbnail_IMAG21_4fadf2ae-3467-4a9d-a6be-4b0313b963e0.jpg', '왕과의 야행.jpg', 'NAVER', 'MONDAY', '왕과의 야행 웹툰의 요약 내용', '왕과의 야행');
+
+-- 웹툰과 장르 연결 (로맨스)
+INSERT INTO webtoon_genre (genre_id, webtoon_id)
+VALUES ((SELECT id FROM genre WHERE name = 'ROMANCE'), LAST_INSERT_ID());
+

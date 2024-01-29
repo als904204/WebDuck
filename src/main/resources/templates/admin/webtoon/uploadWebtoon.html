@@ -11,6 +11,10 @@
           <label for="title" class="form-label">웹툰 제목
             <input type="text" name="title" id="title" class="form-control" placeholder="제목을 입력해 주세요">
           </label>
+
+          <label for="author" class="form-label">웹툰 작가
+            <input type="text" name="author" id="author" class="form-control" placeholder="작가를 입력해 주세요">
+          </label>
         </div>
 
         <div>
@@ -35,6 +39,13 @@
             </select>
           </label>
         </div>
+
+        <div id="genreContainer">
+        </div>
+
+
+
+
 
         <div class="col-md-6">
           <label for="imageFile" class="form-label">웹툰 이미지
@@ -77,5 +88,6 @@
 
 
   <script th:src="@{/js/admin/uploadWebtoon.js}"></script>
+  <script th:src="@{/js/admin/getGenre.js}"></script>
 </th:block>
 </html>

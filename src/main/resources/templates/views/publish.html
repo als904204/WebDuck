@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="content">
+
+  <section class="text-white container notice mt-4 mb-4">
+    <hr style="border-color: white;">
+    <div style="background-color: rgb(25,26,42); padding: 0.5rem;" class="d-flex align-items-center">
+      <i class="fa-regular fa-bell fa-2x"></i>
+      <span style="font-size: 1.5rem; margin-left: 0.5rem;">공지사항</span>
+    </div>
+  </section>
+
+  <section class="container mt-3 text-white">
+    <div class="container mt-3 text-white">
+      <div class="row">
+        <div id="MONDAY" class="col"></div> <!-- 월요일 컨테이너 -->
+        <div id="TUESDAY" class="col"></div> <!-- 화요일 컨테이너 -->
+        <div id="WEDNESDAY" class="col"></div> <!-- 수요일 컨테이너 -->
+        <div id="THURSDAY" class="col"></div> <!-- 목요일 컨테이너 -->
+        <div id="FRIDAY" class="col"></div> <!-- 금요일 컨테이너 -->
+        <div id="SATURDAY" class="col"></div> <!-- 토요일 컨테이너 -->
+        <div id="SUNDAY" class="col"></div> <!-- 일요일 컨테이너 -->
+      </div>
+    </div>
+
+
+  </section>
+
+
+<script th:src="@{/js/webtoon/publish/publishWebtoonPage.js}"></script>
+
+</th:block>
+</html>
