@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:block th:fragment="nav">
+  <!-- Navigation-->
+  <nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light" id="mainNav">
+    <div class="container px-4 px-lg-5">
+      <a class="navbar-brand logo-font" th:href="@{/}">WebDuck</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ms-auto py-4 py-lg-0">
+          <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+            <a class="nav-link px-lg-3 py-2 py-lg-1 nav-manager" th:href="@{/admin}">관리자</a>
+          </li>
+          <li class="nav-item"><a class="nav-link px-lg-3 py-2 py-lg-1" th:href="@{/genre}">장르별웹툰</a></li>
+          <li class="nav-item"><a class="nav-link px-lg-3 py-2 py-lg-1" th:href="@{/publish}">요일별웹툰</a></li>
+          <li class="nav-item"><a class="nav-link px-lg-3 py-2 py-lg-1" th:href="@{/kakao}">카카오웹툰</a></li>
+          <li class="nav-item"><a class="nav-link px-lg-3 py-2 py-lg-1" th:href="@{/naver}">네이버웹툰</a></li>
+          <li class="nav-item"><a class="nav-link px-lg-3 py-2 py-lg-1" sec:authorize="isAnonymous()"  th:href="@{/auth/login}">로그인/가입</a></li>
+          <li class="nav-item">
+            <form action="/auth/logout" sec:authorize="isAuthenticated()"  method="post">
+              <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+              <input type="submit" class="nav-link px-lg-3 py-2 py-lg-1" value="로그아웃"/>
+            </form>
+          </li>
+
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+</th:block>
+</html>
+

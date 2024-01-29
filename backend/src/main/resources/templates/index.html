@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="content">
+
+    <section>
+        <header>
+            <div id="carouselExample" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/img/webtoon/toon1.png" class="d-block w-100" alt="toon1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/webtoon/toon2.png" class="d-block w-100" alt="toon2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/img/webtoon/toon3.png" class="d-block w-100" alt="toon3">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </header>
+    </section>
+
+    <section class="text-white">
+        <div class="container">
+            <main class="text-white">
+                <div class="mb-3">
+                    <div class="mt-4 mb-1">
+                        <h3>인기 웹툰</h3>
+                    </div>
+                    <div>
+                        <button id="btnReviewCount" class="btn btn-secondary btn-circle btn-xl"><span>리뷰순</span></button>
+                        <button id="btnRatingAvg" class="btn btn-secondary btn-circle btn-xl"><span>평점순</span></button>
+                    </div>
+                </div>
+                <div>
+                    <div class="row" id="popularWebtoonList">
+                        <!-- 동적으로 웹툰 목록이 들어갈 부분 -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+
+
+    <section class="text-white publishDay">
+        <div class="container">
+            <main>
+                <div class="mb-3">
+                    <div class="mt-4 mb-1">
+                        <h3>요일별 웹툰</h3>
+                    </div>
+                    <div>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="MONDAY"><span>월</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="TUESDAY"><span>화</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="WEDNESDAY"><span>수</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="THURSDAY"><span>목</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="FRIDAY"><span>금</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="SATURDAY"><span>토</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-publish-day="SUNDAY"><span>일</span></button>
+                    </div>
+                </div>
+                <!-- 웹툰 목록을 표시할 컨테이너 -->
+                <div id="publishWebtoonList" class="row">
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <section class="text-white platform">
+        <div class="container">
+            <main>
+                <div class="mb-3">
+                    <div class="mt-4 mb-1">
+                        <h3>플랫폼별 웹툰</h3>
+                    </div>
+                    <div>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-platform="KAKAO"><span>카카오</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-platform="NAVER"><span>네이버</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-platform="TOPTOON"><span>탑툰</span></button>
+                        <button class="btn btn-secondary btn-circle btn-xl" data-platform="ELSE"><span>그외</span></button>
+                    </div>
+                </div>
+                <!-- 웹툰 목록을 표시할 컨테이너 -->
+                <div id="platformWebtoonList" class="row">
+                </div>
+            </main>
+        </div>
+    </section>
+
+
+
+
+<script th:src="@{/js/webtoon/index/publishWebtoonList.js}"></script>
+<script th:src="@{/js/webtoon/index/platformWebtoonList.js}"></script>
+<script th:src="@{/js/webtoon/index/popularWebtoonList.js}"></script>
+</th:block>
+</html>
+

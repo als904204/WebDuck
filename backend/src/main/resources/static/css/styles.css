@@ -1,0 +1,98 @@
+/* Carousel의 이미지 크기 조절 */
+#carouselExample .carousel-item img {
+  max-height: 600px; /* 이미지의 최대 높이를 600px로 설정 */
+  width: auto; /* 이미지의 너비를 자동으로 조정 */
+  max-width: 100%; /* 이미지의 최대 너비를 화면 너비에 맞게 설정 */
+  object-fit: contain; /* 이미지를 컨테이너에 맞추되, 비율을 유지하고 잘리지 않음 */
+}
+
+.btn-circle.btn-xl {
+  border-radius: 60px;
+  font-size: 15px;
+  outline: none; /* 클릭 시 나타나는 외곽선 제거 */
+  text-align: center;
+}
+
+.btn-circle.btn-xl:focus, .btn-circle.btn-xl:active {
+  background-color: rebeccapurple; /* 버튼 클릭 시 배경색 */
+  color: #fff; /* 클릭 시 글자색 */
+  box-shadow: none; /* 클릭 시 외곽선 제거 */
+}
+
+.equal-height-img {
+  width: 100%;       /* 부모 요소의 전체 너비를 차지하도록 설정 */
+  height: 150px;     /* 원하는 이미지 높이로 설정 */
+  object-fit: cover; /* 이미지 비율을 유지하면서 높이에 맞게 크기 조정 */
+}
+
+.logo-font{
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px; /* 폰트 크기를 조절할 수 있습니다. */
+  font-weight: bold; /* 폰트 굵기를 조절할 수 있습니다. */
+}
+
+.btn-login {
+  background: transparent; /* 배경을 투명하게 설정합니다. */
+  border: none; /* 테두리 제거 */
+  padding: 0; /* 패딩 제거 */
+  width: 100%; /* 버튼 너비를 이미지 크기에 맞게 설정 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+/* 공통 스타일 */
+.social-login-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 2px;
+  text-decoration: none;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 5px; /* 버튼 간격 조정 */
+  width: 150px; /* 공통 너비 설정 */
+}
+
+.social-login-button svg {
+  margin-right: 10px;
+  width: 20px; /* SVG 아이콘 크기 통일 */
+  height: 20px; /* SVG 아이콘 크기 통일 */
+}
+
+/* 구글 로그인 버튼 스타일 */
+.google-login-button {
+  background-color: #fff;
+  color: #757575;
+  border: 1px solid #ddd;
+}
+
+/* 카카오 로그인 버튼 스타일 */
+.kakao-login-button {
+  background-color: #FEE500;
+  color: #391B1B;
+  border: none;
+}
+
+/* 네이버 로그인 버튼 스타일 */
+.naver-login-button {
+  background-color: #1EC800;
+  color: white;
+  border: none;
+}
+/* 애플 로그인 버튼 스타일 */
+.apple-login-button {
+  background-color: black;
+  color: white;
+  border: none;
+}
+.apple-logo {
+  filter: invert(100%);
+}
+
+.no-hover{
+  cursor: default;
+}
+
+.nav-manager{
+  background-color: white; /* 배경색을 흰색으로 설정 */
+  color: black; /* 글자색을 검정색으로 설정 */
+}
