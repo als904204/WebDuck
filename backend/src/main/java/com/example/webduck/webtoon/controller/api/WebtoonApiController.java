@@ -44,7 +44,7 @@ public class WebtoonApiController {
     }
 
     @GetMapping("/platform")
-    public ResponseEntity<List<WebtoonResponse>> getWebtoonListByPlatform(@RequestParam("platform") Platform platform) {
+    public ResponseEntity<List<WebtoonResponse>> getWebtoonListByPlatform(@RequestParam("type") Platform platform) {
         List<WebtoonResponse> webtoonList = webtoonService.findWebtoonsByPlatform(platform);
         return ResponseEntity.ok(webtoonList);
     }
