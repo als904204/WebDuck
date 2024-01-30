@@ -31,7 +31,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     // TODO : 현재는 모두 허용, 나중에 제한적 허용으로 변경
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
+        registry.addMapping("/api/v1/**")
             .allowedOrigins("http://localhost:5173")
             .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
             .allowedHeaders("*")
