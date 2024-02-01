@@ -10,23 +10,59 @@
 </template>
 
 <script setup>
-import {ref, watch} from 'vue';
-import {getWebtoonsByPlatform} from "../../../service/PlatformService.js";
+import { ref, watchEffect } from 'vue';
+import {
+  getWebtoonsByPlatform,
+  getWebtoonsByPopular,
+  getWebtoonsByPublish
+} from "../../../service/PlatformService.js";
 
 const props = defineProps({
-  platform: String
-})
+  param: String,
+  serviceType: String
+});
 
 const webtoons = ref([]);
 
-watch(() => props.platform,async (requestPlatform) => {
-  try {
-    webtoons.value = await getWebtoonsByPlatform(requestPlatform);
-  } catch (error){
-    console.error('Failed to fetch webtoons:', error);
-  }
-},{immediate: true})
 
+// props의 변화를 감지하여 데이터를 가져오는 로직
+watchEffect(async () => {
+  if (!props.param || !props.serviceType) return; // 초기 상태 확인
+
+  try {
+    let data;
+    if (props.serviceType === 'PLATFORM') {
+      data = await getWebtoonsByPlatform(props.param);
+    } else if (props.serviceType === 'POPULAR') {
+      data = await getWebtoonsByPopular(props.param);
+    } else if (props.serviceType === 'PUBLISH') {
+      data = await getWebtoonsByPublish(props.param);
+    } else {
+      webtoons.value = []; // 서비스 타입이 지정되지 않은 경우
+      return;
+    }
+    webtoons.value = data;
+  } catch (error) {
+    console.error(`Error fetching webtoons for ${props.serviceType}`, props.param, error);
+  }
+});
+
+
+
+
+
+// const props = defineProps({
+//   platform: String
+// })
+// const webtoons = ref([]);
+//
+// watch(() => props.platform,async (requestPlatform) => {
+//   try {
+//     webtoons.value = await getWebtoonsByPlatform(requestPlatform);
+//   } catch (error){
+//     console.error('Failed to fetch webtoons:', error);
+//   }
+// },{immediate: true})
 
 </script>
 
