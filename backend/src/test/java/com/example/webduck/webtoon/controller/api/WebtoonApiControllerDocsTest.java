@@ -135,7 +135,7 @@ class WebtoonApiControllerDocsTest {
             .thenReturn(mockWebtoonResponses);
 
         mockMvc.perform(get(uri +endpoint)
-                .param("publishDay", PublishDay.THURSDAY.name()))
+                .param("day", PublishDay.THURSDAY.name()))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByPublish",
                 queryParameters(
@@ -168,11 +168,11 @@ class WebtoonApiControllerDocsTest {
             .thenReturn(mockWebtoonResponses);
 
         mockMvc.perform(get(uri + endpoint)
-                .param("platform", Platform.NAVER.name()))
+                .param("type", Platform.NAVER.name()))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByPlatform",
                 queryParameters(
-                    parameterWithName("platform").description("플랫폼별 웹툰을 조회하기 위한 파라미터. 가능한 값: " +
+                    parameterWithName("type").description("플랫폼별 웹툰을 조회하기 위한 파라미터. 가능한 값: " +
                         Arrays.stream(Platform.values())
                             .map(Enum::name)
                             .collect(Collectors.joining(", ")))
