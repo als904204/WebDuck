@@ -22,7 +22,7 @@
         <Button label="평점순" @click="setPopularCriteria('RATING');" severity="Primary" size="large" rounded />
       </div>
     </div>
-    <PlatformWebtoonList :param="popularCriteria.param" :serviceType="popularCriteria.serviceType" />
+    <FetchWebtoonList :param="popularCriteria.param" :serviceType="popularCriteria.serviceType" />
   </section>
 
 
@@ -39,7 +39,7 @@
         <Button label="토"  @click="setPublishCriteria('SATURDAY');" severity="Primary" size="large"  rounded />
         <Button label="일"  @click="setPublishCriteria('SUNDAY', 'PUBLISH');" severity="Primary" size="large"  rounded />
       </div>
-      <PlatformWebtoonList :param="publishCriteria.param" :serviceType="publishCriteria.serviceType" />
+      <FetchWebtoonList :param="publishCriteria.param" :serviceType="publishCriteria.serviceType" />
     </div>
   </section>
 
@@ -53,14 +53,14 @@
         <Button label="그외" severity="Primary" size="large" rounded />
       </div>
     </div>
-    <PlatformWebtoonList :param="platformCriteria.param" :serviceType="platformCriteria.serviceType" />
+    <FetchWebtoonList :param="platformCriteria.param" :serviceType="platformCriteria.serviceType" />
   </section>
 
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue';
-import PlatformWebtoonList from "../webtoon/list/WebtoonList.vue";
+import FetchWebtoonList from "../webtoon/list/WebtoonList.vue";
 import { Carousel, Slide, Pagination } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import notice1 from '../../assets/notice1.png';

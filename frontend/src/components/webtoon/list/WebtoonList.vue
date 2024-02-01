@@ -46,24 +46,6 @@ watchEffect(async () => {
     console.error(`Error fetching webtoons for ${props.serviceType}`, props.param, error);
   }
 });
-
-
-
-
-
-// const props = defineProps({
-//   platform: String
-// })
-// const webtoons = ref([]);
-//
-// watch(() => props.platform,async (requestPlatform) => {
-//   try {
-//     webtoons.value = await getWebtoonsByPlatform(requestPlatform);
-//   } catch (error){
-//     console.error('Failed to fetch webtoons:', error);
-//   }
-// },{immediate: true})
-
 </script>
 
 <style scoped>
