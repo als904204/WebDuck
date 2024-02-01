@@ -38,7 +38,7 @@ public class WebtoonApiController {
     }
 
     @GetMapping("/publish")
-    public ResponseEntity<List<WebtoonResponse>> getWebtoonListByPublish(@RequestParam("publishDay") PublishDay publishDay) {
+    public ResponseEntity<List<WebtoonResponse>> getWebtoonListByPublish(@RequestParam("day") PublishDay publishDay) {
         List<WebtoonResponse> webtoonList = webtoonService.findWebtoonsByPublishDay(publishDay);
         return ResponseEntity.ok(webtoonList);
     }

@@ -135,7 +135,7 @@ class WebtoonApiControllerDocsTest {
             .thenReturn(mockWebtoonResponses);
 
         mockMvc.perform(get(uri +endpoint)
-                .param("publishDay", PublishDay.THURSDAY.name()))
+                .param("day", PublishDay.THURSDAY.name()))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByPublish",
                 queryParameters(
