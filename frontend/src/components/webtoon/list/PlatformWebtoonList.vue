@@ -1,7 +1,7 @@
 <template>
   <div class="webtoon-grid">
     <div class="webtoon-item" v-for="webtoon in webtoons" :key="webtoon.id">
-      <router-link :to="`/webtoon/${webtoon.id}`">
+      <router-link :to="`/review/${webtoon.id}`">
         <img class="webtoon-image" :src="webtoon.imagePath" :alt="webtoon.title">
       </router-link>
         <p class="webtoon-title">{{ webtoon.title }}</p>
