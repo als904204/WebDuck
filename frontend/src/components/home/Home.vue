@@ -60,7 +60,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
-import PlatformWebtoonList from "../webtoon/list/PlatformWebtoonList.vue";
+import PlatformWebtoonList from "../webtoon/list/WebtoonList.vue";
 import { Carousel, Slide, Pagination } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import notice1 from '../../assets/notice1.png';

@@ -15,7 +15,7 @@ import {
   getWebtoonsByPlatform,
   getWebtoonsByPopular,
   getWebtoonsByPublish
-} from "../../../service/PlatformService.js";
+} from "../../../service/WebtoonListFetchService.js";
 
 const props = defineProps({
   param: String,
