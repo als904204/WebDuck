@@ -1,7 +1,6 @@
 <template>
-  <h1>Genre!!</h1>
+  <h1>장르!</h1>
 </template>
 
 <script setup>
-
 </script>

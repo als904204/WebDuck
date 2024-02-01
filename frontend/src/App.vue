@@ -1,8 +1,8 @@
 
 <template>
-  <Navbar/>
-  <router-view></router-view>
-  <Footer/>
+    <Navbar/>
+    <router-view></router-view>
+    <Footer/>
 </template>
 
 <script setup>
@@ -12,5 +12,6 @@ import Footer from "./components/common/Footer.vue";
 
 
 <style scoped>
+
 
 </style>

@@ -16,17 +16,19 @@
   <session>
     <div class="webtoon-container">
       <h2 class="title-webtoon">🔥이번주 인기 웹툰</h2>
-      <div class="btn">
+      <div class="btn-container">
         <Button id="btn-review" label="리뷰순" severity="Primary" size="large"  rounded />
         <Button id="btn-rating" label="평점순" severity="Primary" size="large"  rounded />
       </div>
     </div>
   </session>
 
+
+
   <session>
     <div class="webtoon-container">
       <h2 class="title-webtoon">📆요일별 웹툰</h2>
-      <div class="btn">
+      <div class="btn-container">
         <Button label="월" severity="Primary" size="large"  rounded />
         <Button label="화" severity="Primary" size="large"  rounded />
         <Button label="수" severity="Primary" size="large"  rounded />
@@ -42,11 +44,12 @@
   <session>
     <div class="webtoon-container">
       <h2 class="title-webtoon">✍🏻플랫폼별 웹툰</h2>
-      <div class="btn">
-        <Button label="카카오" severity="Primary" size="large"  rounded />
-        <Button label="네이버" severity="Primary" size="large"  rounded />
-        <Button label="그외" severity="Primary" size="large"  rounded />
+      <div class="btn-container">
+        <Button label="카카오" @click="currentPlatform = 'KAKAO'" severity="Primary" size="large"  rounded />
+        <Button label="네이버" @click="currentPlatform = 'NAVER'" severity="Primary" size="large"  rounded />
+        <Button label="그외"  @click="currentPlatform = 'ELSE'" severity="Primary" size="large"  rounded />
       </div>
+      <PlatformWebtoonList :platform="currentPlatform"/>
     </div>
   </session>
 
@@ -54,21 +57,25 @@
 
 <script setup>
 import { ref } from 'vue';
+import PlatformWebtoonList from "../webtoon/list/PlatformWebtoonList.vue";
 import { Carousel, Slide, Pagination } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
-
-import notice1 from '../assets/notice1.png';
-import notice2 from '../assets/notice2.png';
+import notice1 from '../../assets/notice1.png';
+import notice2 from '../../assets/notice2.png';
 
 const images = ref([
   notice1,
   notice2
 ]);
 
+const currentPlatform = ref('KAKAO'); // 초기값으로 'KAKAO' 설정
+
+
 </script>
 
 
 <style scoped>
+
 .banner-container{
   margin-bottom:52px;
 }
@@ -89,9 +96,10 @@ const images = ref([
 }
 
 
-.btn{
+.btn-container{
   display:flex;
   gap:1rem 10px;
+  margin-bottom : 24px;
 }
 
 .webtoon-container {
