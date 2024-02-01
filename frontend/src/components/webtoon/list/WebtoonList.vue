@@ -51,7 +51,7 @@ watchEffect(async () => {
 <style scoped>
 .webtoon-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap:10px;
 }
 
@@ -67,8 +67,8 @@ watchEffect(async () => {
 
 
 .webtoon-image {
-  width: 100%;
-  height: auto;
+  width: 200px;
+  height: 300px;
   object-fit: cover;
 }
 
