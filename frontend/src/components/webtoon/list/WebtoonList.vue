@@ -60,11 +60,11 @@ watchEffect(async () => {
   flex-direction: column;
   align-items: center;
 }
+
 .webtoon-item a {
   text-decoration: none;
   color: inherit;
 }
-
 
 .webtoon-image {
   width: 200px;
