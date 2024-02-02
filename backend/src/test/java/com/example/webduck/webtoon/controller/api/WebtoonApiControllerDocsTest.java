@@ -130,16 +130,17 @@ class WebtoonApiControllerDocsTest {
     void testWebtoonListByPublish() throws Exception {
 
         final String endpoint = "/publish";
+        String thursday = PublishDay.THURSDAY.name();
 
         Mockito.when(webtoonService.findWebtoonsByPublishDay(Mockito.any(PublishDay.class)))
             .thenReturn(mockWebtoonResponses);
 
-        mockMvc.perform(get(uri +endpoint)
-                .param("day", PublishDay.THURSDAY.name()))
+        mockMvc.perform(get(uri + endpoint)
+                .param("day", thursday))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByPublish",
                 queryParameters(
-                    parameterWithName("publishDay").description("요일별 웹툰을 조회하기 위한 파라미터. 가능한 값: " +
+                    parameterWithName("day").description("요일별 웹툰을 조회하기 위한 파라미터. 가능한 값: " +
                         Arrays.stream(PublishDay.values())
                             .map(Enum::name)
                             .collect(Collectors.joining(", ")))
@@ -148,10 +149,14 @@ class WebtoonApiControllerDocsTest {
                     fieldWithPath("[].id").description("웹툰의 ID").type(Long.class),
                     fieldWithPath("[].title").description("웹툰의 제목").type(JsonFieldType.STRING),
                     fieldWithPath("[].summary").description("웹툰의 요약").type(JsonFieldType.STRING),
-                    fieldWithPath("[].originalImageName").description("원본 이미지 파일명").type(JsonFieldType.STRING),
-                    fieldWithPath("[].imagePath").description("이미지 파일 경로").type(JsonFieldType.STRING),
-                    fieldWithPath("[].publishDay").description("웹툰의 연재 요일").type(JsonFieldType.STRING),
-                    fieldWithPath("[].platform").description("웹툰이 연재되는 플랫폼").type(JsonFieldType.STRING),
+                    fieldWithPath("[].originalImageName").description("원본 이미지 파일명")
+                        .type(JsonFieldType.STRING),
+                    fieldWithPath("[].imagePath").description("이미지 파일 경로")
+                        .type(JsonFieldType.STRING),
+                    fieldWithPath("[].publishDay").description("웹툰의 연재 요일")
+                        .type(JsonFieldType.STRING),
+                    fieldWithPath("[].platform").description("웹툰이 연재되는 플랫폼")
+                        .type(JsonFieldType.STRING),
                     fieldWithPath("[].author").description("웹툰의 작가").type(JsonFieldType.STRING)
                 )
             ));
