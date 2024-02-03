@@ -9,6 +9,7 @@ import { router } from './router/index.js'
 import PrimeVue from 'primevue/config';
 import Button from "primevue/button"
 import Menubar from 'primevue/menubar';
+import Badge from 'primevue/badge';
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import 'primeicons/primeicons.css'
 
@@ -27,6 +28,7 @@ app.use(router)
 app.use(PrimeVue);
 app.component('Button', Button);
 app.component('Menubar', Menubar);
+app.component('Badge', Badge);
 
 // axios
 app.use(VueAxios, axios);

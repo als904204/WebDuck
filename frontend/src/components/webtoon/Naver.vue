@@ -1,22 +1,11 @@
 <template>
-<h1>NAVER</h1>
-  <ul v-if="webtoons.length > 0">
-    <li v-for="webtoon of webtoons" :key="webtoon.id">
-      {{webtoon.title}}
-    </li>
-  </ul>
+<h1>NAVER 웹툰</h1>
+
+  <div>
+    <FetchWebtoonList param="NAVER" serviceType="PLATFORM" />
+  </div>
 </template>
 
 <script setup>
-import {getWebtoonsByPlatform} from "../../service/WebtoonListFetchService.js";
-import {onMounted, ref} from "vue";
-
-
-const webtoons = ref([]);
-
-onMounted(async () => {
-  const data = await getWebtoonsByPlatform("NAVER");
-  webtoons.value = data;
-})
-
+import FetchWebtoonList from "./list/WebtoonList.vue";
 </script>

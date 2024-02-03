@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue';
+import {ref,watchEffect} from 'vue';
 import {
   getWebtoonsByPlatform,
   getWebtoonsByPopular,
@@ -22,13 +22,13 @@ const props = defineProps({
   serviceType: String
 });
 
+
 const webtoons = ref([]);
 
 
 // props의 변화를 감지하여 데이터를 가져오는 로직
 watchEffect(async () => {
   if (!props.param || !props.serviceType) return; // 초기 상태 확인
-
   try {
     let data;
     if (props.serviceType === 'PLATFORM') {
@@ -51,7 +51,7 @@ watchEffect(async () => {
 <style scoped>
 .webtoon-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap:10px;
 }
 
@@ -60,15 +60,15 @@ watchEffect(async () => {
   flex-direction: column;
   align-items: center;
 }
+
 .webtoon-item a {
   text-decoration: none;
   color: inherit;
 }
 
-
 .webtoon-image {
-  width: 100%;
-  height: auto;
+  width: 200px;
+  height: 300px;
   object-fit: cover;
 }
 
