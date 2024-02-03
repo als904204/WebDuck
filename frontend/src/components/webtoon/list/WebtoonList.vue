@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue';
+import {ref,watchEffect} from 'vue';
 import {
   getWebtoonsByPlatform,
   getWebtoonsByPopular,
@@ -22,13 +22,13 @@ const props = defineProps({
   serviceType: String
 });
 
+
 const webtoons = ref([]);
 
 
 // props의 변화를 감지하여 데이터를 가져오는 로직
 watchEffect(async () => {
   if (!props.param || !props.serviceType) return; // 초기 상태 확인
-
   try {
     let data;
     if (props.serviceType === 'PLATFORM') {
