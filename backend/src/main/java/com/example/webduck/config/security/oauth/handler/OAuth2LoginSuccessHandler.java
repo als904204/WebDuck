@@ -18,19 +18,17 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
         Authentication authentication) throws IOException {
-        log.info("OAuth2Login Success!");
 
         // TODO : 현재 DefaultOAuth2User 커스텀할지 아니면 DefaultOAuth2User 로 사용할지 모름
-        DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
+        var oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
             oAuth2User, null, oAuth2User.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
-        response.sendRedirect("/");
+        var redirectUrl = "http://localhost:5173";
+
+        getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
-
-
-
 }
