@@ -1,6 +1,20 @@
 == 웹툰(Webtoon)
 웹툰정보에 대한 조회/리뷰 조건 정렬 기능을 제공합니다
 
+
+=== 리뷰 상세 조회
+
+==== Request
+include::{snippets}/get-v1-get-webtoonDetails/http-request.adoc[]
+include::{snippets}/get-v1-get-webtoonDetails/path-parameters.adoc[]
+
+==== Response
+include::{snippets}/get-v1-get-webtoonDetails/http-response.adoc[]
+include::{snippets}/get-v1-get-webtoonDetails/response-body.adoc[]
+include::{snippets}/get-v1-get-webtoonDetails/response-fields.adoc[]
+
+
+
 === 모든 웹툰 조회
 
 ==== Request
