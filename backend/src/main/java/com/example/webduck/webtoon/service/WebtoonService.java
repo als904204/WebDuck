@@ -33,23 +33,32 @@ public class WebtoonService {
     public WebtoonResponse findWebtoonById(Long id) {
         Webtoon webtoon = webtoonRepository.findById(id)
             .orElseThrow(() -> new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND));
+
         return new WebtoonResponse(webtoon);
     }
 
-    // 웹툰 상세정보
-    // 웹툰정보와 해당 웹툰의 리뷰 목록을 리턴
+    /**
+     * 웹툰 상세보기
+     * @param webtoonId 조회할 웹툰 ID
+     * @return 웹툰 정보,리뷰 목록,리뷰 개수,웹툰 리뷰 평균 점수
+     */
     @Transactional(readOnly = true)
     public WebtoonDetails getWebtoonDetails(Long webtoonId) {
+
         Webtoon webtoon = webtoonRepository.findById(webtoonId)
             .orElseThrow(() -> new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND));
 
-        List<Review> reviews = reviewRepository.findReviewsByWebtoonIdOrderByCreatedAtDesc(webtoonId);
+        List<Review> reviews = reviewRepository.findReviewsByWebtoonIdOrderByCreatedAtDesc(
+            webtoonId);
+
+        Double webtoonRating = Review.calculateRatingAvg(reviews);
+        int reviewCount = reviews.size();
 
         List<ReviewResponse> reviewDto = reviews.stream()
             .map(ReviewResponse::new)
             .toList();
 
-        return new WebtoonDetails(webtoon,reviewDto);
+        return new WebtoonDetails(webtoon,reviewDto,reviewCount,webtoonRating);
     }
 
     // 모든 웹툰 조회
