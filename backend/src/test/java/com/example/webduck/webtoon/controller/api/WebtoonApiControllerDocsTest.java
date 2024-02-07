@@ -6,9 +6,13 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.webduck.review.dto.ReviewResponse;
+import com.example.webduck.review.entity.Review;
+import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.dto.WebtoonSortCondition.WebtoonConditionResponse;
@@ -19,6 +23,7 @@ import com.example.webduck.webtoon.service.WebtoonService;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.hibernate.mapping.Any;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -304,6 +309,77 @@ class WebtoonApiControllerDocsTest {
                     fieldWithPath("[].webtoonUrl").description("해당 웹툰 바로가기 링크").type(JsonFieldType.STRING),
                     fieldWithPath("[].reviewCount").description("웹툰 리뷰 수").type(JsonFieldType.NUMBER),
                     fieldWithPath("[].ratingAvg").description("웹툰 리뷰 평균 점수").type(JsonFieldType.NUMBER)
+                )
+            ));
+    }
+
+    @DisplayName("조회 : 웹툰 상세보기")
+    @Test
+    void testGetWebtoonDetails() throws Exception {
+
+        var webtoonId = 1L;
+        Webtoon webtoon = Webtoon.builder()
+            .title("웹툰 제목")
+            .summary("웹툰 줄거리")
+            .imagePath("썸네일 이미지 경로")
+            .publishDay(PublishDay.MONDAY)
+            .platform(Platform.NAVER)
+            .author("웹툰 작가")
+            .webtoonUrl("웹툰 바로가기 링크")
+            .originalImageName("썸네일 이미지 파일 이름")
+            .build();
+
+        List<Review> reviews = List.of(
+            Review.builder()
+                .webtoonId(webtoonId)
+                .reviewerNickname("user1")
+                .memberId(1L)
+                .content("hi!")
+                .rating(5)
+                .build(),
+            Review.builder()
+                .webtoonId(webtoonId)
+                .reviewerNickname("user1")
+                .memberId(1L)
+                .content("hi!!")
+                .rating(5)
+                .build()
+        );
+
+        List<ReviewResponse> reviewDto = reviews.stream()
+            .map(ReviewResponse::new)
+            .toList();
+
+        int reviewCount = reviews.size();
+        Double webtoonAvg = Review.calculateRatingAvg(reviews);
+
+        WebtoonDetails response = new WebtoonDetails(webtoon,reviewDto,reviewCount,webtoonAvg);
+        Mockito.when(webtoonService.getWebtoonDetails(Mockito.any(Long.class)))
+            .thenReturn(response);
+
+        mockMvc.perform(get(uri + "/{id}", webtoonId))
+            .andExpect(status().isOk())
+            .andDo(document("get-v1-get-webtoonDetails",
+                pathParameters(
+                    parameterWithName("id").description("조회할 웹툰 ID")
+                ),
+                responseFields(
+                    fieldWithPath("webtoonId").description("웹툰 ID").type(Long.class),
+                    fieldWithPath("title").description("웹툰 제목"),
+                    fieldWithPath("summary").description("웹툰 줄거리"),
+                    fieldWithPath("originalImageName").description("썸네일 이미지 파일 이름"),
+                    fieldWithPath("imagePath").description("썸네일 이미지 파일 경로"),
+                    fieldWithPath("publishDay").description("웹툰 출간 요일"),
+                    fieldWithPath("platform").description("웹툰 플랫폼"),
+                    fieldWithPath("author").description("웹툰 작가"),
+                    fieldWithPath("webtoonUrl").description("웹툰 바로가기 링크"),
+                    fieldWithPath("reviews").description("웹툰 리뷰 목록"),
+                    fieldWithPath("reviews[].authorId").description("리뷰 작성자 ID").type(Long.class),
+                    fieldWithPath("reviews[].reviewerNickname").description("리뷰 작성자 닉네임"),
+                    fieldWithPath("reviews[].content").description("리뷰 내용"),
+                    fieldWithPath("reviews[].rating").description("리뷰 점수"),
+                    fieldWithPath("reviewCount").description("리뷰 수"),
+                    fieldWithPath("webtoonRating").description("웹툰 리뷰 평균 평점")
                 )
             ));
     }
