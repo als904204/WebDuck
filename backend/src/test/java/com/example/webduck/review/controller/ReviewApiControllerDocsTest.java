@@ -4,6 +4,8 @@ package com.example.webduck.review.controller;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -89,6 +91,7 @@ class ReviewApiControllerDocsTest {
                 .sessionAttr("member", sessionMember))
             .andExpect(status().isOk())
             .andDo(document("post-v1-post-review",
+                preprocessResponse(prettyPrint()),
                 requestFields(
                     fieldWithPath("webtoonId").description("웹툰의 ID"),
                     fieldWithPath("content").description("리뷰 내용"),
@@ -139,6 +142,7 @@ class ReviewApiControllerDocsTest {
                 .param("nextId", "2"))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-reviewsByWebtoonId",
+                preprocessResponse(prettyPrint()),
                 pathParameters(
                     parameterWithName("webtoonId").description("리뷰 목록 조회할 웹툰 ID")
                 ),
@@ -180,6 +184,7 @@ class ReviewApiControllerDocsTest {
         mockMvc.perform(get(uri + "/{webtoonId}/avg", webtoonId))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-reviewRating",
+                preprocessResponse(prettyPrint()),
                 pathParameters(
                     parameterWithName("webtoonId").description("리뷰 평균점수 조회할 웹툰 ID")
                 ),
@@ -202,6 +207,7 @@ class ReviewApiControllerDocsTest {
         mockMvc.perform(get(uri + "/{webtoonId}/count", webtoonId))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-reviewCount",
+                preprocessResponse(prettyPrint()),
                 pathParameters(
                     parameterWithName("webtoonId").description("리뷰 개수 조회할 웹툰 ID")
                 ),

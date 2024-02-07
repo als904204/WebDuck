@@ -28,7 +28,7 @@ const items = computed(() => {
   // 로그인 상태에 따라 '로그인/가입' 또는 '내정보' 메뉴 항목 추가
   if (isLoggedIn.value) {
     baseItems.push({ label: '내정보', icon: 'pi pi-user', command: () => router.push("/profile") });
-    baseItems.push({ label: '로그아웃', icon: 'pi pi-user', command: handleLogout });
+    baseItems.push({ label: '로그아웃', icon: 'pi pi-times', command: handleLogout });
   } else {
     baseItems.push({ label: '로그인/가입', icon: 'pi pi-user', command: () => router.push("/login") });
   }

@@ -30,7 +30,7 @@ include::{snippets}/get-v1-get-reviewsByWebtoonId/response-fields.adoc[]
 
 === 웹툰 ID로 리뷰 평균 점수 조회
 
-===== Request
+==== Request
 include::{snippets}/get-v1-get-reviewRating/http-request.adoc[]
 include::{snippets}/get-v1-get-reviewRating/path-parameters.adoc[]
 
@@ -41,7 +41,7 @@ include::{snippets}/get-v1-get-reviewRating/response-fields.adoc[]
 
 === 웹툰 ID로 리뷰 개수 조회
 
-===== Request
+==== Request
 include::{snippets}/get-v1-get-reviewCount/http-request.adoc[]
 include::{snippets}/get-v1-get-reviewCount/path-parameters.adoc[]
 

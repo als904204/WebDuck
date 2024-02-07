@@ -1,5 +1,6 @@
 package com.example.webduck.webtoon.controller.api;
 
+import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.dto.WebtoonSortCondition.WebtoonConditionResponse;
@@ -21,15 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebtoonApiController {
 
     private final WebtoonService webtoonService;
-
-
-    @Deprecated
     @GetMapping("/{id}")
-    public ResponseEntity<WebtoonResponse> getWebtoon(@PathVariable Long id) {
-        WebtoonResponse request = webtoonService.findWebtoonById(id);
-        return ResponseEntity.ok(request);
+    public ResponseEntity<WebtoonDetails> getWebtoonDetailsById(@PathVariable Long id) {
+        WebtoonDetails webtoonDetails = webtoonService.getWebtoonDetails(id);
+        return ResponseEntity.ok(webtoonDetails);
     }
-
 
     @GetMapping
     public ResponseEntity<List<WebtoonResponse>> getWebtoonList() {

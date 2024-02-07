@@ -66,8 +66,15 @@ class WebtoonApiControllerTest {
     }
 
 
+    @DisplayName("실패 : 잘못된 웹툰 ID 요청")
+    @Test
+    void testInvalidWebtoonId() throws Exception {
+        var invalidWebtoonId = 1231L;
+        when(webtoonService.getWebtoonDetails(invalidWebtoonId))
+            .thenThrow(new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND));
 
-
-
-
+        mockMvc.perform(get(uri + "/{id}", invalidWebtoonId)
+                .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+    }
 }

@@ -5,7 +5,9 @@ import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
 import java.util.List;
+import lombok.Getter;
 
+@Getter
 public class WebtoonDetails {
 
     private final Long webtoonId;
@@ -18,9 +20,12 @@ public class WebtoonDetails {
     private final String author;
     private final String webtoonUrl;
     private final List<ReviewResponse> reviews;
+    private final int reviewCount;
+    private final Double webtoonRating;
 
 
-    public WebtoonDetails(Webtoon webtoon,List<ReviewResponse> reviews) {
+    public WebtoonDetails(Webtoon webtoon, List<ReviewResponse> reviews, int reviewCount,
+        Double webtoonRating) {
         this.webtoonId = webtoon.getId();
         this.originalImageName = webtoon.getOriginalImageName();
         this.imagePath = webtoon.getImagePath();
@@ -31,45 +36,7 @@ public class WebtoonDetails {
         this.author = webtoon.getAuthor();
         this.reviews = reviews;
         this.webtoonUrl = webtoon.getWebtoonUrl();
-    }
-
-    public Long getWebtoonId() {
-        return webtoonId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public String getOriginalImageName() {
-        return originalImageName;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public PublishDay getPublishDay() {
-        return publishDay;
-    }
-
-    public Platform getPlatform() {
-        return platform;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public List<ReviewResponse> getReviews() {
-        return reviews;
-    }
-
-    public String getWebtoonUrl() {
-        return webtoonUrl;
+        this.reviewCount = reviewCount;
+        this.webtoonRating = webtoonRating;
     }
 }
