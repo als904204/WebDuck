@@ -2,10 +2,14 @@ package com.example.webduck.webtoon.service;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.example.webduck.review.entity.Review;
+import com.example.webduck.review.repository.ReviewRepository;
+import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
 import com.example.webduck.webtoon.entity.Platform;
@@ -32,6 +36,9 @@ class WebtoonServiceTest {
     private WebtoonService webtoonService;
     @Mock
     private WebtoonRepository webtoonRepository;
+
+    @Mock
+    private ReviewRepository reviewRepository;
 
     private final String title = "Webtoon 1";
     private final String summary = "Summary 1";
@@ -65,6 +72,50 @@ class WebtoonServiceTest {
         assertThat(result.getOriginalImageName()).isEqualTo("Image1.png");
 
         verify(webtoonRepository, times(1)).findById(id);
+    }
+
+    @DisplayName("웹툰 상세조회 : 리뷰 개수,리뷰 점수")
+    @Test
+    void getWebtoonDetails() {
+        var id = 1L;
+
+        Webtoon webtoon = Webtoon.builder()
+            .title(title)
+            .summary(summary)
+            .imagePath(path)
+            .publishDay(PublishDay.MONDAY)
+            .platform(Platform.NAVER)
+            .originalImageName(imageName)
+            .build();
+
+        List<Review> reviews = List.of(
+            Review.builder()
+                .webtoonId(id)
+                .reviewerNickname("user1")
+                .memberId(1L)
+                .content("hi!")
+                .rating(5)
+                .build(),
+            Review.builder()
+                .webtoonId(id)
+                .reviewerNickname("user1")
+                .memberId(1L)
+                .content("hi!!")
+                .rating(5)
+                .build()
+        );
+
+        when(webtoonRepository.findById(any(Long.class))).thenReturn(Optional.of(webtoon));
+        when(reviewRepository.findReviewsByWebtoonIdOrderByCreatedAtDesc(
+            any(Long.class))).thenReturn(reviews);
+
+        WebtoonDetails webtoonDetails = webtoonService.getWebtoonDetails(id);
+
+        assertThat(webtoonDetails).isNotNull();
+        assertThat(webtoonDetails.getWebtoonRating()).isEqualTo(5);
+        assertThat(webtoonDetails.getReviewCount()).isEqualTo(2);
+
+
     }
 
     @DisplayName("웹툰 목록 조회")
