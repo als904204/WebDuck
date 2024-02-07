@@ -65,7 +65,7 @@ public class Webtoon{
 
     @Builder
     public Webtoon(String title, String summary, String originalImageName, String imagePath,
-        PublishDay publishDay, Platform platform,String author) {
+        PublishDay publishDay, Platform platform, String author,String webtoonUrl) {
         this.title = title;
         this.summary = summary;
         this.originalImageName = originalImageName;
@@ -73,6 +73,7 @@ public class Webtoon{
         this.publishDay = publishDay;
         this.platform = platform;
         this.author = author;
+        this.webtoonUrl = webtoonUrl;
     }
 
     public void incrementReviewCount() {
