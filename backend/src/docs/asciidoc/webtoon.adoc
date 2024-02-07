@@ -2,7 +2,7 @@
 웹툰정보에 대한 조회/리뷰 조건 정렬 기능을 제공합니다
 
 
-=== 리뷰 상세 조회
+=== 웹툰 상세 조회
 
 ==== Request
 include::{snippets}/get-v1-get-webtoonDetails/http-request.adoc[]
