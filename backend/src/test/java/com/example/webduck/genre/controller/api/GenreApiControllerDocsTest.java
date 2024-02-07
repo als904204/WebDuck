@@ -3,6 +3,8 @@ package com.example.webduck.genre.controller.api;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -68,6 +70,7 @@ class GenreApiControllerDocsTest {
             .andExpect(status().isOk())
 
             .andDo(document("get-v1-get-genres",
+                preprocessResponse(prettyPrint()),
                 responseFields(
                     fieldWithPath("[].genreName").description("장르 이름")
                 )

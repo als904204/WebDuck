@@ -1,8 +1,11 @@
 package com.example.webduck.webtoon.controller.api;
 
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -23,7 +26,6 @@ import com.example.webduck.webtoon.service.WebtoonService;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.hibernate.mapping.Any;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +37,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -65,7 +66,7 @@ class WebtoonApiControllerDocsTest {
         final RestDocumentationContextProvider provider) {
 
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
-            .apply(MockMvcRestDocumentation.documentationConfiguration(provider))// rest docs 설정 주입
+            .apply(documentationConfiguration(provider))// rest docs 설정 주입
             .alwaysDo(MockMvcResultHandlers.print()) // andDo(print()) 코드 포함
             .addFilters(new CharacterEncodingFilter("UTF-8", true)) // 한글 깨짐 방지
             .build();
@@ -117,8 +118,9 @@ class WebtoonApiControllerDocsTest {
         mockMvc.perform(get(uri))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoons",
+                preprocessResponse(prettyPrint()),
                 responseFields(
-                    fieldWithPath("[].id").description("웹툰의 ID"),
+                    fieldWithPath("[].id").description("웹툰 ID"),
                     fieldWithPath("[].title").description("웹툰 제목"),
                     fieldWithPath("[].summary").description("웹툰 줄거리"),
                     fieldWithPath("[].originalImageName").description("원본 이미지 파일명"),
@@ -144,6 +146,7 @@ class WebtoonApiControllerDocsTest {
                 .param("day", thursday))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByPublish",
+                preprocessResponse(prettyPrint()),
                 queryParameters(
                     parameterWithName("day").description("요일별 웹툰을 조회하기 위한 파라미터. 가능한 값: " +
                         Arrays.stream(PublishDay.values())
@@ -181,6 +184,7 @@ class WebtoonApiControllerDocsTest {
                 .param("type", Platform.NAVER.name()))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByPlatform",
+                preprocessResponse(prettyPrint()),
                 queryParameters(
                     parameterWithName("type").description("플랫폼별 웹툰을 조회하기 위한 파라미터. 가능한 값: " +
                         Arrays.stream(Platform.values())
@@ -212,6 +216,7 @@ class WebtoonApiControllerDocsTest {
                 .param("name", "FANTASY"))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByGenre",
+                preprocessResponse(prettyPrint()),
                 queryParameters(
                     parameterWithName("name").description("웹툰을 조회하기 위한 장르 이름. 가능한 값: " + String.join(", ", genres))
                 ),
@@ -249,6 +254,7 @@ class WebtoonApiControllerDocsTest {
                 .param("names", String.join(",", mockNames)))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByGenres",
+                preprocessResponse(prettyPrint()),
                 queryParameters(
                     parameterWithName("names").description("웹툰 장르로 필터링 (여러가지 선택 가능):"+ String.join(", ", genres))
                 ),
@@ -297,6 +303,7 @@ class WebtoonApiControllerDocsTest {
                 .param("sortBy", sortBy))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByCondition",
+                preprocessResponse(prettyPrint()),
                 queryParameters(
                     parameterWithName("sortBy").description("정렬 기준 (평점순,리뷰순): 'rating', 'count'")
                 ),
@@ -334,14 +341,14 @@ class WebtoonApiControllerDocsTest {
                 .webtoonId(webtoonId)
                 .reviewerNickname("user1")
                 .memberId(1L)
-                .content("hi!")
+                .content("리뷰내용1")
                 .rating(5)
                 .build(),
             Review.builder()
                 .webtoonId(webtoonId)
                 .reviewerNickname("user1")
                 .memberId(1L)
-                .content("hi!!")
+                .content("리뷰내용2")
                 .rating(5)
                 .build()
         );
@@ -360,6 +367,7 @@ class WebtoonApiControllerDocsTest {
         mockMvc.perform(get(uri + "/{id}", webtoonId))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonDetails",
+                preprocessResponse(prettyPrint()),
                 pathParameters(
                     parameterWithName("id").description("조회할 웹툰 ID")
                 ),
@@ -373,13 +381,14 @@ class WebtoonApiControllerDocsTest {
                     fieldWithPath("platform").description("웹툰 플랫폼"),
                     fieldWithPath("author").description("웹툰 작가"),
                     fieldWithPath("webtoonUrl").description("웹툰 바로가기 링크"),
+                    fieldWithPath("reviewCount").description("리뷰 수"),
+                    fieldWithPath("webtoonRating").description("웹툰 리뷰 평균 평점"),
                     fieldWithPath("reviews").description("웹툰 리뷰 목록"),
                     fieldWithPath("reviews[].authorId").description("리뷰 작성자 ID").type(Long.class),
                     fieldWithPath("reviews[].reviewerNickname").description("리뷰 작성자 닉네임"),
                     fieldWithPath("reviews[].content").description("리뷰 내용"),
-                    fieldWithPath("reviews[].rating").description("리뷰 점수"),
-                    fieldWithPath("reviewCount").description("리뷰 수"),
-                    fieldWithPath("webtoonRating").description("웹툰 리뷰 평균 평점")
+                    fieldWithPath("reviews[].rating").description("리뷰 점수")
+
                 )
             ));
     }
