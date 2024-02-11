@@ -62,8 +62,12 @@ public class ReviewService {
     // 리뷰 점수평균을 구한다
     @Transactional(readOnly = true)
     public ReviewAvg getReviewAvg(Long webtoonId) {
+
         List<Review> reviews = reviewRepository.findReviewsByWebtoonId(webtoonId);
-        return new ReviewAvg(Review.calculateRatingAvg(reviews));
+
+        Double reviewAvg = Review.calculateRatingAvg(reviews);
+
+        return new ReviewAvg(reviewAvg);
     }
 
     @Transactional(readOnly = true)
