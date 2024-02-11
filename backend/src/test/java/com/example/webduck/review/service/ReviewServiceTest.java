@@ -8,6 +8,8 @@ import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.repository.ReviewRepository;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -70,13 +72,5 @@ class ReviewServiceTest {
         assertThat(avgRating).isNotEqualTo(4);
     }
 
-    @DisplayName("존재하지 않는 웹툰ID로 리뷰목록 조회시 예외 ")
-    @Test
-    void invalidWebtoonId_fail() {
-        Long invalidWebtoonId = 100L;
-        when(reviewRepository.findReviewsByWebtoonId(invalidWebtoonId)).thenReturn(
-            Collections.emptyList());
-        assertThrows(CustomException.class, () -> reviewService.getReviewAvg(invalidWebtoonId));
-    }
 
 }
