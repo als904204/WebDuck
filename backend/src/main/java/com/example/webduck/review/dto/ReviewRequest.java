@@ -16,8 +16,8 @@ public class ReviewRequest {
     private final String content;
 
     @NotNull(message = "rating은 빈값이 될 수 없습니다")
-    @Min(value = 2, message = "rating은 최소 2점 이상이어야 합니다")
-    @Max(value = 10, message = "rating은 최대 10점까지 가능합니다")
+    @Min(value = 1, message = "rating은 최소 1점 이상이어야 합니다")
+    @Max(value = 5, message = "rating은 최대 5점까지 가능합니다")
     private final Integer rating;
 
 

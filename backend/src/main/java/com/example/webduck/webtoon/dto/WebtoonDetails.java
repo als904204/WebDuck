@@ -1,10 +1,8 @@
 package com.example.webduck.webtoon.dto;
 
-import com.example.webduck.review.dto.ReviewResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
-import java.util.List;
 import lombok.Getter;
 
 @Getter
@@ -19,12 +17,11 @@ public class WebtoonDetails {
     private final Platform platform;
     private final String author;
     private final String webtoonUrl;
-    private final List<ReviewResponse> reviews;
     private final int reviewCount;
     private final Double webtoonRating;
 
 
-    public WebtoonDetails(Webtoon webtoon, List<ReviewResponse> reviews, int reviewCount,
+    public WebtoonDetails(Webtoon webtoon, int reviewCount,
         Double webtoonRating) {
         this.webtoonId = webtoon.getId();
         this.originalImageName = webtoon.getOriginalImageName();
@@ -34,7 +31,6 @@ public class WebtoonDetails {
         this.publishDay = webtoon.getPublishDay();
         this.platform = webtoon.getPlatform();
         this.author = webtoon.getAuthor();
-        this.reviews = reviews;
         this.webtoonUrl = webtoon.getWebtoonUrl();
         this.reviewCount = reviewCount;
         this.webtoonRating = webtoonRating;

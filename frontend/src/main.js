@@ -13,9 +13,12 @@ import Button from "primevue/button"
 import Menubar from 'primevue/menubar';
 import Badge from 'primevue/badge';
 import Card from 'primevue/card';
+import Textarea from 'primevue/textarea';
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css';
+import Rating from 'primevue/rating';
+
 
 // axios
 import axios from "axios";
@@ -37,6 +40,8 @@ app.component('Button', Button);
 app.component('Menubar', Menubar);
 app.component('Badge', Badge);
 app.component('Card', Card);
+app.component('Rating', Rating);
+app.component('Textarea', Textarea);
 
 // axios
 app.use(VueAxios, axios);

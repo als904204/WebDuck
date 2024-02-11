@@ -54,13 +54,15 @@ public class Review extends BaseTime {
     // 리뷰점수 평균 구하기
     public static Double calculateRatingAvg(List<Review> reviews) {
         if (reviews == null || reviews.isEmpty()) {
-            throw new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND);
+            return 0.0;
         }
-        Integer sum = 0;
+        int sum = 0;
         for (Review review : reviews) {
             sum += review.getRating();
         }
-        return (double) sum / reviews.size();
+        double avg = (double) sum / reviews.size();
+
+        return Math.round(avg * 10.0) / 10.0; // 반올림 후 리턴
     }
 
 

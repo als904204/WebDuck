@@ -13,7 +13,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.webduck.review.dto.ReviewResponse;
 import com.example.webduck.review.entity.Review;
 import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
@@ -353,14 +352,12 @@ class WebtoonApiControllerDocsTest {
                 .build()
         );
 
-        List<ReviewResponse> reviewDto = reviews.stream()
-            .map(ReviewResponse::new)
-            .toList();
+
 
         int reviewCount = reviews.size();
         Double webtoonAvg = Review.calculateRatingAvg(reviews);
 
-        WebtoonDetails response = new WebtoonDetails(webtoon,reviewDto,reviewCount,webtoonAvg);
+        WebtoonDetails response = new WebtoonDetails(webtoon,reviewCount,webtoonAvg);
         Mockito.when(webtoonService.getWebtoonDetails(Mockito.any(Long.class)))
             .thenReturn(response);
 
@@ -382,13 +379,7 @@ class WebtoonApiControllerDocsTest {
                     fieldWithPath("author").description("웹툰 작가"),
                     fieldWithPath("webtoonUrl").description("웹툰 바로가기 링크"),
                     fieldWithPath("reviewCount").description("리뷰 수"),
-                    fieldWithPath("webtoonRating").description("웹툰 리뷰 평균 평점"),
-                    fieldWithPath("reviews").description("웹툰 리뷰 목록"),
-                    fieldWithPath("reviews[].authorId").description("리뷰 작성자 ID").type(Long.class),
-                    fieldWithPath("reviews[].reviewerNickname").description("리뷰 작성자 닉네임"),
-                    fieldWithPath("reviews[].content").description("리뷰 내용"),
-                    fieldWithPath("reviews[].rating").description("리뷰 점수")
-
+                    fieldWithPath("webtoonRating").description("웹툰 리뷰 평균 평점")
                 )
             ));
     }

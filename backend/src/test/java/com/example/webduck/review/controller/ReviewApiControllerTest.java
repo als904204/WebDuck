@@ -55,18 +55,6 @@ class ReviewApiControllerTest {
             }
             """;
 
-        var webtoonId = 1L;
-        List<ReviewResponse> mockResponses = List.of(new ReviewResponse(
-            Review.builder()
-                .reviewerNickname("user")
-                .content("content")
-                .rating(4)
-                .webtoonId(1L)
-                .memberId(1L)
-                .build(
-                )));
-
-//        when(reviewService.getReviewsByWebtoonId(webtoonId)).thenReturn(mockResponses);
 
         mockMvc.perform(post(uri).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)

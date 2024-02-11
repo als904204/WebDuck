@@ -2,7 +2,6 @@ package com.example.webduck.webtoon.service;
 
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
-import com.example.webduck.review.dto.ReviewResponse;
 import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.repository.ReviewRepository;
 import com.example.webduck.webtoon.dto.WebtoonDetails;
@@ -44,7 +43,6 @@ public class WebtoonService {
      */
     @Transactional(readOnly = true)
     public WebtoonDetails getWebtoonDetails(Long webtoonId) {
-
         Webtoon webtoon = webtoonRepository.findById(webtoonId)
             .orElseThrow(() -> new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND));
 
@@ -54,11 +52,8 @@ public class WebtoonService {
         Double webtoonRating = Review.calculateRatingAvg(reviews);
         int reviewCount = reviews.size();
 
-        List<ReviewResponse> reviewDto = reviews.stream()
-            .map(ReviewResponse::new)
-            .toList();
 
-        return new WebtoonDetails(webtoon,reviewDto,reviewCount,webtoonRating);
+        return new WebtoonDetails(webtoon,reviewCount,webtoonRating);
     }
 
     // 모든 웹툰 조회
