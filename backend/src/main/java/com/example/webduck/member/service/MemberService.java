@@ -31,7 +31,7 @@ public class MemberService {
 
 
     @Transactional
-    public void updateMemberProfile(SessionMember sessionMember, ProfileRequest request) {
+    public ProfileResponse updateMemberProfile(SessionMember sessionMember, ProfileRequest request) {
         Long sessionMemberId = sessionMember.getId();
 
         Member member = memberRepository.findById(sessionMemberId)
@@ -54,5 +54,6 @@ public class MemberService {
 
         member.updateProfile(username);
         sessionMember.setUsername(username);
+        return new ProfileResponse(member);
     }
 }

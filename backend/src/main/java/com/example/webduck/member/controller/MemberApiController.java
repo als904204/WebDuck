@@ -31,11 +31,11 @@ public class MemberApiController {
 
     // 모든 자원 변경 아님, PUT X -> PATCH O
     @PatchMapping("/profile")
-    public ResponseEntity<Void> updateProfile(@LoginMember SessionMember sessionMember,
+    public ResponseEntity<ProfileResponse> updateProfile(@LoginMember SessionMember sessionMember,
         @RequestBody @Valid ProfileRequest profileRequest) {
-
-        memberService.updateMemberProfile(sessionMember, profileRequest);
-        return ResponseEntity.noContent().build();
+        ProfileResponse profileResponse = memberService.updateMemberProfile(sessionMember,
+            profileRequest);
+        return ResponseEntity.ok(profileResponse);
     }
 
 }
