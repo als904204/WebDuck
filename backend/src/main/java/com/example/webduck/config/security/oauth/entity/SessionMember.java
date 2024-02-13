@@ -17,7 +17,7 @@ public class SessionMember implements Serializable {
     @Serial
     private static final long serialVersionUID = -3094014404731310385L;
     private final Long id;
-    private final String username;
+    private String username;
 
     public SessionMember(Member member) {
         this.id = member.getId();
@@ -30,6 +30,10 @@ public class SessionMember implements Serializable {
 
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

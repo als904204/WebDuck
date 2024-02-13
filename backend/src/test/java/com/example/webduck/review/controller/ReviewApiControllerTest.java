@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
 import com.example.webduck.review.dto.ReviewRequest;
 import com.example.webduck.review.dto.ReviewResponse;
@@ -54,10 +55,11 @@ class ReviewApiControllerTest {
                 "rating" :5
             }
             """;
-
+        SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
         mockMvc.perform(post(uri).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
+                .sessionAttr("member", sessionMember)
                 .content(req))
             .andExpect(status().isBadRequest());
     }
@@ -80,9 +82,12 @@ class ReviewApiControllerTest {
 
         when(reviewService.saveReview(Mockito.any(SessionMember.class),Mockito.any(ReviewRequest.class))).thenReturn(mockResponse);
 
+        SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
+
         mockMvc.perform(post(uri).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(req))
+                .content(req)
+                .sessionAttr("member", sessionMember))
             .andExpect(status().isBadRequest());
     }
 

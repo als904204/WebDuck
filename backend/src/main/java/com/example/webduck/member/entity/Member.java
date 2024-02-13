@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Builder;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Member extends BaseTime {
@@ -20,7 +21,8 @@ public class Member extends BaseTime {
     @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Length(min = 2, max = 16)
+    @Column(nullable = false, length = 16)
     private String username;
 
     @Convert(converter = EncryptorConverter.class)
@@ -55,6 +57,10 @@ public class Member extends BaseTime {
         this.socialPk = socialPk;
         this.socialId = socialId;
         this.socialType = socialType;
+    }
+
+    public void updateProfile(String username) {
+        this.username = username;
     }
 
     public String getRoleKey() {
