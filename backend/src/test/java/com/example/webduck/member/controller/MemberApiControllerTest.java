@@ -9,11 +9,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
+import com.example.webduck.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,6 +26,9 @@ class MemberApiControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    private MemberService memberService;
 
     private final String uri = "/api/v1/member";
 
@@ -44,9 +51,12 @@ class MemberApiControllerTest {
                 }
             """;
 
+        SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
+
         mockMvc.perform(patch(uri + "/profile").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request))
+                .content(request)
+            .sessionAttr("member", sessionMember))
             .andDo(print())
             .andExpect(status().isBadRequest());
     }
