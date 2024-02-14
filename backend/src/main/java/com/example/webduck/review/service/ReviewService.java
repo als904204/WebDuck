@@ -113,7 +113,7 @@ public class ReviewService {
             reviewLikesRepository.deleteByReviewIdAndMemberId(reviewId, memberId);
             review.downLikesCount();
             int likesCount = review.getLikesCount();
-            return new ReviewLikesResponse("down", likesCount);
+            return new ReviewLikesResponse(true, likesCount);
         }else{
             log.info("up likes");
 
@@ -126,7 +126,7 @@ public class ReviewService {
 
             review.upLikesCount();
             int likesCount = review.getLikesCount();
-            return new ReviewLikesResponse("up", likesCount);
+            return new ReviewLikesResponse(true, likesCount);
         }
     }
 
