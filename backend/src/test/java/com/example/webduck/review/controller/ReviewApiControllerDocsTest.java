@@ -3,6 +3,7 @@ package com.example.webduck.review.controller;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -23,6 +24,7 @@ import com.example.webduck.review.dto.ReviewRequest;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
+import com.example.webduck.review.dto.ReviewResponse.ReviewLikesResponse;
 import com.example.webduck.review.dto.SliceReviewResponse;
 import com.example.webduck.review.service.ReviewService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -116,12 +118,9 @@ class ReviewApiControllerDocsTest {
 
         // given
         var reviewResponses = List.of(
-            new SliceReviewResponse(1L, "summary1", "nickname1", 1L, 5, now),
-            new SliceReviewResponse(2L, "summary2", "nickname2", 2L, 4, now),
-            new SliceReviewResponse(3L, "summary2", "nickname2", 2L, 4, now),
-            new SliceReviewResponse(4L, "summary2", "nickname2", 2L, 4, now),
-            new SliceReviewResponse(5L, "summary2", "nickname2", 2L, 4, now),
-            new SliceReviewResponse(6L, "summary2", "nickname2", 2L, 4, now)
+            new SliceReviewResponse(1L, "summary1", "nickname1", 1L, 5, now,2),
+            new SliceReviewResponse(2L, "summary2", "nickname2", 2L, 4, now,2),
+            new SliceReviewResponse(3L, "summary2", "nickname2", 2L, 4, now,2)
         );
 
         var sliceResponse = new SliceResponse<>(
@@ -158,6 +157,7 @@ class ReviewApiControllerDocsTest {
                     fieldWithPath("item[].reviewerNickname").description("리뷰어 닉네임"),
                     fieldWithPath("item[].authorId").description("리뷰 작성자 ID"),
                     fieldWithPath("item[].rating").description("리뷰 평점"),
+                    fieldWithPath("item[].likesCount").description("리뷰 좋아요"),
                     fieldWithPath("item[].createdAt").description("리뷰 작성 시간"),
                     fieldWithPath("pageNumber").description("현재 페이지 번호"),
                     fieldWithPath("pageSize").description("페이지당 항목 수"),
@@ -215,6 +215,40 @@ class ReviewApiControllerDocsTest {
                     fieldWithPath("count").description("리뷰 개수")
                 )
             ));
+
+    }
+
+    @WithMockCustomUser
+    @DisplayName("수정 : 리뷰 좋아요")
+    @Test
+    void testUpdateReviewLikes() throws Exception {
+        var reviewId = 1L;
+
+        var reviewLikesResponse = new ReviewLikesResponse(true, 20);
+
+
+
+        Mockito.when(
+                reviewService.updateLikes(Mockito.any(Long.class), Mockito.any(SessionMember.class)))
+            .thenReturn(reviewLikesResponse);
+
+        SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
+
+        mockMvc.perform(patch(uri + "/{reviewId}/likes", reviewId)
+                .sessionAttr("member", sessionMember))
+            .andExpect(status().isOk())
+            .andDo(document("patch-v1-update-reviewLikes",
+                preprocessResponse(prettyPrint()),
+                pathParameters(
+                    parameterWithName("reviewId").description("조회할 리뷰 ID")
+                ),
+                responseFields(
+                    fieldWithPath("success").description("성공/실패 여부"),
+                    fieldWithPath("likesCount").description("좋아요 개수")
+                )
+            ));
+
+
 
     }
 
