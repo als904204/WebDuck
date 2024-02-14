@@ -50,6 +50,16 @@ include::{snippets}/get-v1-get-reviewCount/http-response.adoc[]
 include::{snippets}/get-v1-get-reviewCount/response-body.adoc[]
 include::{snippets}/get-v1-get-reviewCount/response-fields.adoc[]
 
+=== 리뷰 좋아요 수정
+==== Request
+include::{snippets}/patch-v1-update-reviewLikes/http-request.adoc[]
+include::{snippets}/patch-v1-update-reviewLikes/path-parameters.adoc[]
+
+==== Response
+include::{snippets}/patch-v1-update-reviewLikes/http-response.adoc[]
+include::{snippets}/patch-v1-update-reviewLikes/response-body.adoc[]
+include::{snippets}/patch-v1-update-reviewLikes/response-fields.adoc[]
+
 
 
 
