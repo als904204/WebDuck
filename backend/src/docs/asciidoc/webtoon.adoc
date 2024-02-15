@@ -1,0 +1,90 @@
+== 웹툰(Webtoon)
+웹툰정보에 대한 조회/리뷰 조건 정렬 기능을 제공합니다
+
+
+=== 웹툰 상세 조회
+
+==== Request
+include::{snippets}/get-v1-get-webtoonDetails/http-request.adoc[]
+include::{snippets}/get-v1-get-webtoonDetails/path-parameters.adoc[]
+
+==== Response
+include::{snippets}/get-v1-get-webtoonDetails/http-response.adoc[]
+include::{snippets}/get-v1-get-webtoonDetails/response-body.adoc[]
+include::{snippets}/get-v1-get-webtoonDetails/response-fields.adoc[]
+
+
+
+=== 모든 웹툰 조회
+
+==== Request
+include::{snippets}/get-v1-get-webtoons/http-request.adoc[]
+
+==== Response
+include::{snippets}/get-v1-get-webtoons/http-response.adoc[]
+include::{snippets}/get-v1-get-webtoons/response-body.adoc[]
+include::{snippets}/get-v1-get-webtoons/response-fields.adoc[]
+
+
+=== 연재 요일 웹툰 조회
+
+==== Request
+include::{snippets}/get-v1-get-webtoonsByPublish/http-request.adoc[]
+include::{snippets}/get-v1-get-webtoonsByPublish/query-parameters.adoc[]
+
+==== Response
+include::{snippets}/get-v1-get-webtoonsByPublish/http-response.adoc[]
+include::{snippets}/get-v1-get-webtoonsByPublish/response-body.adoc[]
+include::{snippets}/get-v1-get-webtoonsByPublish/response-fields.adoc[]
+
+
+=== 플랫폼별 웹툰 조회
+
+==== Request
+include::{snippets}/get-v1-get-webtoonsByPlatform/http-request.adoc[]
+include::{snippets}/get-v1-get-webtoonsByPlatform/query-parameters.adoc[]
+
+==== Response
+include::{snippets}/get-v1-get-webtoonsByPlatform/http-response.adoc[]
+include::{snippets}/get-v1-get-webtoonsByPlatform/response-body.adoc[]
+include::{snippets}/get-v1-get-webtoonsByPlatform/response-fields.adoc[]
+
+=== 장르별 웹툰 조회
+
+==== Request
+include::{snippets}/get-v1-get-webtoonsByGenre/http-request.adoc[]
+include::{snippets}/get-v1-get-webtoonsByGenre/query-parameters.adoc[]
+
+==== Response
+include::{snippets}/get-v1-get-webtoonsByGenre/http-response.adoc[]
+include::{snippets}/get-v1-get-webtoonsByGenre/response-body.adoc[]
+include::{snippets}/get-v1-get-webtoonsByGenre/response-fields.adoc[]
+
+
+=== 장르별 웹툰 조회
+
+==== Request
+include::{snippets}/get-v1-get-webtoonsByGenres/http-request.adoc[]
+include::{snippets}/get-v1-get-webtoonsByGenres/query-parameters.adoc[]
+
+==== Response
+include::{snippets}/get-v1-get-webtoonsByGenres/http-response.adoc[]
+include::{snippets}/get-v1-get-webtoonsByGenres/response-body.adoc[]
+include::{snippets}/get-v1-get-webtoonsByGenres/response-fields.adoc[]
+
+=== 리뷰 개수,리뷰 평점 순 정렬
+
+==== Request
+해당 정렬은 "rating(리뷰 평점순)" 을 기준으로 정렬
+include::{snippets}/get-v1-get-webtoonsByCondition/http-request.adoc[]
+include::{snippets}/get-v1-get-webtoonsByCondition/query-parameters.adoc[]
+
+===== Response
+include::{snippets}/get-v1-get-webtoonsByCondition/http-response.adoc[]
+include::{snippets}/get-v1-get-webtoonsByCondition/response-body.adoc[]
+include::{snippets}/get-v1-get-webtoonsByCondition/response-fields.adoc[]
+
+
+
+
+

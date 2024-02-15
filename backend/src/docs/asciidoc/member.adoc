@@ -1,0 +1,38 @@
+== 회원(Member)
+회원정보에 대한 조회/수정 기능을 제공합니다
+
+[INFO]
+====
+세션 회원 정보가 필요한 엔드포인트 입니다.
+====
+
+=== 회원 프로필 조회
+
+==== request
+include::{snippets}/get-v1-get-profile/http-request.adoc[]
+
+==== response
+include::{snippets}/get-v1-get-profile/http-response.adoc[]
+include::{snippets}/get-v1-get-profile/response-body.adoc[]
+include::{snippets}/get-v1-get-profile/response-fields.adoc[]
+
+
+=== 회원 프로필 수정
+
+==== request
+include::{snippets}/patch-v1-update-profile/http-request.adoc[]
+include::{snippets}/patch-v1-update-profile/request-body.adoc[]
+include::{snippets}/patch-v1-update-profile/request-fields.adoc[]
+
+==== response
+include::{snippets}/patch-v1-update-profile/http-response.adoc[]
+include::{snippets}/patch-v1-update-profile/response-body.adoc[]
+include::{snippets}/patch-v1-update-profile/response-fields.adoc[]
+
+
+
+
+
+
+
+
