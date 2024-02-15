@@ -169,7 +169,8 @@ class ReviewCustomRepositoryImplTest {
                     qReview.reviewerNickname,
                     qReview.memberId,
                     qReview.rating,
-                    qReview.createdAt
+                    qReview.createdAt,
+                    qReview.likesCount
                 ))
             .from(qReview)
             .innerJoin(qWebtoon).on(qReview.webtoonId.eq(qWebtoon.id))

@@ -37,7 +37,8 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
                     review.reviewerNickname,
                     review.memberId,
                     review.rating,
-                    review.createdAt
+                    review.createdAt,
+                    review.likesCount
                 ))
             .from(review)
             .innerJoin(webtoon).on(review.webtoonId.eq(webtoon.id))

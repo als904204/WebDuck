@@ -39,6 +39,9 @@ public class Review extends BaseTime {
     @Column(nullable = false)
     private Integer rating;
 
+    // 해당 리뷰 좋아요 수
+    private int likesCount = 0;
+
     // todo : 세션맴버에서 닉네임 추가하고 리뷰 생성할 때 닉네임으로 설정
     @Builder
     public Review(Long webtoonId, Long memberId,String reviewerNickname ,String content,Integer rating) {
@@ -65,6 +68,15 @@ public class Review extends BaseTime {
         return Math.round(avg * 10.0) / 10.0; // 반올림 후 리턴
     }
 
+    public void upLikesCount() {
+        this.likesCount++;
+    }
+
+    public void downLikesCount() {
+        if (this.likesCount > 0) {
+            this.likesCount--;
+        }
+    }
 
     public Long getId() {
         return id;
@@ -83,6 +95,10 @@ public class Review extends BaseTime {
     }
     public Integer getRating() {
         return rating;
+    }
+
+    public int getLikesCount(){
+        return likesCount;
     }
 }
 

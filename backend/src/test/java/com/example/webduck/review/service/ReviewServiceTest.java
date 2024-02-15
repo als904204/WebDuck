@@ -1,17 +1,12 @@
 package com.example.webduck.review.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.repository.ReviewRepository;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

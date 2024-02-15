@@ -8,8 +8,11 @@ import com.example.webduck.review.dto.ReviewRequest;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
+import com.example.webduck.review.dto.ReviewResponse.ReviewLikesResponse;
 import com.example.webduck.review.dto.SliceReviewResponse;
 import com.example.webduck.review.entity.Review;
+import com.example.webduck.review.entity.ReviewLikes;
+import com.example.webduck.review.repository.ReviewLikesRepository;
 import com.example.webduck.review.repository.ReviewRepository;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
@@ -29,6 +32,8 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
 
     private final WebtoonRepository webtoonRepository;
+
+    private final ReviewLikesRepository reviewLikesRepository;
 
 
     @Transactional
@@ -91,6 +96,38 @@ public class ReviewService {
 
         webtoonIsExists(webtoonId);
         return reviewRepository.findSliceReviews(webtoonId, nextReviewId, pageable);
+    }
+
+    // 리뷰 좋아요 / 이미 있다면 좋아요 취소
+    @Transactional
+    public ReviewLikesResponse updateLikes(Long reviewId, SessionMember sessionMember) {
+        Long memberId = sessionMember.getId();
+
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new CustomException(
+            LogicExceptionCode.REVIEW_NOT_FOUND));
+
+        boolean hasLikes = reviewLikesRepository.existsByReviewIdAndMemberId(reviewId, memberId);
+
+        if (hasLikes) {
+            log.info("down likes");
+            reviewLikesRepository.deleteByReviewIdAndMemberId(reviewId, memberId);
+            review.downLikesCount();
+            int likesCount = review.getLikesCount();
+            return new ReviewLikesResponse(true, likesCount);
+        }else{
+            log.info("up likes");
+
+            ReviewLikes reviewLikes = ReviewLikes.builder()
+                .reviewId(reviewId)
+                .memberId(memberId)
+                .build();
+
+            reviewLikesRepository.save(reviewLikes);
+
+            review.upLikesCount();
+            int likesCount = review.getLikesCount();
+            return new ReviewLikesResponse(true, likesCount);
+        }
     }
 
     private void webtoonIsExists(Long id) {
