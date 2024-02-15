@@ -1,131 +1,95 @@
-# WebDuck
-웹툰 리뷰 사이트 
----
+![notice1.png](img/notice1.png)
 
-
-##  ~ 12/29 완료 
-  - [백엔드]
-    - OAuth 회원가입(구글,카카오,네이버)
-    - 로그인
-    - 어드민 웹툰 업로드
-    - 글로벌 예외처리 
-  - [프론트]
-    - index 기본 화면
-    - 회원가입 OAuth 선택 페이지
-    - 요일별 클릭 시, 해당 요일 웹툰 출력
-    - 오류 페이지 
-   
+# 웹툰 덕후들을 위한 사이트, WebDuck
 
 ---
+## 소개
 
-## 12/29 ~ 12/31 완료
-- [백엔드]
-    - 웹툰 조회,웹툰 목록 조회,웹툰 요일별 조회 테스트 코드 작성
----
+웹덕은 웹툰을 좋아하는 사람들의 웹툰 리뷰들을 모아놓은 커뮤니티 사이트입니다
 
-## 1/1 ~ 1/1 완료
-- [백엔드]
-    - 웹툰 플랫폼 별 조회 & 테스트 코드
-    - 이미지 업로드 파일경로 변경 :  프로젝트/src/main/..../static/temp -> 컴퓨터 바탕화면/img/ 로 변경
-- [프론트]
-    - 플랫폼 별 웹툰 조회 화면 출력
+웹툰 리뷰평을 보고 보고싶은 웹툰을 찾아봐요
+
+
+## 기술 스택
 
 ---
-## 1/2 ~ 3 완료
-- [백엔드]
-    - 웹툰 장르 도메인 작성 
-    - Webtoon <==> Webtoon_Genre ==> Genre 연관관계 설정
-    - 어드민 웹툰 업로드 장르 선택 추가
-  
-- [프론트]
-    - 어드민 페이지 웹툰 업로드 시 장르 선택 추가
+|                                                                                                                                                                                                                                                                          **Backend**                                                                                                                                                                                                                                                                           |         
+|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:| 
+|![Spring boot](https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white) ![RestDocs](https://img.shields.io/badge/RestDocs-ff?style=flat-square&logo=SpringBoot&logoColor=white) ![Spring Security](https://img.shields.io/badge/SpringSecurity-6DB33F?style=flat-square&logo=SpringSecurity&logoColor=white) ![Gradle](https://img.shields.io/badge/Gradle-white?style=flat-square&logo=gradle&color=02303A) ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=flat-the-badge&logo=mariadb&logoColor=white) 
+|                                                                                                                                                                                                                                                                          **Frontend**   
+|![Vue](https://img.shields.io/badge/Vue.js-35495E?style=flat-the-badge&logo=vuedotjs&logoColor=4FC08D)
+|                                                                                                                                                                                                                                                                           **Infra**                                                                                                                                                                                                                                                                            |
+|                                                                                                                        ![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=AmazonAWS&logoColor=white)![Git Action](https://img.shields.io/badge/GitAction-2088FF?style=flat-square&logo=GithubActions&logoColor=white) ![S3](https://img.shields.io/badge/S3-569A31?style=flat-square&logo=AmazonS3&logoColor=white)                                                                                                                         
 
-- [TODO]
-    -  장르별 웹툰 검색 API 추가 
----
+## 주요 기능
 
 ---
-## 1/4 ~ 1/5 완료
-- [백엔드]
-    - 장르 별 웹툰 조회 API 
-    - 장르 엔티티 컬럼 Type -> name 변경
-    - Validation 적용
-    - 요일 별 웹툰 API
+- 장르별/플랫폼별/요일별 웹툰 조회
+- 웹툰 리뷰 작성
+- 리뷰순/평점순으로 웹툰을 정렬해 인기 웹툰 조회
 
-- [프론트]
-    - 메인화면에 장르별 웹툰 선택 화면
-    - 요일 별 웹툰 페이지 
+## 아키텍쳐
+
+---
+작성중..
+
+## ERD
+
+---
+작성중...
+
+
+## 기술
+
+---
+- [Spring Security OAuth 사용자 인증](#spring-security-oauth-사용자-인증)
+- [Session 기반 사용자 인가](#session-기반-사용자-인가)
+- [RestDocs 이용한 API 문서화](#restdocs-이용한-api-문서화)
+- [QueryDsl 동적 쿼리](#querydsl-동적-쿼리)
 
 ---
 
----
-## 1/6 ~ 1/7 완료
-- [백엔드]
-    - QueryDsl 도입
-    - 여러 장르 별 웹툰 조회 API(무협,판타지 선택시 해당 장르에 해당하는 웹툰 조회)
+## Spring Security OAuth 사용자 인증
 
+**1. 설명1**
+- 설명 보충1
+- 설명 보충1
+- 설명 보충1
 
-- [프론트]
-    - 여러 장르 별 웹툰 조회 페이지
+**2. 설명2**
+- 설명 보충2
+- 설명 보충2
+- 설명 보충2
 
----
+## Session 기반 사용자 인가
+**1. 설명1**
+- 설명 보충1
+- 설명 보충1
+- 설명 보충1
 
----
-## 1/9 ~ 1/10 완료
-- [백엔드]
-    - 임시 웹툰 sql
-    - 세션기반 회원정보 유지
+**2. 설명2**
+- 설명 보충2
+- 설명 보충2
+- 설명 보충2
 
-- [프론트]
-  - 플랫폼 별 웹툰 API
+## RestDocs 이용한 API 문서화
+**1. 설명1**
+- 설명 보충1
+- 설명 보충1
+- 설명 보충1
 
----
+**2. 설명2**
+- 설명 보충2
+- 설명 보충2
+- 설명 보충2
+- 
+## QueryDsl 동적 쿼리
+**1. 설명1**
+- 설명 보충1
+- 설명 보충1
+- 설명 보충1
 
-
-## 1/12 ~ 진행중(수정 삭제 구현중..)
-- [백엔드]
-    - 웹툰 리뷰 생성 API
-    
-
-- [프론트]
-    - 웹툰 상세보기 페이지
-    - 리뷰 작성
-    - 리뷰 목록
-
-- [문제점]
-  - jwt 토큰 혹은 session 기반으로 할지 정해서 현재 접속중인 회원인증하는 로직 필요함
-
----
-
-## 1/14 완료
-- [백엔드]
-    - 회원정보 암호화
-    - JPA Converter를 이용해 암호화&복호화 적용
----
-
-## 1/15 ~ 1/16 완료
-- [백엔드]
-  - 회원 리뷰
-
----
-
-## 1/20 ~ 1/26
-- [백엔드]
-  - RestDocs 적용
-  - Webtoon API Document
-  - Genre API Document
-  - Review API Document
-  - 리팩토링 & Review 목록 전체조회 무한 페이징 적용
-
-## 1/26 중단
-- Vue 공부 후 적용예정
-
-## - 미완료
-  - [백엔드]
-    - DB 설계 확장
-    - 회원 커뮤니티 [미정]
-    - 자주 접근하는 API 캐싱(레디스X,스프링 내부 캐시 OR 외부 라이브러리)
-  - [프론트]
-    - 인기 웹툰 동적 출력
-    - 웹툰 리뷰 화면
-
+**2. 설명2**
+- 설명 보충2
+- 설명 보충2
+- 설명 보충2
