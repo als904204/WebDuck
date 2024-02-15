@@ -88,9 +88,12 @@
               <div v-for="review in reviews" :key="review.reviewId">
                 <span>
                   <Rating v-model="review.rating" readonly :cancel="false" />
-                  <p>{{review.createdAt}}</p>
+                  <p>
+                    <span class="mr-4 font-bold">{{review.reviewerNickname}} </span>
+                    <span class="text-gray-500">{{review.createdAt}}</span>
+                  </p>
                   <p>{{review.content}}</p>
-                  <p>{{review.reviewerNickname}}</p>
+                    <Button :label="review.likesCount" @click="updateLikes(review.reviewId)" class="pi pi-thumbs-up"></Button>
                   <hr/>
                 </span>
               </div>
@@ -121,7 +124,11 @@ import {
   fetchWebtoonDetails,
   fetchWebtoonRatingAvg
 } from "../../service/WebtoonDetailsService.js";
-import {fetchReviewsByWebtoonId, submitReview} from "../../service/ReviewService.js";
+import {
+  fetchReviewsByWebtoonId,
+  submitReview,
+  updateReviewLikes
+} from "../../service/ReviewService.js";
 import {isLoggedIn} from "../../store/auth.js";
 import Message from 'primevue/message';
 import {timeAgo} from "../../service/TimeAgoConverter.js";
@@ -142,7 +149,6 @@ let avgRated = ref(null);
 let errorStatus = ref('');
 let avgStatus = ref('');
 let reviewCounted = ref('');
-
 
 // 웹툰 상세보기 정보
 onMounted(async ()=>{
@@ -232,6 +238,28 @@ const createReview = async () => {
     userReviewRating.value = 0;
   }
 }
+
+// 리뷰 좋아요
+const updateLikes = async (reviewId) => {
+
+  if(!isLoggedIn.value){
+    errorStatus.value = 'loginRequired';
+    return;
+  }
+
+  try{
+    const response = await updateReviewLikes(reviewId);
+
+    const reviewIndex = reviews.value.findIndex(r => r.reviewId === reviewId);
+
+    if(reviewIndex !== -1){
+      reviews.value[reviewIndex].likesCount = response.likesCount;
+    }
+  }catch (error){
+    alert('알수 없는 에러가 발생했습니다.');
+    return;
+  }
+};
 
 // 리뷰 목록 새로고침
 const refreshReviews = async () => {
