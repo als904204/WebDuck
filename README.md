@@ -1,4 +1,4 @@
-![notice1.png](..%2F..%2FDesktop%2Fnotice1.png)
+![notice1.png](img/notice1.png)
 
 # 웹툰 덕후들을 위한 사이트, WebDuck
 
