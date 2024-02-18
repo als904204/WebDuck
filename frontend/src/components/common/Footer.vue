@@ -1,7 +1,6 @@
 <template>
   <footer class="footer">
     <div class="footer_leftCover">
-      <p>웹덕로고</p>
       <div class="footer_contentInfo">
         <div class="footer_title">Contact</div>
         <div class="footer_mail">min.uuu1117@gmail.com</div>
@@ -13,17 +12,17 @@
 
     <div class="footer_rightCover">
       <a href="mailto:min.uuu1117@gmail.com" class="pi pi-envelope" target="_blank"></a>
-      <a href="https://github.com/als904204" class="pi pi-github" target="_blank"></a>
+      <img :src="notice1" alt="웹덕 로고" style="width: 24px; height: 24px;">
+
     </div>
 
 
   </footer>
 </template>
 
-<script>
-export default {
-  name: 'Footer'
-}
+<script setup>
+import notice1 from '../../assets/webduck-icon.png';
+
 </script>
 
 <style>
