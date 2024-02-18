@@ -60,9 +60,6 @@ dependencies {
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.4'
     runtimeOnly 'com.h2database:h2'
 
-    // LOG
-    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1'
-
     // querydsl
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
