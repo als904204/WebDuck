@@ -8,7 +8,6 @@ class WebDuckApplicationTests {
 
     @Test
     void contextLoads() {
-        System.out.println("CI/CD");
     }
 
 }
