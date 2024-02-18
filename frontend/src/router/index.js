@@ -8,6 +8,7 @@ import Naver from "../components/webtoon/Naver.vue";
 import Login from "../components/login/Login.vue";
 import Review from "../components/webtoon/Review.vue";
 import Profile from "../components/login/Profile.vue";
+import NotFound from "../components/common/NotFound.vue";
 
 const routes = [
   {path : '/',component:Home},
@@ -17,7 +18,9 @@ const routes = [
   {path : '/naver', component: Naver},
   {path : '/login', component: Login},
   {path : '/profile', component: Profile},
-  {path : '/review/:id',component: Review, name: 'review'}
+  {path : '/review/:id',component: Review, name: 'review'},
+  {path : '/notFound', component: NotFound, name: 'name'},
+  {path: "/:pathMatch(.*)*", redirect: "/notFound"}
 
 ]
 
