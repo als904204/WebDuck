@@ -1,7 +1,5 @@
 spring:
   profiles:
-    active: prod # prod,dev,test
+    active: dev # prod,dev,test
 ---
-logging:
-  level:
-    root: debug
+
