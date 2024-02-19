@@ -1,6 +1,5 @@
 package com.example.webduck.genre.controller.api;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -24,12 +23,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+@ActiveProfiles("test")
 @WebMvcTest(GenreApiController.class)
 @ExtendWith(RestDocumentationExtension.class)
 @AutoConfigureRestDocs
