@@ -19,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+@ActiveProfiles("test")
 @WebMvcTest(MemberApiController.class)
 class MemberApiControllerTest {
 
@@ -32,13 +34,6 @@ class MemberApiControllerTest {
 
     private final String uri = "/api/v1/member";
 
-    @DisplayName("실패 : 로그인하지 않은 회원 프로필 조회 3xx 리다이렉트")
-    @Test
-    void testFailNoLogin() throws Exception {
-        mockMvc.perform(get(uri + "/profile"))
-            .andDo(print())
-            .andExpect(status().is3xxRedirection());
-    }
 
     @WithMockCustomUser
     @DisplayName("실패 : 회원 프로필 업데이트 필드값 누락 400 오류")

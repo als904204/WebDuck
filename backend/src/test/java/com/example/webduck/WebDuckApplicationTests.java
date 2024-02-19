@@ -8,6 +8,7 @@ class WebDuckApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }
