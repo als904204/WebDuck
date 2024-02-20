@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+    @Value("${login.redirect.url}")
+    private String redirectUrl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -27,7 +31,6 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
-        var redirectUrl = "http://localhost:5173";
 
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
