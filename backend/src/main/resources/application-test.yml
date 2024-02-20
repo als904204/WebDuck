@@ -26,3 +26,9 @@ spring:
 
 secret:
   key: "asdfasdfasdfasdfasdfasdfdasdfasdfadfafdsa"
+
+
+
+login:
+  redirect:
+    url: "localhost:5173"
