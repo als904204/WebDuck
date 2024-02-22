@@ -7,6 +7,7 @@ spring:
             client-id: 452076268077-4i5s6h332sv3trkl4297a7dfb74e5iql.apps.googleusercontent.com
             client-secret: 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
             scope: profile,email
+            redirect-uri: http://localhost:8080/login/oauth2/code/google
           kakao:
             client-id: 3995bb2154a6fc28c4bbc19606e68f09
             client-secret: EQ93LhhvCZHlq4Gge2dSdpvkTCa2Z6lv
@@ -61,7 +62,7 @@ secret:
 
 login:
   redirect:
-    url: "localhost:5173"
+    url: "http://localhost:5173"
 
 
 

@@ -40,7 +40,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private static final String NAVER = "naver";
     private static final String KAKAO = "kakao";
-    private static final String APPLE = "apple";
     private static final String GOOGLE = "google";
 
 
@@ -54,7 +53,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
 
-        // OAuth2 회사이름 GOOGLE,KAKAO,NAVER,APPLE
+        // OAuth2 회사이름 GOOGLE,KAKAO,NAVER
         String oAuthProviderName = userRequest.getClientRegistration().getRegistrationId();
 
         // OAuth2 로그인 시 키(PK)가 되는 값 (sub)
