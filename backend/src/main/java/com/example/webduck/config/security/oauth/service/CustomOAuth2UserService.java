@@ -45,7 +45,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        log.info("loadUser by OAuth");
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
@@ -76,7 +75,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         Member member = createOrUpdateMember(oAuth2UserInfo);
 
         httpSession.setAttribute("member", new SessionMember(member));
-
         return new DefaultOAuth2User(
             Collections.singleton(new
                 SimpleGrantedAuthority((member.getRoleKey()))),
@@ -94,8 +92,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 
     private Member createMember(OAuth2UserInfo oAuth2UserInfo){
-        log.info("new user");
-
+        log.info("new user={}",oAuth2UserInfo.getEmail());
         String randomNickname = nicknameGenerator.getRandomNickname();
 
         Member newMember = Member.builder()

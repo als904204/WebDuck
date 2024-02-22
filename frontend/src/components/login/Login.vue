@@ -26,19 +26,15 @@ import naver from '../../assets/login/btn_naver.svg';
 import kakao from '../../assets/login/btn_kakao.svg';
 import { computed } from 'vue';
 
-
-
 const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+const oauthRedirectUri = '/oauth2/redirect';
 
-const redirectUri = import.meta.env.VITE_APP_ENV === 'production'
-    ? 'https://webduck.info/oauth2/redirect'
-    : 'http://localhost:5173/oauth2/redirect';
+const redirectUri = backendUrl + oauthRedirectUri;
+
 
 const googleLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/google?redirect_uri=${redirectUri}`);
 const naverLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/naver?redirect_uri=${redirectUri}`);
 const kakaoLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/kakao?redirect_uri=${redirectUri}`);
-
-
 
 </script>
 
