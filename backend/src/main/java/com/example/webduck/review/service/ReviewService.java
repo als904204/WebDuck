@@ -44,16 +44,15 @@ public class ReviewService {
             .orElseThrow(() -> new CustomException(
                 LogicExceptionCode.WEBTOON_NOT_FOUND));
 
-        // todo : 닉네임으로 변경
         Long memberId = sessionMember.getId();
-        String email = sessionMember.getUsername();
+        String username = sessionMember.getUsername();
         String content = reviewRequest.getContent();
         Integer rating = reviewRequest.getRating();
 
         Review review = Review.builder()
             .webtoonId(webtoonId)
             .memberId(memberId)
-            .reviewerNickname(email)
+            .reviewerNickname(username)
             .content(content)
             .rating(rating)
             .build();
@@ -61,6 +60,7 @@ public class ReviewService {
         // 리뷰 저장 시, 해당 웹툰 리뷰 개수를 증가한다.
         webtoon.incrementReviewCount();
         review = reviewRepository.save(review);
+        log.info("m.pk={} is saved review(r.pk={}_",memberId,review.getId());
         return new ReviewId(review.getId());
     }
 
