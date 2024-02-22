@@ -54,6 +54,7 @@ public class MemberService {
 
         member.updateProfile(username);
         sessionMember.setUsername(username);
+        log.info("member username updated={}",member.getUsername());
         return new ProfileResponse(member);
     }
 }
