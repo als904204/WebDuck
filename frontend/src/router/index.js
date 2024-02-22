@@ -9,6 +9,7 @@ import Login from "../components/login/Login.vue";
 import Review from "../components/webtoon/Review.vue";
 import Profile from "../components/login/Profile.vue";
 import NotFound from "../components/common/NotFound.vue";
+import Redirect from "../components/login/Redirect.vue";
 
 const routes = [
   {path : '/',component:Home},
@@ -20,8 +21,8 @@ const routes = [
   {path : '/profile', component: Profile},
   {path : '/review/:id',component: Review, name: 'review'},
   {path : '/notFound', component: NotFound, name: 'name'},
-  {path: "/:pathMatch(.*)*", redirect: "/notFound"}
-
+  {path: "/:pathMatch(.*)*", redirect: "/notFound"},
+  {path: '/oauth2/redirect', component: Redirect}
 ]
 
 

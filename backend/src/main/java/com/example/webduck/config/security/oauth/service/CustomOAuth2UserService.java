@@ -40,12 +40,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private static final String NAVER = "naver";
     private static final String KAKAO = "kakao";
-    private static final String APPLE = "apple";
     private static final String GOOGLE = "google";
 
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        log.info("loadUser by OAuth");
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
@@ -54,7 +54,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
 
-        // OAuth2 회사이름 GOOGLE,KAKAO,NAVER,APPLE
+        // OAuth2 회사이름 GOOGLE,KAKAO,NAVER
         String oAuthProviderName = userRequest.getClientRegistration().getRegistrationId();
 
         // OAuth2 로그인 시 키(PK)가 되는 값 (sub)

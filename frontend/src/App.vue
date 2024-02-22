@@ -7,13 +7,12 @@
 <script setup>
 import Navbar from "./components/common/Navbar.vue";
 import Footer from "./components/common/Footer.vue";
-import { onMounted } from 'vue';
-import {checkLoginStatus} from "./store/auth.js";
+import {csrfToken, isLoggedIn} from "./store/auth.js";
+import {onMounted} from "vue";
 
-onMounted(async () => {
-  await checkLoginStatus();
-})
-
+onMounted(() => {
+  isLoggedIn.value = sessionStorage.getItem('isLoggedIn') === 'true';
+});
 </script>
 
 
