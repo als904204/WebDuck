@@ -62,7 +62,7 @@ secret:
 
 login:
   redirect:
-    url: "http://localhost:5173"
+    url: "http://localhost:5173/oauth2/redirect"
 
 
 
