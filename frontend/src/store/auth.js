@@ -9,11 +9,15 @@ export async function checkLoginStatus() {
     const response = await axios.get('/api/v1/auth/status');
     if(response.data === true){
       isLoggedIn.value = response.data;
+      sessionStorage.setItem('isLoggedIn', 'true');
       await fetchCsrfToken(); // 로그인 상태일 때만 CSRF 토큰 요청
+    }else{
+      sessionStorage.removeItem('isLoggedIn');
     }
+    return response.data;
   } catch (error) {
     console.error("Error checking login status", error);
-    throw error;
+    return false;
   }
 }
 
@@ -22,6 +26,7 @@ async function fetchCsrfToken() {
   try {
     const response = await axios.get('/api/v1/auth/csrf');
     csrfToken.value = response.data;
+    sessionStorage.setItem('csrfToken', csrfToken.value);
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken.value;
   } catch (error) {
     console.error("Error fetching CSRF token", error);
@@ -29,16 +34,25 @@ async function fetchCsrfToken() {
   }
 }
 
+
+
 export async function logout() {
+  const csrfToken = sessionStorage.getItem('csrfToken'); // 세션 스토리지에서 CSRF 토큰 가져오기
   try {
     await axios.post('/api/v1/auth/logout', {}, {
+      headers: {
+        'X-CSRF-TOKEN': csrfToken,
+      },
       withCredentials: true
     });
     isLoggedIn.value = false;
+    sessionStorage.clear(); // 로그아웃 시 세션 스토리지 클리어
   } catch (error) {
     console.error("Error during logout", error);
     throw error;
   }
 }
+
+
 
 

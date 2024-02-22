@@ -27,11 +27,16 @@ import kakao from '../../assets/login/btn_kakao.svg';
 import { computed } from 'vue';
 
 
-// TODO env 로 변경
-const backendUrl = "http://localhost:8080"
-const googleLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/google`);
-const naverLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/naver`);
-const kakaoLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/kakao`);
+
+const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+
+const redirectUri = import.meta.env.VITE_APP_ENV === 'production'
+    ? 'https://webduck.info/oauth2/redirect'
+    : 'http://localhost:5173/oauth2/redirect';
+
+const googleLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/google?redirect_uri=${redirectUri}`);
+const naverLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/naver?redirect_uri=${redirectUri}`);
+const kakaoLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/kakao?redirect_uri=${redirectUri}`);
 
 
 
