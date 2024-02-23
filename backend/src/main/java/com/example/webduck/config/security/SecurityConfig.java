@@ -83,10 +83,6 @@ public class SecurityConfig {
                     .requestMatchers(ADMIN_URL)
                     .hasRole(ADMIN.name())
 
-                    // ex) 권한 세부 설정
-                    .requestMatchers(GET, ADMIN_URL)
-                    .hasAnyAuthority(ADMIN.name())
-
                     .anyRequest()
                     .authenticated()
             )
@@ -105,10 +101,10 @@ public class SecurityConfig {
             )
             .sessionManagement(session -> session
                 .maximumSessions(1) // 동시 세션 제한
-                .expiredUrl("/session-expired") // 동시 로그인 시 기존로그인 한 사람 리다이렉트
-
+                .expiredUrl("/") // 동시 로그인 시 기존로그인 한 사람 리다이렉트
             )
             .logout(logout -> logout
+                .permitAll()
                 .logoutUrl("/api/v1/auth/logout")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/api/v1/auth/logout")) // 주소창에 입력해도 POST 로 처리
                 .deleteCookies("JSESSIONID")
