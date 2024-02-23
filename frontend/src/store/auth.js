@@ -46,6 +46,7 @@ export async function logout() {
       withCredentials: true
     });
     isLoggedIn.value = false;
+    sessionStorage.setItem('isLoggedIn', 'false');
     sessionStorage.clear(); // 로그아웃 시 세션 스토리지 클리어
   } catch (error) {
     console.error("Error during logout", error);
