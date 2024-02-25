@@ -16,8 +16,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     private final LoginMemberArgumentResolver loginMemberArgumentResolver;
 
-    @Value("${cors.origin}")
-    private String origin;
+    @Value("${index.page}")
+    private String indexPage;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -36,7 +36,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/v1/**")
-            .allowedOrigins(origin)
+            .allowedOrigins(indexPage)
             .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
             .allowedHeaders("*")
             .allowCredentials(true);
