@@ -40,18 +40,19 @@ async function fetchCsrfToken() {
 export async function logout() {
   const csrfToken = sessionStorage.getItem('csrfToken'); // 세션 스토리지에서 CSRF 토큰 가져오기
   try {
-    await axios.post('/api/v1/auth/logout', {}, {
-      headers: {
-        'X-CSRF-TOKEN': csrfToken,
-      },
-      withCredentials: true
+      await axios.post('/api/v1/auth/logout', {}, {
+        headers: {
+          'X-CSRF-TOKEN': csrfToken,
+        },
+        withCredentials: true
     });
+
     isLoggedIn.value = false;
     sessionStorage.setItem('isLoggedIn', 'false');
-    sessionStorage.clear(); // 로그아웃 시 세션 스토리지 클리어
+    sessionStorage.clear();
   } catch (error) {
     console.error("Error during logout", error);
-    throw error;
+    alert('알수없는 에러가 발생했습니다')
   }
 }
 

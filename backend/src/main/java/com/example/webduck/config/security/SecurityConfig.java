@@ -9,8 +9,8 @@ import static org.springframework.http.HttpMethod.POST;
 import com.example.webduck.config.security.oauth.handler.OAuth2LoginFailureHandler;
 import com.example.webduck.config.security.oauth.handler.OAuth2LoginSuccessHandler;
 import com.example.webduck.config.security.oauth.service.CustomOAuth2UserService;
-import com.example.webduck.member.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,6 +29,9 @@ public class SecurityConfig {
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
     private final OAuth2LoginFailureHandler oAuth2LoginFailureHandle;
 
+    @Value("${index.page}")
+    private String indexPage;
+
     private static final String[] WHITE_LIST_URL = {
         "/",
         "/css/**",
@@ -43,6 +46,7 @@ public class SecurityConfig {
         "/webtoon/details/**"
 
     };
+
 
     private static final String[] WHITE_GET_API_LIST_URL = {
         "/api/v1/webtoon/**",
@@ -110,7 +114,7 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true) // 로그아웃 시 세션 날리기
                 .clearAuthentication(true)   // 시큐리티 컨텍스트 홀더 인증정보 날리기
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl(indexPage)
             );
 
         return http.build();
