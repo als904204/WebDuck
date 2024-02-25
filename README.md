@@ -35,7 +35,7 @@
 ## 아키텍쳐
 
 ---
-![img.png](img.png)
+![img.png](img/architecture.png)
 
 ## ERD
 
