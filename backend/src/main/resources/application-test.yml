@@ -28,10 +28,9 @@ secret:
   key: "asdfasdfasdfasdfasdfasdfdasdfasdfadfafdsa"
 
 
-
 login:
   redirect:
-    url: "localhost:5173"
+    url: "https://login/redirect"
 
-cors:
-  origin: "http://localhost:5173"
+index:
+  page: "https://index.page"
