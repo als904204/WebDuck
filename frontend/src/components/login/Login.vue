@@ -9,9 +9,6 @@
           <a :href="googleLoginUrl" class="btn-link">
             <img :src="google" class="login-icon" alt="google_login">
           </a>
-          <a :href="naverLoginUrl" class="btn-link">
-          <img :src="naver" class="login-icon" alt="naver_login">
-          </a>
           <a :href="kakaoLoginUrl"class="btn-link">
           <img :src="kakao" class="login-icon" alt="kakao_login">
           </a>
@@ -22,7 +19,6 @@
 </template>
 <script setup>
 import google from '../../assets/login/btn_google.svg';
-import naver from '../../assets/login/btn_naver.svg';
 import kakao from '../../assets/login/btn_kakao.svg';
 import { computed } from 'vue';
 
@@ -33,7 +29,6 @@ const redirectUri = backendUrl + oauthRedirectUri;
 
 
 const googleLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/google?redirect_uri=${redirectUri}`);
-const naverLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/naver?redirect_uri=${redirectUri}`);
 const kakaoLoginUrl = computed(() => `${backendUrl}/oauth2/authorization/kakao?redirect_uri=${redirectUri}`);
 
 </script>

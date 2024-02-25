@@ -13,6 +13,7 @@ export async function checkLoginStatus() {
       await fetchCsrfToken(); // 로그인 상태일 때만 CSRF 토큰 요청
     }else{
       sessionStorage.removeItem('isLoggedIn');
+      sessionStorage.removeItem('csrfToken');
     }
     return response.data;
   } catch (error) {
