@@ -8,6 +8,7 @@ import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
 import com.example.webduck.review.dto.ReviewResponse.ReviewLikesResponse;
+import com.example.webduck.review.dto.ReviewUpdate;
 import com.example.webduck.review.dto.SliceReviewResponse;
 import com.example.webduck.review.service.ReviewService;
 import jakarta.validation.Valid;
@@ -35,6 +36,13 @@ public class ReviewApiController {
     ReviewSave reviewSave) {
         ReviewId response = reviewService.saveReview(member, reviewSave);
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{reviewId}")
+    public ResponseEntity<Void> updateReviewByReviewId(@PathVariable Long reviewId,
+        @LoginMember SessionMember member, @Valid @RequestBody ReviewUpdate reviewUpdate) {
+        reviewService.updateReview(reviewId,member,reviewUpdate);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{webtoonId}")
