@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class ReviewRequest {
+public class ReviewSave {
 
     @NotNull(message = "webtoonId는 null이 될 수 없습니다")
     private final Long webtoonId;
@@ -21,7 +21,7 @@ public class ReviewRequest {
     private final Integer rating;
 
 
-    public ReviewRequest(Long webtoonId, String content, int rating) {
+    public ReviewSave(Long webtoonId, String content, int rating) {
         this.webtoonId = webtoonId;
         this.content = content;
         this.rating = rating;

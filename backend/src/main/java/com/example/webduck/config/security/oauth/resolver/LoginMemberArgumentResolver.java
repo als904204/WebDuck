@@ -42,8 +42,8 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         var sessionMember = httpSession.getAttribute("member");
 
         if (sessionMember == null) {
-            log.error("Authenticated user not found in session");
-            throw new CustomException(LogicExceptionCode.MEMBER_NOT_FOUND);
+            log.warn("Authenticated user not found in session");
+            return null;
         }
 
         return httpSession.getAttribute("member");

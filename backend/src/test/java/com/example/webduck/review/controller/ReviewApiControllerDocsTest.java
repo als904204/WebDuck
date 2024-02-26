@@ -2,6 +2,7 @@ package com.example.webduck.review.controller;
 
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -20,7 +21,7 @@ import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
 import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
-import com.example.webduck.review.dto.ReviewRequest;
+import com.example.webduck.review.dto.ReviewSave;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
@@ -81,11 +82,11 @@ class ReviewApiControllerDocsTest {
     public void testCreateReview() throws Exception {
 
         // given
-        var request = new ReviewRequest(1L, "first review", 5);
+        var request = new ReviewSave(1L, "first review", 5);
         var responseReviewId = new ReviewId(1L);
 
         Mockito.when(reviewService.saveReview(Mockito.any(SessionMember.class), Mockito.any(
-            ReviewRequest.class))).thenReturn(responseReviewId);
+            ReviewSave.class))).thenReturn(responseReviewId);
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
@@ -109,6 +110,7 @@ class ReviewApiControllerDocsTest {
 
     @DisplayName("조회 : 리뷰 목록(no offset)")
     @Test
+    @WithMockCustomUser
     void testGetReviewsByWebtoonID() throws Exception {
 
         var webtoonId = 1L;
@@ -131,16 +133,24 @@ class ReviewApiControllerDocsTest {
 
         // when
         Mockito.when(
-                reviewService.findReviewsByWebtoonId(Mockito.any(Long.class), Mockito.any(Long.class),
-                    Mockito.any(Integer.class), Mockito.any(Integer.class
-                    )))
-            .thenReturn(sliceResponse);
+            reviewService.findReviewsByWebtoonId(
+                Mockito.any(Long.class),
+                Mockito.any(Long.class),
+                Mockito.any(Integer.class),
+                Mockito.any(Integer.class),
+                Mockito.any(SessionMember.class))
+        ).thenReturn(sliceResponse);
+
+        SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
+
 
         // then
         mockMvc.perform(get(uri + "/{webtoonId}", webtoonId)
                 .param("page", "0")
                 .param("size", "5")
-                .param("nextId", "2"))
+                .param("nextId", "2")
+                .sessionAttr("member", sessionMember))
+
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-reviewsByWebtoonId",
                 preprocessResponse(prettyPrint()),
@@ -150,7 +160,8 @@ class ReviewApiControllerDocsTest {
                 queryParameters(
                     parameterWithName("page").description("요청할 페이지 번호"),
                     parameterWithName("size").description("요청할 페이지당 항목 수"),
-                    parameterWithName("nextId").description("다음 페이지를 위한 마지막 리뷰 ID (첫 요청 시 Null로 요청)").optional()
+                    parameterWithName("nextId").description(
+                        "다음 페이지를 위한 마지막 리뷰 ID (첫 요청 시 Null로 요청)").optional()
                 ),
                 responseFields(
                     fieldWithPath("item[]").description("리뷰 목록"),
@@ -160,6 +171,7 @@ class ReviewApiControllerDocsTest {
                     fieldWithPath("item[].authorId").description("리뷰 작성자 ID"),
                     fieldWithPath("item[].rating").description("리뷰 평점"),
                     fieldWithPath("item[].likesCount").description("리뷰 좋아요"),
+                    fieldWithPath("item[].author").description("리뷰 작성자 여부"),
                     fieldWithPath("item[].createdAt").description("리뷰 작성 시간"),
                     fieldWithPath("pageNumber").description("현재 페이지 번호"),
                     fieldWithPath("pageSize").description("페이지당 항목 수"),
@@ -173,6 +185,27 @@ class ReviewApiControllerDocsTest {
     }
 
 
+    @DisplayName("삭제 : 리뷰 삭제")
+    @Test
+    @WithMockCustomUser
+    void testDeleteReview() throws Exception{
+        var reviewId = 1L;
+
+        Mockito.doNothing().when(reviewService).deleteReview(Mockito.any(Long.class), Mockito.any(SessionMember.class));
+
+        SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
+
+        mockMvc.perform(delete(uri + "/{reviewId}", reviewId)
+            .sessionAttr("member", sessionMember))
+            .andExpect(status().isNoContent())
+            .andDo(document("delete-v1-delete-review",
+                preprocessResponse(prettyPrint()),
+                    pathParameters(
+                        parameterWithName("reviewId").description("삭제할 리뷰 ID")
+                    )
+                ));
+
+    }
 
     @DisplayName("조회 : 리뷰 평균 점수")
     @Test
@@ -180,7 +213,7 @@ class ReviewApiControllerDocsTest {
         var webtoonId = 1L;
         var reviewAvgRes = new ReviewAvg(4.0);
 
-        Mockito.when(reviewService.getReviewAvg(Mockito.any(Long.class)))
+        Mockito.when(reviewService.getAvg(Mockito.any(Long.class)))
             .thenReturn(reviewAvgRes);
 
         mockMvc.perform(get(uri + "/{webtoonId}/avg", webtoonId))
@@ -203,7 +236,7 @@ class ReviewApiControllerDocsTest {
         var webtoonId = 1L;
         var reviewCount = new ReviewCount(250);
 
-        Mockito.when(reviewService.getReviewCount(Mockito.any(Long.class)))
+        Mockito.when(reviewService.getCount(Mockito.any(Long.class)))
             .thenReturn(reviewCount);
 
         mockMvc.perform(get(uri + "/{webtoonId}/count", webtoonId))
