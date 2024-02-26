@@ -55,10 +55,6 @@ public class Review extends BaseTime {
 
     protected Review() {}
 
-    // 리뷰 수정
-    public void updateReview(String content) {
-        this.content = content;
-    }
 
     // 리뷰점수 평균 구하기
     public static Double calculateRatingAvg(List<Review> reviews) {

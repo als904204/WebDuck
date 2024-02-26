@@ -10,7 +10,6 @@ import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
 import com.example.webduck.review.dto.ReviewResponse.ReviewLikesResponse;
-import com.example.webduck.review.dto.ReviewUpdate;
 import com.example.webduck.review.dto.SliceReviewResponse;
 import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.entity.ReviewLikes;
@@ -18,9 +17,7 @@ import com.example.webduck.review.repository.ReviewLikesRepository;
 import com.example.webduck.review.repository.ReviewRepository;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
-import java.util.ArrayList;
 import java.util.List;
-import javax.security.auth.login.LoginException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -73,22 +70,7 @@ public class ReviewService {
         return new ReviewId(review.getId());
     }
 
-    @Transactional
-    public void updateReview(Long reviewId, SessionMember sessionMember, ReviewUpdate request) {
 
-        Long memberId = sessionMember.getId();
-
-        memberRepository.existsById(memberId);
-
-        Review review = reviewRepository.findReviewByIdAndMemberId(reviewId, memberId)
-            .orElseThrow(() -> new CustomException(
-                LogicExceptionCode.BAD_REQUEST));
-
-        review.updateReview(request.getContent());
-
-        log.info("review update success m.id={}, r.id={}, r.content={}", memberId,
-            reviewId, request.getContent());
-    }
 
     // 리뷰 평균 점수
     @Transactional(readOnly = true)
@@ -134,8 +116,6 @@ public class ReviewService {
                 }
             }
         }
-
-
         return reviewList;
     }
 

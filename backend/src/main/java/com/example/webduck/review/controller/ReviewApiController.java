@@ -8,7 +8,6 @@ import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
 import com.example.webduck.review.dto.ReviewResponse.ReviewLikesResponse;
-import com.example.webduck.review.dto.ReviewUpdate;
 import com.example.webduck.review.dto.SliceReviewResponse;
 import com.example.webduck.review.service.ReviewService;
 import jakarta.validation.Valid;
@@ -38,23 +37,15 @@ public class ReviewApiController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/{reviewId}")
-    public ResponseEntity<Void> updateReviewByReviewId(@PathVariable Long reviewId,
-        @LoginMember SessionMember member, @Valid @RequestBody ReviewUpdate reviewUpdate) {
-        reviewService.updateReview(reviewId,member,reviewUpdate);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("/{webtoonId}")
     public ResponseEntity<SliceResponse<SliceReviewResponse>> getReviewsByWebtoonId(
         @PathVariable Long webtoonId,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(value = "size", defaultValue = "5") int size,
-        @RequestParam(value = "nextId", required = false) Long nextId) {
-
+        @RequestParam(value = "nextId", required = false) Long nextId,
+        @LoginMember SessionMember member) {
         SliceResponse<SliceReviewResponse> reviews = reviewService.findReviewsByWebtoonId(webtoonId,
-            nextId, page, size);
-
+            nextId, page, size,member);
         return ResponseEntity.ok(reviews);
     }
 

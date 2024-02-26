@@ -109,6 +109,7 @@ class ReviewApiControllerDocsTest {
 
     @DisplayName("조회 : 리뷰 목록(no offset)")
     @Test
+    @WithMockCustomUser
     void testGetReviewsByWebtoonID() throws Exception {
 
         var webtoonId = 1L;
@@ -131,16 +132,24 @@ class ReviewApiControllerDocsTest {
 
         // when
         Mockito.when(
-                reviewService.findReviewsByWebtoonId(Mockito.any(Long.class), Mockito.any(Long.class),
-                    Mockito.any(Integer.class), Mockito.any(Integer.class
-                    )))
-            .thenReturn(sliceResponse);
+            reviewService.findReviewsByWebtoonId(
+                Mockito.any(Long.class),
+                Mockito.any(Long.class),
+                Mockito.any(Integer.class),
+                Mockito.any(Integer.class),
+                Mockito.any(SessionMember.class))
+        ).thenReturn(sliceResponse);
+
+        SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
+
 
         // then
         mockMvc.perform(get(uri + "/{webtoonId}", webtoonId)
                 .param("page", "0")
                 .param("size", "5")
-                .param("nextId", "2"))
+                .param("nextId", "2")
+                .sessionAttr("member", sessionMember))
+
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-reviewsByWebtoonId",
                 preprocessResponse(prettyPrint()),
@@ -150,7 +159,8 @@ class ReviewApiControllerDocsTest {
                 queryParameters(
                     parameterWithName("page").description("요청할 페이지 번호"),
                     parameterWithName("size").description("요청할 페이지당 항목 수"),
-                    parameterWithName("nextId").description("다음 페이지를 위한 마지막 리뷰 ID (첫 요청 시 Null로 요청)").optional()
+                    parameterWithName("nextId").description(
+                        "다음 페이지를 위한 마지막 리뷰 ID (첫 요청 시 Null로 요청)").optional()
                 ),
                 responseFields(
                     fieldWithPath("item[]").description("리뷰 목록"),
@@ -160,6 +170,7 @@ class ReviewApiControllerDocsTest {
                     fieldWithPath("item[].authorId").description("리뷰 작성자 ID"),
                     fieldWithPath("item[].rating").description("리뷰 평점"),
                     fieldWithPath("item[].likesCount").description("리뷰 좋아요"),
+                    fieldWithPath("item[].author").description("리뷰 작성자 여부"),
                     fieldWithPath("item[].createdAt").description("리뷰 작성 시간"),
                     fieldWithPath("pageNumber").description("현재 페이지 번호"),
                     fieldWithPath("pageSize").description("페이지당 항목 수"),
