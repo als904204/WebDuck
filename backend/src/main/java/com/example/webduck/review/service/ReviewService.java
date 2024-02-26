@@ -4,11 +4,12 @@ import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
-import com.example.webduck.review.dto.ReviewRequest;
+import com.example.webduck.review.dto.ReviewSave;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
 import com.example.webduck.review.dto.ReviewResponse.ReviewLikesResponse;
+import com.example.webduck.review.dto.ReviewUpdate;
 import com.example.webduck.review.dto.SliceReviewResponse;
 import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.entity.ReviewLikes;
@@ -37,8 +38,8 @@ public class ReviewService {
 
 
     @Transactional
-    public ReviewId saveReview(SessionMember sessionMember, ReviewRequest reviewRequest) {
-        Long webtoonId = reviewRequest.getWebtoonId();
+    public ReviewId saveReview(SessionMember sessionMember, ReviewSave reviewSave) {
+        Long webtoonId = reviewSave.getWebtoonId();
 
         Webtoon webtoon = webtoonRepository.findById(webtoonId)
             .orElseThrow(() -> new CustomException(
@@ -46,8 +47,8 @@ public class ReviewService {
 
         Long memberId = sessionMember.getId();
         String username = sessionMember.getUsername();
-        String content = reviewRequest.getContent();
-        Integer rating = reviewRequest.getRating();
+        String content = reviewSave.getContent();
+        Integer rating = reviewSave.getRating();
 
         Review review = Review.builder()
             .webtoonId(webtoonId)
@@ -64,9 +65,14 @@ public class ReviewService {
         return new ReviewId(review.getId());
     }
 
+    public void updateReview(SessionMember sessionMember, ReviewUpdate request) {
+
+
+    }
+
     // 리뷰 점수평균을 구한다
     @Transactional(readOnly = true)
-    public ReviewAvg getReviewAvg(Long webtoonId) {
+    public ReviewAvg getAvg(Long webtoonId) {
 
         List<Review> reviews = reviewRepository.findReviewsByWebtoonId(webtoonId);
 
@@ -76,7 +82,7 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public ReviewCount getReviewCount(Long webtoonId) {
+    public ReviewCount getCount(Long webtoonId) {
         int size = reviewRepository.findReviewsByWebtoonId(webtoonId).size();
         return new ReviewCount(size);
     }
@@ -109,14 +115,11 @@ public class ReviewService {
         boolean hasLikes = reviewLikesRepository.existsByReviewIdAndMemberId(reviewId, memberId);
 
         if (hasLikes) {
-            log.info("down likes");
             reviewLikesRepository.deleteByReviewIdAndMemberId(reviewId, memberId);
             review.downLikesCount();
             int likesCount = review.getLikesCount();
             return new ReviewLikesResponse(true, likesCount);
         }else{
-            log.info("up likes");
-
             ReviewLikes reviewLikes = ReviewLikes.builder()
                 .reviewId(reviewId)
                 .memberId(memberId)

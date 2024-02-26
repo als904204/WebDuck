@@ -3,7 +3,7 @@ package com.example.webduck.review.controller;
 import com.example.webduck.config.security.oauth.dto.LoginMember;
 import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
-import com.example.webduck.review.dto.ReviewRequest;
+import com.example.webduck.review.dto.ReviewSave;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
@@ -32,8 +32,8 @@ public class ReviewApiController {
 
     @PostMapping
     public ResponseEntity<ReviewId> createReview(@LoginMember SessionMember member,@Valid @RequestBody
-    ReviewRequest reviewRequest) {
-        ReviewId response = reviewService.saveReview(member, reviewRequest);
+    ReviewSave reviewSave) {
+        ReviewId response = reviewService.saveReview(member, reviewSave);
         return ResponseEntity.ok(response);
     }
 
@@ -52,13 +52,13 @@ public class ReviewApiController {
 
     @GetMapping("{webtoonId}/avg")
     public ResponseEntity<ReviewAvg> getReviewAvgByWebtoonId(@PathVariable Long webtoonId) {
-        ReviewAvg response = reviewService.getReviewAvg(webtoonId);
+        ReviewAvg response = reviewService.getAvg(webtoonId);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("{webtoonId}/count")
     public ResponseEntity<ReviewCount> getReviewCountByWebtoonId(@PathVariable Long webtoonId) {
-        ReviewCount response = reviewService.getReviewCount(webtoonId);
+        ReviewCount response = reviewService.getCount(webtoonId);
         return ResponseEntity.ok(response);
     }
 

@@ -1,6 +1,5 @@
 package com.example.webduck.review.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -11,27 +10,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
-import com.example.webduck.review.dto.ReviewRequest;
-import com.example.webduck.review.dto.ReviewResponse;
+import com.example.webduck.review.dto.ReviewSave;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
-import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.service.ReviewService;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ActiveProfiles("test")
 @WebMvcTest(ReviewApiController.class)
@@ -82,7 +72,7 @@ class ReviewApiControllerTest {
 
         ReviewId mockResponse = new ReviewId(reviewId);
 
-        when(reviewService.saveReview(Mockito.any(SessionMember.class),Mockito.any(ReviewRequest.class))).thenReturn(mockResponse);
+        when(reviewService.saveReview(Mockito.any(SessionMember.class),Mockito.any(ReviewSave.class))).thenReturn(mockResponse);
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 

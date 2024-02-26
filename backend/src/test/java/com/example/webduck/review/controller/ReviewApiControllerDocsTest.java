@@ -20,7 +20,7 @@ import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
 import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
-import com.example.webduck.review.dto.ReviewRequest;
+import com.example.webduck.review.dto.ReviewSave;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
@@ -81,11 +81,11 @@ class ReviewApiControllerDocsTest {
     public void testCreateReview() throws Exception {
 
         // given
-        var request = new ReviewRequest(1L, "first review", 5);
+        var request = new ReviewSave(1L, "first review", 5);
         var responseReviewId = new ReviewId(1L);
 
         Mockito.when(reviewService.saveReview(Mockito.any(SessionMember.class), Mockito.any(
-            ReviewRequest.class))).thenReturn(responseReviewId);
+            ReviewSave.class))).thenReturn(responseReviewId);
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
@@ -180,7 +180,7 @@ class ReviewApiControllerDocsTest {
         var webtoonId = 1L;
         var reviewAvgRes = new ReviewAvg(4.0);
 
-        Mockito.when(reviewService.getReviewAvg(Mockito.any(Long.class)))
+        Mockito.when(reviewService.getAvg(Mockito.any(Long.class)))
             .thenReturn(reviewAvgRes);
 
         mockMvc.perform(get(uri + "/{webtoonId}/avg", webtoonId))
@@ -203,7 +203,7 @@ class ReviewApiControllerDocsTest {
         var webtoonId = 1L;
         var reviewCount = new ReviewCount(250);
 
-        Mockito.when(reviewService.getReviewCount(Mockito.any(Long.class)))
+        Mockito.when(reviewService.getCount(Mockito.any(Long.class)))
             .thenReturn(reviewCount);
 
         mockMvc.perform(get(uri + "/{webtoonId}/count", webtoonId))
