@@ -18,6 +18,7 @@ import com.example.webduck.review.repository.ReviewLikesRepository;
 import com.example.webduck.review.repository.ReviewRepository;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
+import java.util.ArrayList;
 import java.util.List;
 import javax.security.auth.login.LoginException;
 import lombok.RequiredArgsConstructor;
@@ -109,19 +110,33 @@ public class ReviewService {
     // 웹툰 ID 로 리뷰 목록 가져오기
     @Transactional(readOnly = true)
     public SliceResponse<SliceReviewResponse> findReviewsByWebtoonId(Long webtoonId,
-        Long nextReviewId, int page, int size) {
+        Long nextReviewId, int page, int size, SessionMember member) {
 
         Pageable pageable = PageRequest.of(page, size);
 
         if (nextReviewId != null) {
             if (!reviewRepository.existsById(nextReviewId)) {
-                log.warn("not exists nextReviewId={}",nextReviewId);
+                log.warn("not exists nextReviewId={}", nextReviewId);
                 throw new CustomException(LogicExceptionCode.REVIEW_NOT_FOUND);
             }
         }
 
         webtoonIsExists(webtoonId);
-        return reviewRepository.findSliceReviews(webtoonId, nextReviewId, pageable);
+
+        SliceResponse<SliceReviewResponse> reviewList = reviewRepository.findSliceReviews(
+            webtoonId, nextReviewId, pageable);
+
+        // 리뷰 작성자 여부
+        if (member != null) {
+            for (SliceReviewResponse response : reviewList.getItem()) {
+                if (response.getAuthorId().equals(member.getId())) {
+                    response.setAuthor();
+                }
+            }
+        }
+
+
+        return reviewList;
     }
 
     // 리뷰 좋아요 / 이미 있다면 좋아요 취소

@@ -93,11 +93,11 @@
                     <span class="text-gray-500">{{review.createdAt}}</span>
                   </p>
                   <p>{{review.content}}</p>
-                    <Button :label="review.likesCount" @click="updateLikes(review.reviewId)" class="pi pi-thumbs-up"></Button>
+                    <Button :label="review.likesCount" @click="updateLikes(review.reviewId);" class="pi pi-thumbs-up mr-2"></Button>
+                    <Button v-if="review.author"  @click="toggleTextarea"   class="pi pi-pencil mr-2" severity="info"></Button>
                   <hr/>
                 </span>
               </div>
-
               <div v-if="hasNext" class="flex justify-content-center">
                   <Button label="더보기" @click="loadMoreReviews"></Button>
               </div>
@@ -105,8 +105,6 @@
               <div v-else class="flex justify-content-center">
                 <p>마지막 리뷰입니다</p>
               </div>
-
-
             </div>
           </div>
         </template>
@@ -139,16 +137,19 @@ const webtoon = ref([]);
 const reviews = ref([]);
 const userReviewRating = ref(0);
 const userReviewContent = ref();
+const showReviewTextarea = ref(false)
 
 const pageNum = ref(0);
 const pageSize = ref(5);
 const hasNext = ref(true);
 const nextId = ref(null);
 
+
 let avgRated = ref(null);
 let errorStatus = ref('');
 let avgStatus = ref('');
 let reviewCounted = ref('');
+
 
 // 웹툰 상세보기 정보
 onMounted(async ()=>{
@@ -193,6 +194,7 @@ const loadReviews = async () => {
       }));
 
       reviews.value.push(...updatedReviews);
+
 
       hasNext.value = webtoonReviews.hasNext;
       nextId.value = webtoonReviews.nextId;
@@ -239,6 +241,9 @@ const createReview = async () => {
   }
 }
 
+
+
+
 // 리뷰 좋아요
 const updateLikes = async (reviewId) => {
 
@@ -274,9 +279,6 @@ const refreshReviews = async () => {
 const loadMoreReviews = () => {
   loadReviews();
 };
-
-
-
 
 </script>
 
