@@ -4,7 +4,8 @@ import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
-import com.example.webduck.review.dto.ReviewRequest;
+import com.example.webduck.member.repository.MemberRepository;
+import com.example.webduck.review.dto.ReviewSave;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
@@ -35,10 +36,15 @@ public class ReviewService {
 
     private final ReviewLikesRepository reviewLikesRepository;
 
+    private final MemberRepository memberRepository;
+
 
     @Transactional
-    public ReviewId saveReview(SessionMember sessionMember, ReviewRequest reviewRequest) {
-        Long webtoonId = reviewRequest.getWebtoonId();
+    public ReviewId saveReview(SessionMember sessionMember, ReviewSave reviewSave) {
+
+        memberRepository.existsById(sessionMember.getId());
+
+        Long webtoonId = reviewSave.getWebtoonId();
 
         Webtoon webtoon = webtoonRepository.findById(webtoonId)
             .orElseThrow(() -> new CustomException(
@@ -46,8 +52,8 @@ public class ReviewService {
 
         Long memberId = sessionMember.getId();
         String username = sessionMember.getUsername();
-        String content = reviewRequest.getContent();
-        Integer rating = reviewRequest.getRating();
+        String content = reviewSave.getContent();
+        Integer rating = reviewSave.getRating();
 
         Review review = Review.builder()
             .webtoonId(webtoonId)
@@ -60,13 +66,33 @@ public class ReviewService {
         // 리뷰 저장 시, 해당 웹툰 리뷰 개수를 증가한다.
         webtoon.incrementReviewCount();
         review = reviewRepository.save(review);
-        log.info("m.pk={} is saved review(r.pk={}_",memberId,review.getId());
+        log.info("m.pk={} is saved review(r.pk={}_", memberId, review.getId());
         return new ReviewId(review.getId());
     }
 
-    // 리뷰 점수평균을 구한다
+    public void deleteReview(Long reviewId, SessionMember sessionMember) {
+
+        Long memberId = sessionMember.getId();
+        memberRepository.existsById(memberId);
+
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new CustomException(
+            LogicExceptionCode.REVIEW_NOT_FOUND));
+
+        Long authorId = review.getMemberId();
+
+        if (!memberId.equals(authorId)) {
+            log.error("Review author mismatch. m.id={}, r.authorId={}", memberId, authorId);
+            throw new CustomException(LogicExceptionCode.BAD_REQUEST);
+        }
+
+        reviewRepository.deleteById(review.getId());
+        log.info("review delete! r.id={}", review.getId());
+    }
+
+
+    // 리뷰 평균 점수
     @Transactional(readOnly = true)
-    public ReviewAvg getReviewAvg(Long webtoonId) {
+    public ReviewAvg getAvg(Long webtoonId) {
 
         List<Review> reviews = reviewRepository.findReviewsByWebtoonId(webtoonId);
 
@@ -76,26 +102,39 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public ReviewCount getReviewCount(Long webtoonId) {
+    public ReviewCount getCount(Long webtoonId) {
         int size = reviewRepository.findReviewsByWebtoonId(webtoonId).size();
         return new ReviewCount(size);
     }
 
+    // 웹툰 ID 로 리뷰 목록 가져오기
     @Transactional(readOnly = true)
     public SliceResponse<SliceReviewResponse> findReviewsByWebtoonId(Long webtoonId,
-        Long nextReviewId, int page, int size) {
+        Long nextReviewId, int page, int size, SessionMember member) {
 
         Pageable pageable = PageRequest.of(page, size);
 
         if (nextReviewId != null) {
             if (!reviewRepository.existsById(nextReviewId)) {
-                log.warn("not exists nextReviewId={}",nextReviewId);
+                log.warn("not exists nextReviewId={}", nextReviewId);
                 throw new CustomException(LogicExceptionCode.REVIEW_NOT_FOUND);
             }
         }
 
         webtoonIsExists(webtoonId);
-        return reviewRepository.findSliceReviews(webtoonId, nextReviewId, pageable);
+
+        SliceResponse<SliceReviewResponse> reviewList = reviewRepository.findSliceReviews(
+            webtoonId, nextReviewId, pageable);
+
+        // 리뷰 작성자 여부
+        if (member != null) {
+            for (SliceReviewResponse response : reviewList.getItem()) {
+                if (response.getAuthorId().equals(member.getId())) {
+                    response.setAuthor();
+                }
+            }
+        }
+        return reviewList;
     }
 
     // 리뷰 좋아요 / 이미 있다면 좋아요 취소
@@ -109,14 +148,11 @@ public class ReviewService {
         boolean hasLikes = reviewLikesRepository.existsByReviewIdAndMemberId(reviewId, memberId);
 
         if (hasLikes) {
-            log.info("down likes");
             reviewLikesRepository.deleteByReviewIdAndMemberId(reviewId, memberId);
             review.downLikesCount();
             int likesCount = review.getLikesCount();
             return new ReviewLikesResponse(true, likesCount);
         }else{
-            log.info("up likes");
-
             ReviewLikes reviewLikes = ReviewLikes.builder()
                 .reviewId(reviewId)
                 .memberId(memberId)

@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
 
@@ -53,6 +54,7 @@ public class Review extends BaseTime {
     }
 
     protected Review() {}
+
 
     // 리뷰점수 평균 구하기
     public static Double calculateRatingAvg(List<Review> reviews) {
@@ -100,5 +102,7 @@ public class Review extends BaseTime {
     public int getLikesCount(){
         return likesCount;
     }
+
+
 }
 

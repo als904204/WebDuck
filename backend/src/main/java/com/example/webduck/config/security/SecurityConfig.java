@@ -1,8 +1,8 @@
 package com.example.webduck.config.security;
 
 import static com.example.webduck.member.entity.Role.ADMIN;
-import static com.example.webduck.member.entity.Role.MANAGER;
 import static com.example.webduck.member.entity.Role.USER;
+import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
@@ -58,13 +58,12 @@ public class SecurityConfig {
     private static final String[] POST_API_LIST_URL = {
         "/api/v1/review/**",
     };
-
+    private static final String[] DELETE_API_LIST_URL = {
+        "/api/v1/review/**",
+    };
     private static final String[] GET_API_LIST_URL = {
         "/api/v1/auth/**"
     };
-
-
-
     private static final String[] ADMIN_URL = {
         "/api/v1/admin/**",
         "/admin/**"
@@ -81,8 +80,10 @@ public class SecurityConfig {
                     .permitAll()
 
                     .requestMatchers(POST, POST_API_LIST_URL)
-                    .hasAnyRole(ADMIN.name(), USER.name(), MANAGER.name())
+                    .hasAnyRole(ADMIN.name(), USER.name())
                     .requestMatchers(GET,GET_API_LIST_URL)
+                    .hasAnyRole(USER.name(),ADMIN.name())
+                    .requestMatchers(DELETE,DELETE_API_LIST_URL)
                     .hasAnyRole(USER.name(),ADMIN.name())
                     .requestMatchers(ADMIN_URL)
                     .hasRole(ADMIN.name())

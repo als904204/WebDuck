@@ -77,6 +77,7 @@
                 <Message v-else-if="errorStatus === 'emptyContent'" severity="error" :closable="false">리뷰 내용을 입력해주세요</Message>
                 <Message v-else-if="errorStatus === 'emptyRating'" severity="warn" :closable="false">리뷰 점수를 매겨주세요</Message>
                 <Message v-else-if="errorStatus === 'success'"  :closable="false">리뷰 등록 성공!</Message>
+                <Message v-else-if="errorStatus === 'delete'" severity="warn"  :closable="false">리뷰 삭제 성공!</Message>
                 <Message v-else-if="errorStatus === 'unknownError'" :closable="false">알 수 없는 에러가 발생했습니다</Message>
               </div>
 
@@ -93,11 +94,11 @@
                     <span class="text-gray-500">{{review.createdAt}}</span>
                   </p>
                   <p>{{review.content}}</p>
-                    <Button :label="review.likesCount" @click="updateLikes(review.reviewId)" class="pi pi-thumbs-up"></Button>
+                    <Button :label="review.likesCount" @click="updateLikes(review.reviewId);" class="pi pi-thumbs-up mr-2"></Button>
+                    <Button v-if="review.author"  @click="deleteReview(review.reviewId)"   class="pi pi-times mr-2" severity="danger"></Button>
                   <hr/>
                 </span>
               </div>
-
               <div v-if="hasNext" class="flex justify-content-center">
                   <Button label="더보기" @click="loadMoreReviews"></Button>
               </div>
@@ -105,8 +106,6 @@
               <div v-else class="flex justify-content-center">
                 <p>마지막 리뷰입니다</p>
               </div>
-
-
             </div>
           </div>
         </template>
@@ -125,7 +124,7 @@ import {
   fetchWebtoonRatingAvg
 } from "../../service/WebtoonDetailsService.js";
 import {
-  fetchReviewsByWebtoonId,
+  fetchReviewsByWebtoonId, removeReview,
   submitReview,
   updateReviewLikes
 } from "../../service/ReviewService.js";
@@ -139,16 +138,19 @@ const webtoon = ref([]);
 const reviews = ref([]);
 const userReviewRating = ref(0);
 const userReviewContent = ref();
+const showReviewTextarea = ref(false)
 
 const pageNum = ref(0);
 const pageSize = ref(5);
 const hasNext = ref(true);
 const nextId = ref(null);
 
+
 let avgRated = ref(null);
 let errorStatus = ref('');
 let avgStatus = ref('');
 let reviewCounted = ref('');
+
 
 // 웹툰 상세보기 정보
 onMounted(async ()=>{
@@ -193,6 +195,7 @@ const loadReviews = async () => {
       }));
 
       reviews.value.push(...updatedReviews);
+
 
       hasNext.value = webtoonReviews.hasNext;
       nextId.value = webtoonReviews.nextId;
@@ -239,6 +242,19 @@ const createReview = async () => {
   }
 }
 
+// 리뷰 삭제
+const deleteReview = async (reviewId) => {
+  try{
+    await removeReview(reviewId);
+    reviews.value = reviews.value.filter(review => review.reviewId !== reviewId);
+    errorStatus.value = 'delete';
+  }catch (error){
+    alert('알수 없는 에러가 발생했습니다');
+  }
+}
+
+
+
 // 리뷰 좋아요
 const updateLikes = async (reviewId) => {
 
@@ -274,9 +290,6 @@ const refreshReviews = async () => {
 const loadMoreReviews = () => {
   loadReviews();
 };
-
-
-
 
 </script>
 

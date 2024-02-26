@@ -54,7 +54,7 @@ class ReviewServiceTest {
     void calculateReviewAvg_success() {
         Long webtoonId = 1L;
         when(reviewRepository.findReviewsByWebtoonId(webtoonId)).thenReturn(reviews);
-        ReviewAvg avgRating = reviewService.getReviewAvg(webtoonId);
+        ReviewAvg avgRating = reviewService.getAvg(webtoonId);
         assertThat(avgRating.rating()).isEqualTo(4.5);
     }
 
@@ -63,7 +63,7 @@ class ReviewServiceTest {
     void calculateReviewAvg_fail() {
         Long webtoonId = 1L;
         when(reviewRepository.findReviewsByWebtoonId(webtoonId)).thenReturn(reviews);
-        ReviewAvg avgRating = reviewService.getReviewAvg(webtoonId);
+        ReviewAvg avgRating = reviewService.getAvg(webtoonId);
         assertThat(avgRating).isNotEqualTo(4);
     }
 

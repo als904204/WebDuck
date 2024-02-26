@@ -3,7 +3,7 @@ package com.example.webduck.review.controller;
 import com.example.webduck.config.security.oauth.dto.LoginMember;
 import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
-import com.example.webduck.review.dto.ReviewRequest;
+import com.example.webduck.review.dto.ReviewSave;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
 import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
@@ -13,6 +13,7 @@ import com.example.webduck.review.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,9 +33,16 @@ public class ReviewApiController {
 
     @PostMapping
     public ResponseEntity<ReviewId> createReview(@LoginMember SessionMember member,@Valid @RequestBody
-    ReviewRequest reviewRequest) {
-        ReviewId response = reviewService.saveReview(member, reviewRequest);
+    ReviewSave reviewSave) {
+        ReviewId response = reviewService.saveReview(member, reviewSave);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId,
+        @LoginMember SessionMember member) {
+        reviewService.deleteReview(reviewId, member);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{webtoonId}")
@@ -42,23 +50,22 @@ public class ReviewApiController {
         @PathVariable Long webtoonId,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(value = "size", defaultValue = "5") int size,
-        @RequestParam(value = "nextId", required = false) Long nextId) {
-
+        @RequestParam(value = "nextId", required = false) Long nextId,
+        @LoginMember SessionMember member) {
         SliceResponse<SliceReviewResponse> reviews = reviewService.findReviewsByWebtoonId(webtoonId,
-            nextId, page, size);
-
+            nextId, page, size,member);
         return ResponseEntity.ok(reviews);
     }
 
     @GetMapping("{webtoonId}/avg")
     public ResponseEntity<ReviewAvg> getReviewAvgByWebtoonId(@PathVariable Long webtoonId) {
-        ReviewAvg response = reviewService.getReviewAvg(webtoonId);
+        ReviewAvg response = reviewService.getAvg(webtoonId);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("{webtoonId}/count")
     public ResponseEntity<ReviewCount> getReviewCountByWebtoonId(@PathVariable Long webtoonId) {
-        ReviewCount response = reviewService.getReviewCount(webtoonId);
+        ReviewCount response = reviewService.getCount(webtoonId);
         return ResponseEntity.ok(response);
     }
 
