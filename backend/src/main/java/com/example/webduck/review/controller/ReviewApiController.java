@@ -13,6 +13,7 @@ import com.example.webduck.review.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,13 @@ public class ReviewApiController {
     ReviewSave reviewSave) {
         ReviewId response = reviewService.saveReview(member, reviewSave);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId,
+        @LoginMember SessionMember member) {
+        reviewService.deleteReview(reviewId, member);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{webtoonId}")

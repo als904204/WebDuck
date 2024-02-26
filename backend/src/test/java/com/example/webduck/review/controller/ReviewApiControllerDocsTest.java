@@ -2,6 +2,7 @@ package com.example.webduck.review.controller;
 
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -184,6 +185,27 @@ class ReviewApiControllerDocsTest {
     }
 
 
+    @DisplayName("삭제 : 리뷰 삭제")
+    @Test
+    @WithMockCustomUser
+    void testDeleteReview() throws Exception{
+        var reviewId = 1L;
+
+        Mockito.doNothing().when(reviewService).deleteReview(Mockito.any(Long.class), Mockito.any(SessionMember.class));
+
+        SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
+
+        mockMvc.perform(delete(uri + "/{reviewId}", reviewId)
+            .sessionAttr("member", sessionMember))
+            .andExpect(status().isNoContent())
+            .andDo(document("delete-v1-delete-review",
+                preprocessResponse(prettyPrint()),
+                    pathParameters(
+                        parameterWithName("reviewId").description("삭제할 리뷰 ID")
+                    )
+                ));
+
+    }
 
     @DisplayName("조회 : 리뷰 평균 점수")
     @Test

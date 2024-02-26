@@ -70,6 +70,24 @@ public class ReviewService {
         return new ReviewId(review.getId());
     }
 
+    public void deleteReview(Long reviewId, SessionMember sessionMember) {
+
+        Long memberId = sessionMember.getId();
+        memberRepository.existsById(memberId);
+
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new CustomException(
+            LogicExceptionCode.REVIEW_NOT_FOUND));
+
+        Long authorId = review.getMemberId();
+
+        if (!memberId.equals(authorId)) {
+            log.error("Review author mismatch. m.id={}, r.authorId={}", memberId, authorId);
+            throw new CustomException(LogicExceptionCode.BAD_REQUEST);
+        }
+
+        reviewRepository.deleteById(review.getId());
+        log.info("review delete! r.id={}", review.getId());
+    }
 
 
     // 리뷰 평균 점수
