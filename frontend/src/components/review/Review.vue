@@ -77,6 +77,7 @@
                 <Message v-else-if="errorStatus === 'emptyContent'" severity="error" :closable="false">리뷰 내용을 입력해주세요</Message>
                 <Message v-else-if="errorStatus === 'emptyRating'" severity="warn" :closable="false">리뷰 점수를 매겨주세요</Message>
                 <Message v-else-if="errorStatus === 'success'"  :closable="false">리뷰 등록 성공!</Message>
+                <Message v-else-if="errorStatus === 'delete'" severity="warn"  :closable="false">리뷰 삭제 성공!</Message>
                 <Message v-else-if="errorStatus === 'unknownError'" :closable="false">알 수 없는 에러가 발생했습니다</Message>
               </div>
 
@@ -94,7 +95,7 @@
                   </p>
                   <p>{{review.content}}</p>
                     <Button :label="review.likesCount" @click="updateLikes(review.reviewId);" class="pi pi-thumbs-up mr-2"></Button>
-                    <Button v-if="review.author"  @click="toggleTextarea"   class="pi pi-pencil mr-2" severity="info"></Button>
+                    <Button v-if="review.author"  @click="deleteReview(review.reviewId)"   class="pi pi-times mr-2" severity="danger"></Button>
                   <hr/>
                 </span>
               </div>
@@ -123,7 +124,7 @@ import {
   fetchWebtoonRatingAvg
 } from "../../service/WebtoonDetailsService.js";
 import {
-  fetchReviewsByWebtoonId,
+  fetchReviewsByWebtoonId, removeReview,
   submitReview,
   updateReviewLikes
 } from "../../service/ReviewService.js";
@@ -241,6 +242,16 @@ const createReview = async () => {
   }
 }
 
+// 리뷰 삭제
+const deleteReview = async (reviewId) => {
+  try{
+    await removeReview(reviewId);
+    reviews.value = reviews.value.filter(review => review.reviewId !== reviewId);
+    errorStatus.value = 'delete';
+  }catch (error){
+    alert('알수 없는 에러가 발생했습니다');
+  }
+}
 
 
 

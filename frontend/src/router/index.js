@@ -6,7 +6,7 @@ import Publish from "../components/webtoon/Publish.vue";
 import Kakao from "../components/webtoon/Kakao.vue";
 import Naver from "../components/webtoon/Naver.vue";
 import Login from "../components/login/Login.vue";
-import Review from "../components/webtoon/Review.vue";
+import Review from "../components/review/Review.vue";
 import Profile from "../components/login/Profile.vue";
 import NotFound from "../components/common/NotFound.vue";
 import Redirect from "../components/login/Redirect.vue";

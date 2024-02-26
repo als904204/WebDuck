@@ -30,6 +30,17 @@ export const submitReview = async (webtoonId,content,rating) => {
   }
 }
 
+// 리뷰 삭제
+export const removeReview = async (reviewId) => {
+  try {
+    const response = await axios.delete(`/api/v1/review/${reviewId}`);
+    alert('성공')
+  } catch (error) {
+    // 에러 처리
+    throw error;
+  }
+};
+
 export const updateReviewLikes = async (reviewId) => {
   try{
     const response = await axios.patch(`/api/v1/review/${reviewId}/likes`, {
