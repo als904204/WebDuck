@@ -3,7 +3,6 @@
     <div class="grid">
       <div class="image-container">
         <img class="border-round image" :src="webtoon.imagePath" :alt="webtoon.title"/>
-      </div>
       <div class="md:p-6">
         <h2 class="text-5xl">{{ webtoon.title }}</h2>
         <p>
@@ -12,6 +11,8 @@
         </p>
         <p>{{webtoon.summary}}</p>
       </div>
+      </div>
+
     </div>
 
     <div class="my-3">
