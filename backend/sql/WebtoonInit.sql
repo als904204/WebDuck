@@ -61,58 +61,45 @@ CREATE TABLE IF NOT EXISTS review_likes (
 );
 
 
--- 왕과의 야행
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('보리', 'https://image-comic.pstatic.net/webtoon/817859/thumbnail/thumbnail_IMAG21_4fadf2ae-3467-4a9d-a6be-4b0313b963e0.jpg', '왕과의 야행.jpg', 'NAVER', 'MONDAY', '왕과의 야행 웹툰의 요약 내용', '왕과의 야행','https://comic.naver.com/webtoon/list?titleId=817859',0);
 
--- 웹툰과 장르 연결 (로맨스)
 INSERT INTO webtoon_genre (genre_id, webtoon_id)
 VALUES ((SELECT id FROM genre WHERE name = 'ROMANCE'), LAST_INSERT_ID());
 
--- 백수세끼
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('치즈', 'https://image-comic.pstatic.net/webtoon/733074/thumbnail/thumbnail_IMAG21_80df3e76-47af-4007-b57c-e8f2830835e5.jpg', '백수세끼.jpg', 'NAVER', 'MONDAY', '백수세끼 웹툰의 요약 내용', '백수세끼','https://comic.naver.com/webtoon/list?titleId=733074',0);
 
--- 웹툰과 장르 연결 (일상, 개그, 감성)
 INSERT INTO webtoon_genre (genre_id, webtoon_id)
 VALUES ((SELECT id FROM genre WHERE name = 'DAILYLIFE'), LAST_INSERT_ID()),
        ((SELECT id FROM genre WHERE name = 'GAG'), LAST_INSERT_ID()),
        ((SELECT id FROM genre WHERE name = 'EMOTION'), LAST_INSERT_ID());
 
--- 신의 탑
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('SIU', 'https://image-comic.pstatic.net/webtoon/183559/thumbnail/thumbnail_IMAG21_5f3fec31-5c95-4afe-a73f-3046288edb47.jpg', '신의 탑.jpg', 'NAVER', 'MONDAY', '신의 탑 웹툰의 요약 내용', '신의 탑','https://comic.naver.com/webtoon/list?titleId=183559',0);
 
--- 웹툰과 장르 연결 (판타지, 액션)
 INSERT INTO webtoon_genre (genre_id, webtoon_id)
 VALUES ((SELECT id FROM genre WHERE name = 'FANTASY'), LAST_INSERT_ID()),
        ((SELECT id FROM genre WHERE name = 'ACTION'), LAST_INSERT_ID());
 
--- 퀘스트지상주의
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('박태준 만화회사, 유누니 / 박태준 만화회사, 태완', 'https://image-comic.pstatic.net/webtoon/783052/thumbnail/thumbnail_IMAG21_800f4c56-26ac-419e-9ed0-baf322311dea.jpg', '퀘스트지상주의.jpg', 'NAVER', 'MONDAY', '퀘스트지상주의 웹툰의 요약 내용', '퀘스트지상주의','https://comic.naver.com/webtoon/list?titleId=783052',0);
 
--- 웹툰과 장르 연결 (드라마, 일상)
 INSERT INTO webtoon_genre (genre_id, webtoon_id)
 VALUES ((SELECT id FROM genre WHERE name = 'DRAMA'), LAST_INSERT_ID()),
        ((SELECT id FROM genre WHERE name = 'DAILYLIFE'), LAST_INSERT_ID());
 
--- 장씨세가 호위무사
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('김인호 / 조형근', 'https://image-comic.pstatic.net/webtoon/728750/thumbnail/thumbnail_IMAG21_47c21251-b213-4882-bacc-15adce1acfc8.jpg', '장씨세가 호위무사.jpg', 'NAVER', 'MONDAY', '장씨세가 호위무사 웹툰의 요약 내용', '장씨세가 호위무사','https://comic.naver.com/webtoon/list?titleId=728750',0);
 
--- 웹툰과 장르 연결 (액션, 드라마, 무협)
 INSERT INTO webtoon_genre (genre_id, webtoon_id)
 VALUES ((SELECT id FROM genre WHERE name = 'ACTION'), LAST_INSERT_ID()),
-       ((SELECT id FROM genre WHERE name = 'DRAMA'), LAST_INSERT_ID()),
        ((SELECT id FROM genre WHERE name = 'MARTIALARTS'), LAST_INSERT_ID());
 
 
--- 윈드브레이커
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('조용석', 'https://image-comic.pstatic.net/webtoon/602910/thumbnail/thumbnail_IMAG21_e861f2cf-6157-4d33-8e02-7b4cbf0a8baf.jpg', '윈드브레이커.jpg', 'NAVER', 'MONDAY', '윈드브레이커 웹툰의 요약 내용', '윈드브레이커','https://comic.naver.com/webtoon/list?titleId=602910',0);
 
--- 웹툰과 장르 연결 (스포츠, 드라마)
 INSERT INTO webtoon_genre (genre_id, webtoon_id)
 VALUES ((SELECT id FROM genre WHERE name = 'SPORTS'), LAST_INSERT_ID()),
        ((SELECT id FROM genre WHERE name = 'DRAMA'), LAST_INSERT_ID());
@@ -122,7 +109,6 @@ VALUES ((SELECT id FROM genre WHERE name = 'SPORTS'), LAST_INSERT_ID()),
 
 
 
--- 마음의소리2
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('조석', 'https://image-comic.pstatic.net/webtoon/814543/thumbnail/thumbnail_IMAG21_df84a681-b7ef-4dda-8cef-25b219d35e3e.jpg', '마음의소리2.jpg', 'NAVER', 'TUESDAY', '마음의소리2 웹툰의 요약 내용', '마음의소리2','https://comic.naver.com/webtoon/list?titleId=814543',0);
 
@@ -130,7 +116,6 @@ INSERT INTO webtoon_genre (webtoon_id, genre_id)
 VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'GAG')),
        (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DAILY_LIFE'));
 
--- 김부장
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('박태준 만화회사 / 정종택', 'https://image-comic.pstatic.net/webtoon/783053/thumbnail/thumbnail_IMAG21_d7732f14-26da-4e35-8762-660cc87b53f1.jpg', '김부장.jpg', 'NAVER', 'TUESDAY', '김부장 웹툰의 요약 내용', '김부장','https://comic.naver.com/webtoon/list?titleId=783053',0);
 
@@ -140,7 +125,6 @@ VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DRAMA'));
 
 
 
--- 마루는 강쥐
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('모죠', 'https://image-comic.pstatic.net/webtoon/796152/thumbnail/thumbnail_IMAG21_26b9c1d8-ca2d-4fc7-87ea-a3334634236a.jpg', '마루는 강쥐.jpg', 'NAVER', 'TUESDAY', '마루는 강쥐 웹툰의 요약 내용', '마루는 강쥐','https://comic.naver.com/webtoon/list?titleId=796152',0);
 
@@ -148,7 +132,6 @@ INSERT INTO webtoon_genre (webtoon_id, genre_id)
 VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DRAMA')),
        (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DAILY_LIFE'));
 
--- 멸망 이후의 세계
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('언데드딸기 / 언데드감자 / 싱숑', 'https://image-comic.pstatic.net/webtoon/789979/thumbnail/thumbnail_IMAG21_792cd36e-d722-4970-933b-3da7c37ee812.jpg', '멸망 이후의 세계.jpg', 'NAVER', 'TUESDAY', '멸망 이후의 세계 웹툰의 요약 내용', '멸망 이후의 세계','https://comic.naver.com/webtoon/list?titleId=789979',0);
 
@@ -156,7 +139,6 @@ INSERT INTO webtoon_genre (webtoon_id, genre_id)
 VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'FANTASY')),
        (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'THRILLER'));
 
--- 서울 자가에 대기업 다니는 김 부장 이야기
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('명랑 / 김병관 / 송희구', 'https://image-comic.pstatic.net/webtoon/819929/thumbnail/thumbnail_IMAG21_f1ca00e5-9b30-44d3-a1ee-7a04d539002a.jpg', '서울 자가에 대기업 다니는 김 부장 이야기.jpg', 'NAVER', 'TUESDAY', '서울 자가에 대기업 다니는 김 부장 이야기 웹툰의 요약 내용', '서울 자가에 대기업 다니는 김 부장 이야기','https://comic.naver.com/webtoon/list?titleId=819929',0);
 
@@ -166,7 +148,6 @@ VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DAILY_LIFE')),
 
 
 
--- 천마는 평범하게 살 수 없다
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('철범 / 우푸 / 산천', 'https://image-comic.pstatic.net/webtoon/774358/thumbnail/thumbnail_IMAG21_580067f4-3434-475f-ba51-3bbc86c6ad7d.jpg', '천마는 평범하게 살 수 없다.jpg', 'NAVER', 'TUESDAY', '천마는 평범하게 살 수 없다 웹툰의 요약 내용', '천마는 평범하게 살 수 없다','https://comic.naver.com/webtoon/list?titleId=774358',0);
 INSERT INTO webtoon_genre (webtoon_id, genre_id)
@@ -176,34 +157,17 @@ VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'ACTION')),
 
 
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
-VALUES ('LICO / 비가', 'https://image-comic.pstatic.net/webtoon/769209/thumbnail/thumbnail_IMAG21_3511dcdd-6e33-4171-8839-598d6d266215.jpg', '화산귀환.jpg', 'NAVER', 'WEDNESDAY', '화산귀환 웹툰의 요약 내용', '화산귀환','https://comic.naver.com/webtoon/list?titleId=769209',0);
-
-INSERT INTO webtoon_genre (webtoon_id, genre_id)
-VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'MARTIALARTS')),
-       (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'ACTION'));
-
--- 무직백수 계백순
-INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('지발', 'https://image-comic.pstatic.net/webtoon/811721/thumbnail/thumbnail_IMAG21_9a2a959a-666b-4156-8e4f-db64dfe319c6.jpg', '무직백수 계백순.jpg', 'NAVER', 'WEDNESDAY', '무직백수 계백순 웹툰의 요약 내용', '무직백수 계백순','https://comic.naver.com/webtoon/list?titleId=811721',0);
 
 INSERT INTO webtoon_genre (webtoon_id, genre_id)
 VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DRAMA'));
 
--- 백XX
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('병장, 박태준 만화회사 / 펀치킥', 'https://image-comic.pstatic.net/webtoon/804862/thumbnail/thumbnail_IMAG21_f1b2f920-5c10-4155-a547-0c25a7132d8f.jpeg', '백XX.jpg', 'NAVER', 'WEDNESDAY', '백XX 웹툰의 요약 내용', '백XX','https://comic.naver.com/webtoon/list?titleId=804862',0);
 
 INSERT INTO webtoon_genre (webtoon_id, genre_id)
 VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DRAMA'));
 
--- 헬퍼 2 : 킬베로스
-INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
-VALUES ('삭', 'https://image-comic.pstatic.net/webtoon/670143/thumbnail/thumbnail_IMAG21_12d5d293-d54d-4022-8e00-c97c5779c701.jpg', '헬퍼 2 : 킬베로스.jpg', 'NAVER', 'WEDNESDAY', '헬퍼 2 : 킬베로스 웹툰의 요약 내용', '헬퍼 2 : 킬베로스','https://comic.naver.com/webtoon/list?titleId=670143',0);
-
-INSERT INTO webtoon_genre (webtoon_id, genre_id)
-VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'YOUTH')),
-       (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'ACTION')),
-       (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DRAMA'));
 
 -- 일렉시드
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
@@ -236,13 +200,6 @@ INSERT INTO webtoon_genre (webtoon_id, genre_id)
 VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DRAMA')),
        (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DAILY_LIFE'));
 
--- 앞집나리
-INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
-VALUES ('민송아', 'https://image-comic.pstatic.net/webtoon/802293/thumbnail/thumbnail_IMAG21_a3e4736d-dfd6-4e76-aec6-b145f4123845.jpg', '앞집나리.jpg', 'NAVER', 'THURSDAY', '앞집나리 웹툰의 요약 내용', '앞집나리','https://comic.naver.com/webtoon/list?titleId=802293',0);
-
-INSERT INTO webtoon_genre (webtoon_id, genre_id)
-VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'YOUTH')),
-       (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DRAMA'));
 
 -- 나노마신
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
@@ -266,7 +223,6 @@ VALUES ('JP / 김병관 / 산경(山景)', 'https://image-comic.pstatic.net/webt
 INSERT INTO webtoon_genre (webtoon_id, genre_id)
 VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DRAMA'));
 
--- 무사만리행
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('운, 배민기', 'https://image-comic.pstatic.net/webtoon/746857/thumbnail/thumbnail_IMAG21_fb7d7fcd-19f1-49eb-9cc8-aae9622cdd04.jpg', '무사만리행.jpg', 'NAVER', 'THURSDAY', '무사만리행 웹툰의 요약 내용', '무사만리행','https://comic.naver.com/webtoon/list?titleId=746857',0);
 
@@ -282,13 +238,6 @@ VALUES ('박태준', 'https://image-comic.pstatic.net/webtoon/641253/thumbnail/t
 
 INSERT INTO webtoon_genre (webtoon_id, genre_id)
 VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DRAMA'));
-
--- 광마회귀
-INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
-VALUES ('JP / 이히 / 유진성', 'https://image-comic.pstatic.net/webtoon/776601/thumbnail/thumbnail_IMAG21_7365135131254864183.jpg', '광마회귀.jpg', 'NAVER', 'FRIDAY', '광마회귀 웹툰의 요약 내용', '광마회귀','https://comic.naver.com/webtoon/list?titleId=776601',0);
-
-INSERT INTO webtoon_genre (webtoon_id, genre_id)
-VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'ACTION'));
 
 -- 역대급 영지 설계사
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
@@ -312,6 +261,7 @@ VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'ACTION')),
 
 
 -- 토 START
+
 -- 초인의 시대
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('섭이', 'https://image-comic.pstatic.net/webtoon/730694/thumbnail/thumbnail_IMAG21_e6fc219d-e5ea-4d93-b7d6-45b595c2a3cb.jpeg', '초인의 시대.jpg', 'NAVER', 'SATURDAY', '초인의 시대 웹툰의 요약 내용', '초인의 시대','https://comic.naver.com/webtoon/list?titleId=730694',0);
@@ -358,13 +308,6 @@ VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'DRAMA')),
        (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'ACTION'));
 
 
--- 수희0(tngmlek0)
-INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
-VALUES ('생일기분', 'https://image-comic.pstatic.net/webtoon/774831/thumbnail/thumbnail_IMAG21_b4644a73-ecfb-4532-a96c-575b02accfd0.jpg', '수희0(tngmlek0).jpg', 'NAVER', 'SUNDAY', '수희0(tngmlek0) 웹툰의 요약 내용', '수희0(tngmlek0)','https://comic.naver.com/webtoon/list?titleId=774831',0);
-
-INSERT INTO webtoon_genre (webtoon_id, genre_id)
-VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'THRILLER'));
-
 -- 나 혼자 특성빨로 무한 성장
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
 VALUES ('샤이아탄 / 2사랑 / 선운(鮮雲)', 'https://image-comic.pstatic.net/webtoon/803909/thumbnail/thumbnail_IMAG21_764d377c-fe45-40f9-8775-0f6ff92ad421.jpg', '나 혼자 특성빨로 무한 성장.jpg', 'NAVER', 'SUNDAY', '나 혼자 특성빨로 무한 성장 웹툰의 요약 내용', '나 혼자 특성빨로 무한 성장','https://comic.naver.com/webtoon/list?titleId=803909',0);
@@ -377,23 +320,6 @@ VALUES (LAST_INSERT_ID(), (SELECT id FROM genre WHERE name = 'FANTASY'));
 
 -- 카카오
 -- 월 START
--- 이번 생, 끝까지 살아남겠습니다
-INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
-VALUES ('아름, 민은경, 니나노솔', 'https://dn-img-page.kakao.com/download/resource?kid=dfbTHX/hAd4tGpidC/9Z14rufbv4OO0dhxlfQZCK&filename=th3', '이번 생, 끝까지 살아남겠습니다.jpg', 'KAKAO', 'MONDAY', '이번 생, 끝까지 살아남겠습니다 웹툰의 요약 내용', '이번 생, 끝까지 살아남겠습니다','https://webtoon.kakao.com/content/%EC%9D%B4%EB%B2%88-%EC%83%9D-%EB%81%9D%EA%B9%8C%EC%A7%80-%EC%82%B4%EC%95%84%EB%82%A8%EA%B2%A0%EC%8A%B5%EB%8B%88%EB%8B%A4/3903',0);
-
--- 웹툰과 장르 연결 (로맨스, 판타지)
-INSERT INTO webtoon_genre (genre_id, webtoon_id)
-VALUES ((SELECT id FROM genre WHERE name = 'ROMANCE'), LAST_INSERT_ID()),
-       ((SELECT id FROM genre WHERE name = 'FANTASY'), LAST_INSERT_ID());
-
--- 사랑받는 막내는 처음이라
-INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
-VALUES ('나정, 와와치, 미래나비', 'https://dn-img-page.kakao.com/download/resource?kid=wipRk/hAdNZMhMcu/gKXTSHIZmX77FjLMRIysmk&filename=th3', '사랑받는 막내는 처음이라.jpg', 'KAKAO', 'MONDAY', '사랑받는 막내는 처음이라 웹툰의 요약 내용', '사랑받는 막내는 처음이라','https://webtoon.kakao.com/content/%EC%82%AC%EB%9E%91%EB%B0%9B%EB%8A%94-%EB%A7%89%EB%82%B4%EB%8A%94-%EC%B2%98%EC%9D%8C%EC%9D%B4%EB%9D%BC/3835',0);
-
--- 웹툰과 장르 연결 (로맨스, 판타지)
-INSERT INTO webtoon_genre (genre_id, webtoon_id)
-VALUES ((SELECT id FROM genre WHERE name = 'ROMANCE'), LAST_INSERT_ID()),
-       ((SELECT id FROM genre WHERE name = 'FANTASY'), LAST_INSERT_ID());
 
 -- 철혈검가 사냥개의 회귀
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
@@ -458,14 +384,6 @@ VALUES ('곰국, 일황', 'https://dn-img-page.kakao.com/download/resource?kid=b
 INSERT INTO webtoon_genre (genre_id, webtoon_id)
 VALUES ((SELECT id FROM genre WHERE name = 'MARTIAL_ARTS'), LAST_INSERT_ID());
 
--- 목요일 연재 웹툰 - 악당의 아빠를 꼬셔라
-INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
-VALUES ('비아, 달슬', 'https://dn-img-page.kakao.com/download/resource?kid=h8sy3/hAdNSl5dJ9/Ri83GJb3sk4FPjXk0lva10&filename=th3', '악당의 아빠를 꼬셔라.jpg', 'KAKAO', 'THURSDAY', '악당의 아빠를 꼬셔라 웹툰의 요약 내용', '악당의 아빠를 꼬셔라','https://webtoon.kakao.com/content/%EC%95%85%EB%8B%B9%EC%9D%98-%EC%95%84%EB%B9%A0%EB%A5%BC-%EA%BC%AC%EC%85%94%EB%9D%BC/2378',0);
-
--- 웹툰과 장르 연결 (로맨스, 판타지)
-INSERT INTO webtoon_genre (genre_id, webtoon_id)
-VALUES ((SELECT id FROM genre WHERE name = 'ROMANCE'), LAST_INSERT_ID()),
-       ((SELECT id FROM genre WHERE name = 'FANTASY'), LAST_INSERT_ID());
 
 -- 금요일 연재 웹툰 - 백작가의 망나니가 되었다
 INSERT INTO webtoon (author, image_path, original_image_name, platform, publish_day, summary, title,webtoon_url,review_count)
