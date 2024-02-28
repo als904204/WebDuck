@@ -3,18 +3,17 @@ package com.example.webduck.member.dto;
 import com.example.webduck.member.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class MemberDto {
+public class MemberUpdate {
 
     @Getter
-    public static class UpdateNickname {
+    public static class ProfileResponse {
         private final String username;
-        public UpdateNickname(Member member) {
+        public ProfileResponse(Member member) {
             this.username = member.getUsername();
         }
     }
