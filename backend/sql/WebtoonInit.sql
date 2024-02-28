@@ -4,6 +4,8 @@ CREATE TABLE IF NOT EXISTS member (
                                       created_at DATETIME(6),
                                       id BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
                                       updated_at DATETIME(6),
+                                      previous_login_at DATETIME(6),
+                                      current_login_at DATETIME(6),
                                       username VARCHAR(16) NOT NULL,
                                       email VARCHAR(255) NOT NULL UNIQUE,
                                       social_id VARCHAR(255) NOT NULL,
@@ -19,7 +21,7 @@ CREATE TABLE IF NOT EXISTS webtoon (
                                        title VARCHAR(40) NOT NULL,
                                        image_path VARCHAR(255) NOT NULL,
                                        original_image_name VARCHAR(255) NOT NULL,
-                                       summary VARCHAR(255) NOT NULL,
+                                       summary VARCHAR(600) NOT NULL,
                                        webtoon_url VARCHAR(255),
                                        platform ENUM('NAVER', 'KAKAO', 'TOPTOON', 'ELSE') NOT NULL,
                                        publish_day ENUM('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY') NOT NULL
