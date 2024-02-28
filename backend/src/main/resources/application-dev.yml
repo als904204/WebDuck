@@ -32,12 +32,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-server:
-  port: 8080
-#    properties:
-#      hibernate:
-#        format_sql: true
-#        show_sql: true
+    properties:
+      hibernate:
+        show_sql: true
 
 logging:
   level:
@@ -47,6 +44,9 @@ logging:
 
 secret:
   key: "b14f7c3f2e4a9d034d9f9c3b15b30a0e3d2b6bca0fa01d8c6f1c66f8a6d376b1"
+
+
+
 
 login:
   redirect:
