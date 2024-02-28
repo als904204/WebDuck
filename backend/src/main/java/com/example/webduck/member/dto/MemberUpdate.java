@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class MemberProfile {
+public class MemberDto {
 
     @Getter
     public static class UpdateNickname {
@@ -19,26 +19,6 @@ public class MemberProfile {
         }
     }
 
-    @Getter
-    public static class Profile {
-        private final String username;
-        private final LocalDateTime prevLoginAt;
-        private final int likesCount;
-        private final int reviewCount;
-
-        /**
-         *
-         * @param member        세션 회원
-         * @param likesCount    회원 리뷰 좋아요 수
-         * @param reviewCount   회원 리뷰 작성 수
-         */
-        public Profile(Member member, int likesCount, int reviewCount) {
-            this.username = member.getUsername();
-            this.prevLoginAt = member.getPreviousLoginAt();
-            this.likesCount = likesCount;
-            this.reviewCount = reviewCount;
-        }
-    }
 
     @Getter
     public static class ProfileRequest{
