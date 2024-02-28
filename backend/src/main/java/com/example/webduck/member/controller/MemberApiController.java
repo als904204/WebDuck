@@ -2,8 +2,9 @@ package com.example.webduck.member.controller;
 
 import com.example.webduck.config.security.oauth.dto.LoginMember;
 import com.example.webduck.config.security.oauth.entity.SessionMember;
-import com.example.webduck.member.dto.MemberProfile.ProfileRequest;
-import com.example.webduck.member.dto.MemberProfile.ProfileResponse;
+import com.example.webduck.member.domain.MemberProfile;
+import com.example.webduck.member.dto.MemberUpdate.ProfileRequest;
+import com.example.webduck.member.dto.MemberUpdate.ProfileResponse;
 import com.example.webduck.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,9 @@ public class MemberApiController {
     private final MemberService memberService;
 
     @GetMapping("/profile")
-    public ResponseEntity<ProfileResponse> getProfile(@LoginMember SessionMember sessionMember) {
-        ProfileResponse memberProfile = memberService.getMemberProfile(sessionMember);
-        return ResponseEntity.ok(memberProfile);
+    public ResponseEntity<MemberProfile> getProfile(@LoginMember SessionMember sessionMember) {
+        MemberProfile profile = memberService.getProfile(sessionMember);
+        return ResponseEntity.ok(profile);
     }
 
     // 모든 자원 변경 아님, PUT X -> PATCH O
