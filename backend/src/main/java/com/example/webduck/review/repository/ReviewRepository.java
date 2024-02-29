@@ -12,4 +12,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long>,ReviewCust
 
     List<Review> findReviewsByWebtoonId(Long webtoonId);
 
+    List<Review> findByMemberId(Long memberId);
+
 }

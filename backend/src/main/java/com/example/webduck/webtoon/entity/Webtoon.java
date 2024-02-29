@@ -26,7 +26,7 @@ public class Webtoon{
     private String title;
 
     // 줄거리
-    @Column(nullable = false)
+    @Column(nullable = false,length = 600)
     private String summary;
 
     // 썸네일 이미지 파일 원본이름

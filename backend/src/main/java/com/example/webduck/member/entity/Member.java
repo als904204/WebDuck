@@ -10,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 
@@ -45,6 +46,12 @@ public class Member extends BaseTime {
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
+    // 이전 로그인 시간
+    private LocalDateTime previousLoginAt;
+
+    // 현재 로그인 시간
+    private LocalDateTime currentLoginAt;
+
     protected Member() {
     }
 
@@ -61,6 +68,11 @@ public class Member extends BaseTime {
 
     public void updateProfile(String username) {
         this.username = username;
+    }
+
+    public void updatePrevLoginAt(LocalDateTime now) {
+        this.previousLoginAt = this.currentLoginAt;
+        this.currentLoginAt = now;
     }
 
     public String getRoleKey() {
@@ -82,4 +94,10 @@ public class Member extends BaseTime {
     public Role getRole() {
         return role;
     }
+
+    public LocalDateTime getPreviousLoginAt() {
+        return previousLoginAt;
+    }
+
+
 }

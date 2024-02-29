@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class MemberProfile {
+public class MemberUpdate {
 
     @Getter
     public static class ProfileResponse {
@@ -17,6 +17,7 @@ public class MemberProfile {
             this.username = member.getUsername();
         }
     }
+
 
     @Getter
     public static class ProfileRequest{
