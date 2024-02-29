@@ -47,6 +47,7 @@ app.component('Rating', Rating);
 app.component('Textarea', Textarea);
 app.component('Dialog', Dialog);
 app.component('InputText', InputText);
+
 // axios
 app.use(VueAxios, axios);
 app.provide("axios", app.config.globalProperties.axios);
