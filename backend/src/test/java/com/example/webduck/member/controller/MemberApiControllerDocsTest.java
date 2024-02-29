@@ -1,7 +1,5 @@
 package com.example.webduck.member.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.boot.autoconfigure.AutoConfigurationPackages.get;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
@@ -16,16 +14,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
-import com.example.webduck.member.dto.MemberProfile.ProfileRequest;
-import com.example.webduck.member.dto.MemberProfile.ProfileResponse;
+import com.example.webduck.member.domain.MemberProfile;
+import com.example.webduck.member.dto.MemberUpdate.ProfileRequest;
+import com.example.webduck.member.dto.MemberUpdate.ProfileResponse;
 import com.example.webduck.member.entity.Member;
 import com.example.webduck.member.service.MemberService;
+import com.example.webduck.review.entity.Review;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -35,7 +36,6 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -75,10 +75,28 @@ class MemberApiControllerDocsTest {
         var member = Mockito.mock(Member.class);
         Mockito.when(member.getId()).thenReturn(1L);
         Mockito.when(member.getUsername()).thenReturn("WebDuck");
+        Mockito.when(member.getPreviousLoginAt()).thenReturn(LocalDateTime.now());
 
-        var response = new ProfileResponse(member);
+        List<Review> reviews = List.of(Review.builder()
+                .webtoonId(1L)
+                .memberId(1L)
+                .reviewerNickname("WebDuck")
+                .content("review content1")
+                .rating(5)
+                .build(),
 
-        Mockito.when(memberService.getMemberProfile(Mockito.any(SessionMember.class)))
+            Review.builder()
+                .webtoonId(1L)
+                .memberId(1L)
+                .reviewerNickname("WebDuck")
+                .content("review content2")
+                .rating(5)
+                .build()
+        );
+
+        MemberProfile response = MemberProfile.of(member, reviews);
+
+        Mockito.when(memberService.getProfile(Mockito.any(SessionMember.class)))
             .thenReturn(response);
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
@@ -89,7 +107,10 @@ class MemberApiControllerDocsTest {
             .andDo(document("get-v1-get-profile",
                     preprocessResponse(prettyPrint()),
                     responseFields(
-                        fieldWithPath("username").description("회원 닉네임")
+                        fieldWithPath("username").description("회원 닉네임"),
+                        fieldWithPath("likesCount").description("회원이 받은 좋아요 개수"),
+                        fieldWithPath("reviewCount").description("회원이 작성한 리뷰 개수"),
+                        fieldWithPath("prevLoginAt").description("마지막 접속 날짜")
                     )
                 )
             );

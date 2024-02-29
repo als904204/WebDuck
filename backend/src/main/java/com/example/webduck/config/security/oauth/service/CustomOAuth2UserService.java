@@ -13,6 +13,7 @@ import com.example.webduck.config.security.oauth.entity.userInfo.NaverUserInfo;
 import com.example.webduck.config.security.oauth.entity.userInfo.OAuth2UserInfo;
 import com.example.webduck.member.service.NicknameGenerator;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,9 +85,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     }
 
+    // 로그인 시 로그인 시간을 기록한다.
+    // 다음 접속 시 현재 로그인한 시간이 아닌 이전에 접속했던 로그인 시간을 보여준다
     private Member createOrUpdateMember(OAuth2UserInfo oAuth2UserInfo) {
-        log.debug("attr={}",oAuth2UserInfo.getAttributes());
+
+        LocalDateTime now = LocalDateTime.now();
         return memberRepository.findByEmailAndSocialType(oAuth2UserInfo.getEmail(), oAuth2UserInfo.getSocialType())
+            .map(existingMember -> {
+                existingMember.updatePrevLoginAt(now); // 기존 회원이면 최근 로그인 시간 업데이트
+                return memberRepository.save(existingMember);
+            })
             .orElseGet(() -> createMember(oAuth2UserInfo));
     }
 
@@ -103,6 +111,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             .socialId(oAuth2UserInfo.getId())
             .socialPk(oAuth2UserInfo.getPk())
             .build();
+
+        newMember.updatePrevLoginAt(LocalDateTime.now());
 
         return memberRepository.save(newMember);
 

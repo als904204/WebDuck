@@ -1,10 +1,24 @@
 <template>
   <div class="container flex-column">
-    <div class="card flex justify-content-center mb-4">
+
+
+
+    <div class="card flex mt-4">
       <p class="text-2xl mr-4">닉네임</p>
       <InputText v-model="userNickname" type="text" class="text-2xl mr-3" />
       <Button label="변경" size="large" @click="updateUserNickname"/>
     </div>
+    <div class="card flex mt-4">
+      <p class="text-2xl mr-4">최근 접속일 : <span>{{prevLoginAt}}</span></p>
+    </div>
+    <div class="card flex mt-4">
+      <p class="text-2xl mr-4">작성한 리뷰 개수 : <span>{{reviewCount}}</span></p>
+    </div>
+
+    <div class="card flex mt-4">
+      <p class="text-2xl mr-4">받은 좋아요 수 : <span>{{likesCount}}</span></p>
+    </div>
+
 
     <div>
       <Message v-if="errorStatus === '409'"  severity="error" :closable="false">중복된 닉네임 입니다</Message>
@@ -20,9 +34,14 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {fetchUserInfo, updateNickname} from "../../service/UserService.js";
 import Message from "primevue/message";
+import {timeAgo} from "../../service/TimeAgoConverter.js";
+
+let prevLoginAt = ref();
+const reviewCount = ref();
+const likesCount = ref();
 
 const userNickname = ref(null);
 let errorStatus = ref('');
@@ -30,11 +49,20 @@ let errorStatus = ref('');
 onMounted(async () => {
   try {
     const userInfo = await fetchUserInfo();
+
+    reviewCount.value = userInfo.reviewCount;
+    likesCount.value = userInfo.likesCount;
     userNickname.value = userInfo.username;
+
+    prevLoginAt = computed(() => timeAgo(userInfo.prevLoginAt));
+
+
   } catch (error) {
     throw error;
   }
 });
+
+
 
 const updateUserNickname = async () => {
 

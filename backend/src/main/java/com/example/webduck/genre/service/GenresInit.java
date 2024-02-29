@@ -18,7 +18,6 @@ public class GenresInit {
     private static final String FANTASY = "FANTASY"; // 판타지
     private static final String GAG = "GAG"; // 개그
     private static final String MARTIAL_ARTS = "MARTIALARTS"; // 무협
-    private static final String ADULT = "ADULT"; // 성인
     private static final String ACTION = "ACTION"; // 액션
     private static final String DAILY_LIFE = "DAILYLIFE"; // 일상
     private static final String THRILLER = "THRILLER"; // 스릴러
@@ -39,8 +38,7 @@ public class GenresInit {
             THRILLER,
             MARTIAL_ARTS,
             DRAMA,
-            SPORTS,
-            ADULT
+            SPORTS
         );
 
         initGenres.forEach(genre ->

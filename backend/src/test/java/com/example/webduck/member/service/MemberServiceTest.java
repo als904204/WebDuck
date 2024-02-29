@@ -6,8 +6,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.global.exception.CustomException;
-import com.example.webduck.member.dto.MemberProfile.ProfileRequest;
-import com.example.webduck.member.dto.MemberProfile.ProfileResponse;
+import com.example.webduck.member.dto.MemberUpdate.ProfileRequest;
 import com.example.webduck.member.entity.Member;
 import com.example.webduck.member.repository.MemberRepository;
 import java.util.Optional;
@@ -31,29 +30,6 @@ class MemberServiceTest {
     @Mock
     private MemberRepository memberRepository;
 
-
-
-    @DisplayName("성공 : 회원 프로필 조회")
-    @Test
-    void testGetMemberProfile() {
-        var memberId = 1L;
-        var username = "WebDuck";
-
-
-        SessionMember mockSessionMember = Mockito.mock(SessionMember.class);
-        Mockito.when(mockSessionMember.getId()).thenReturn(memberId);
-        Mockito.when(mockSessionMember.getUsername()).thenReturn(username);
-
-        Member member = Mockito.mock(Member.class);
-        Mockito.when(member.getId()).thenReturn(memberId);
-        Mockito.when(member.getUsername()).thenReturn(username);
-        Mockito.when(memberRepository.findById(Mockito.any(Long.class))).thenReturn(Optional.of(member));
-
-        ProfileResponse memberProfile = memberService.getMemberProfile(mockSessionMember);
-
-        Assertions.assertThat(memberProfile.getUsername()).isEqualTo("WebDuck");
-    }
-
     @DisplayName("실패 : 없는 회원 프로필 조회")
     @Test
     void testGetMemberProfileFail() {
@@ -66,7 +42,7 @@ class MemberServiceTest {
         Mockito.when(memberRepository.findById(memberId)).thenReturn(Optional.empty());
 
         Throwable thrown = catchThrowable(
-            () -> memberService.getMemberProfile(new SessionMember(member)));
+            () -> memberService.getProfile(new SessionMember(member)));
 
         Assertions.assertThat(thrown)
             .isInstanceOf(CustomException.class)
