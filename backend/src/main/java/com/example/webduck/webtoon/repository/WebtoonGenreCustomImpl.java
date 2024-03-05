@@ -68,10 +68,19 @@ public class WebtoonGenreCustomImpl implements WebtoonGenreCustom{
     private OrderSpecifier<?> sortByRatingOrReviewCount(String condition) {
         QReview review = QReview.review;
         QWebtoon webtoon = QWebtoon.webtoon;
-        return switch (condition.toUpperCase()) {
-            case "RATING" -> review.rating.avg().desc();
-            case "COUNT" -> webtoon.reviewCount.desc();
-            default -> throw new CustomException(LogicExceptionCode.BAD_REQUEST);
-        };
+
+        OrderSpecifier<?> orderSpecifier;
+        switch (condition.toUpperCase()) {
+            case "RATING":
+                orderSpecifier = review.rating.avg().desc();
+                break;
+            case "COUNT":
+                orderSpecifier = webtoon.reviewCount.desc();
+                break;
+            default:
+                throw new CustomException(LogicExceptionCode.BAD_REQUEST);
+        }
+        return orderSpecifier;
     }
+
 }

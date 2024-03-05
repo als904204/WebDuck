@@ -4,7 +4,7 @@ import com.example.webduck.config.security.oauth.dto.LoginMember;
 import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -10,7 +10,7 @@ import com.example.webduck.review.dto.ReviewResponse.ReviewId;
 import com.example.webduck.review.dto.ReviewResponse.ReviewLikesResponse;
 import com.example.webduck.review.dto.SliceReviewResponse;
 import com.example.webduck.review.service.ReviewService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

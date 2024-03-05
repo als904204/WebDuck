@@ -2,8 +2,8 @@ package com.example.webduck.global.advice;
 
 import com.example.webduck.global.common.ErrorResponse;
 import com.example.webduck.global.exception.CustomException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

@@ -74,18 +74,19 @@ public class SecurityConfig {
 
         http
             .authorizeHttpRequests((req) ->
-                req.requestMatchers(WHITE_LIST_URL)
+                req
+                    .antMatchers(WHITE_LIST_URL)
                     .permitAll()
-                    .requestMatchers(GET, WHITE_GET_API_LIST_URL)
+                    .antMatchers(GET, WHITE_GET_API_LIST_URL)
                     .permitAll()
 
-                    .requestMatchers(POST, POST_API_LIST_URL)
+                    .antMatchers(POST, POST_API_LIST_URL)
                     .hasAnyRole(ADMIN.name(), USER.name())
-                    .requestMatchers(GET,GET_API_LIST_URL)
-                    .hasAnyRole(USER.name(),ADMIN.name())
-                    .requestMatchers(DELETE,DELETE_API_LIST_URL)
-                    .hasAnyRole(USER.name(),ADMIN.name())
-                    .requestMatchers(ADMIN_URL)
+                    .antMatchers(GET, GET_API_LIST_URL)
+                    .hasAnyRole(USER.name(), ADMIN.name())
+                    .antMatchers(DELETE, DELETE_API_LIST_URL)
+                    .hasAnyRole(USER.name(), ADMIN.name())
+                    .antMatchers(ADMIN_URL)
                     .hasRole(ADMIN.name())
 
                     .anyRequest()
@@ -111,7 +112,8 @@ public class SecurityConfig {
             .logout(logout -> logout
                 .permitAll()
                 .logoutUrl("/api/v1/auth/logout")
-                .logoutRequestMatcher(new AntPathRequestMatcher("/api/v1/auth/logout")) // 주소창에 입력해도 POST 로 처리
+                .logoutRequestMatcher(
+                    new AntPathRequestMatcher("/api/v1/auth/logout")) // 주소창에 입력해도 POST 로 처리
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true) // 로그아웃 시 세션 날리기
                 .clearAuthentication(true)   // 시큐리티 컨텍스트 홀더 인증정보 날리기

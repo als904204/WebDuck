@@ -1,8 +1,9 @@
 package com.example.webduck.member.dto;
 
 import com.example.webduck.member.entity.Member;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

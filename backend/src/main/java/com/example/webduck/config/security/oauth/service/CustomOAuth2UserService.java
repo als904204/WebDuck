@@ -9,12 +9,11 @@ import com.example.webduck.member.entity.Role;
 import com.example.webduck.member.repository.MemberRepository;
 import com.example.webduck.config.security.oauth.entity.userInfo.GoogleUserInfo;
 import com.example.webduck.config.security.oauth.entity.userInfo.KakaoUserInfo;
-import com.example.webduck.config.security.oauth.entity.userInfo.NaverUserInfo;
 import com.example.webduck.config.security.oauth.entity.userInfo.OAuth2UserInfo;
 import com.example.webduck.member.service.NicknameGenerator;
-import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,10 +35,8 @@ import org.springframework.stereotype.Service;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final MemberRepository memberRepository;
-    private final HttpSession httpSession;
     private final NicknameGenerator nicknameGenerator;
-
-    private static final String NAVER = "naver";
+    private final HttpSession httpSession;
     private static final String KAKAO = "kakao";
     private static final String GOOGLE = "google";
 
@@ -65,13 +62,18 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .getUserNameAttributeName();
 
 
-        OAuth2UserInfo oAuth2UserInfo =
-                switch (oAuthProviderName) {
-                case GOOGLE -> new GoogleUserInfo(oAuth2User.getAttributes(),userNameAttributeName);
-                case KAKAO -> new KakaoUserInfo(oAuth2User.getAttributes(),userNameAttributeName);
-                case NAVER -> new NaverUserInfo(oAuth2User.getAttributes(),userNameAttributeName);
-                default -> throw new CustomException(INVALID_OAUTH_TYPE);
-            };
+        OAuth2UserInfo oAuth2UserInfo;
+        switch (oAuthProviderName) {
+            case GOOGLE:
+                oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes(), userNameAttributeName);
+                break;
+            case KAKAO:
+                oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes(), userNameAttributeName);
+                break;
+            default:
+                throw new CustomException(INVALID_OAUTH_TYPE);
+        }
+
 
         Member member = createOrUpdateMember(oAuth2UserInfo);
 

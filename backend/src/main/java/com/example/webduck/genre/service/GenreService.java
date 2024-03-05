@@ -6,6 +6,7 @@ import com.example.webduck.genre.repository.GenreRepository;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +22,7 @@ public class GenreService {
     public List<GenreResponse> findAllGenres() {
         List<Genre> genres = genreRepository.findAll();
         return genres.stream()
-            .map(GenreResponse::new)
-            .toList();
+            .map(GenreResponse::new).collect(Collectors.toList());
     }
 
     // 새로운 장르 생성
