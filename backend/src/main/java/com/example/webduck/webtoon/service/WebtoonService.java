@@ -13,6 +13,7 @@ import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -61,8 +62,7 @@ public class WebtoonService {
     public List<WebtoonResponse> findWebtoonList() {
         List<Webtoon> webtoons = webtoonRepository.findAll();
         return webtoons.stream()
-            .map(WebtoonResponse::new)
-            .toList();
+            .map(WebtoonResponse::new).collect(Collectors.toList());
     }
 
     // 요청에 따른 요일 웹툰 목록 조회 (MONDAY,SUNDAY..)
@@ -70,8 +70,7 @@ public class WebtoonService {
     public List<WebtoonResponse> findWebtoonsByPublishDay(PublishDay publishDay) {
         List<Webtoon> webtoons = webtoonRepository.findWebtoonsByPublishDay(publishDay);
         return webtoons.stream()
-            .map(WebtoonResponse::new)
-            .toList();
+            .map(WebtoonResponse::new).collect(Collectors.toList());
     }
 
     // 요청에 따른 플랫폼 별 웹툰 목록 조회 (NAVER,KAKAO..)
@@ -79,8 +78,7 @@ public class WebtoonService {
     public List<WebtoonResponse> findWebtoonsByPlatform(Platform platform) {
         List<Webtoon> webtoons = webtoonRepository.findWebtoonsByPlatform(platform);
         return webtoons.stream()
-            .map(WebtoonResponse::new)
-            .toList();
+            .map(WebtoonResponse::new).collect(Collectors.toList());
     }
 
     // 단건 장르 웹툰 목록 조회 (무협 웹툰만 조회,로맨스 웹툰만 조회)
@@ -88,8 +86,7 @@ public class WebtoonService {
     public List<WebtoonResponse> findWebtoonsByGenreName(String name) {
         List<Webtoon> webtoonsByGenre = webtoonRepository.findWebtoonsByGenreName(name);
         return webtoonsByGenre.stream()
-            .map(WebtoonResponse::new)
-            .toList();
+            .map(WebtoonResponse::new).collect(Collectors.toList());
     }
 
     // 장르 요청에 따른 웹툰 목록 조회 (무협,개그,판타지 장르를 포함한 웹툰)

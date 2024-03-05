@@ -10,7 +10,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
+
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.review.entity.Review;
@@ -148,7 +149,7 @@ class WebtoonApiControllerDocsTest {
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByPublish",
                 preprocessResponse(prettyPrint()),
-                queryParameters(
+                requestParameters(
                     parameterWithName("day").description("요일별 웹툰을 조회하기 위한 파라미터. 가능한 값: " +
                         Arrays.stream(PublishDay.values())
                             .map(Enum::name)
@@ -186,7 +187,7 @@ class WebtoonApiControllerDocsTest {
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByPlatform",
                 preprocessResponse(prettyPrint()),
-                queryParameters(
+                requestParameters(
                     parameterWithName("type").description("플랫폼별 웹툰을 조회하기 위한 파라미터. 가능한 값: " +
                         Arrays.stream(Platform.values())
                             .map(Enum::name)
@@ -218,7 +219,7 @@ class WebtoonApiControllerDocsTest {
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByGenre",
                 preprocessResponse(prettyPrint()),
-                queryParameters(
+                requestParameters(
                     parameterWithName("name").description("웹툰을 조회하기 위한 장르 이름. 가능한 값: " + String.join(", ", genres))
                 ),
                 responseFields(
@@ -256,7 +257,7 @@ class WebtoonApiControllerDocsTest {
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByGenres",
                 preprocessResponse(prettyPrint()),
-                queryParameters(
+                requestParameters(
                     parameterWithName("names").description("웹툰 장르로 필터링 (여러가지 선택 가능):"+ String.join(", ", genres))
                 ),
                 responseFields(
@@ -305,7 +306,7 @@ class WebtoonApiControllerDocsTest {
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByCondition",
                 preprocessResponse(prettyPrint()),
-                queryParameters(
+                requestParameters(
                     parameterWithName("sortBy").description("정렬 기준 (평점순,리뷰순): 'rating', 'count'")
                 ),
                 responseFields(

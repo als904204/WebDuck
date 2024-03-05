@@ -2,9 +2,10 @@ package com.example.webduck.genre.service;
 
 import com.example.webduck.genre.entity.Genre;
 import com.example.webduck.genre.repository.GenreRepository;
-import jakarta.annotation.PostConstruct;
+
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

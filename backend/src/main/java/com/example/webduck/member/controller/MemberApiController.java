@@ -6,7 +6,8 @@ import com.example.webduck.member.domain.MemberProfile;
 import com.example.webduck.member.dto.MemberUpdate.ProfileRequest;
 import com.example.webduck.member.dto.MemberUpdate.ProfileResponse;
 import com.example.webduck.member.service.MemberService;
-import jakarta.validation.Valid;
+
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

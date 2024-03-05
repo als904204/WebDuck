@@ -54,8 +54,11 @@ onMounted(async () => {
     likesCount.value = userInfo.likesCount;
     userNickname.value = userInfo.username;
 
-    prevLoginAt = computed(() => timeAgo(userInfo.prevLoginAt));
 
+
+    prevLoginAt = computed(() => {
+      return userInfo.prevLoginAt ? timeAgo(userInfo.prevLoginAt) : '없음';
+    });
 
   } catch (error) {
     throw error;
