@@ -12,7 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.webduck.config.security.oauth.entity.SessionMember;
 import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
+import com.example.webduck.member.dto.MemberUpdate;
+import com.example.webduck.member.dto.MemberUpdate.ProfileRequest;
 import com.example.webduck.member.service.MemberService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,23 +37,21 @@ class MemberApiControllerTest {
 
     private final String uri = "/api/v1/member";
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @WithMockCustomUser
     @DisplayName("실패 : 회원 프로필 업데이트 필드값 누락 400 오류")
     @Test
     void testFailInvalidRequest() throws Exception{
 
-        var request = """
-                {
-                    "username":""
-                }
-            """;
 
+        ProfileRequest request = new ProfileRequest("");
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
         mockMvc.perform(patch(uri + "/profile").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(request)
+                .content(objectMapper.writeValueAsString(request))
             .sessionAttr("member", sessionMember))
             .andDo(print())
             .andExpect(status().isBadRequest());

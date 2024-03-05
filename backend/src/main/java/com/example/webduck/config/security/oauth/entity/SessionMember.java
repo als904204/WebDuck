@@ -1,7 +1,7 @@
 package com.example.webduck.config.security.oauth.entity;
 
 import com.example.webduck.member.entity.Member;
-import java.io.Serial;
+
 import java.io.Serializable;
 
 /**
@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 public class SessionMember implements Serializable {
 
-    @Serial
+
     private static final long serialVersionUID = -3094014404731310385L;
     private final Long id;
     private String username;

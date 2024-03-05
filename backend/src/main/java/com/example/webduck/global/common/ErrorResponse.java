@@ -1,10 +1,10 @@
 package com.example.webduck.global.common;
 
 import com.example.webduck.global.exception.exceptionCode.ExceptionCode;
-import jakarta.validation.ConstraintViolation;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.validation.ConstraintViolation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

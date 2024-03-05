@@ -13,6 +13,7 @@ import com.example.webduck.member.customMock.WithMockCustomUser;
 import com.example.webduck.review.dto.ReviewSave;
 import com.example.webduck.review.dto.ReviewResponse.ReviewId;
 import com.example.webduck.review.service.ReviewService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -35,24 +36,21 @@ class ReviewApiControllerTest {
 
     private final String uri = "/api/v1/review";
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @WithMockCustomUser
     @DisplayName("유효성 검사 실패 테스트 : 리뷰 content 빈 값")
     @Test
     void testCreateReview_fail_contentIsNull() throws Exception {
-        var req = """
-            {
-                "webtoonId" : 1,
-                "content" : "",
-                "rating" :5
-            }
-            """;
+
+        ReviewSave request = new ReviewSave(1L,"",5);
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
         mockMvc.perform(post(uri).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .sessionAttr("member", sessionMember)
-                .content(req))
+                .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isBadRequest());
     }
 
@@ -61,14 +59,9 @@ class ReviewApiControllerTest {
     @Test
     void testCreateReview_fail_overRating() throws Exception {
 
-        var req = """
-            {
-                "webtoonId" : 1,
-                "content" : "content",
-                "rating" : 20
-            }
-            """;
+
         var reviewId = 1L;
+        ReviewSave request = new ReviewSave(1L,"",20);
 
         ReviewId mockResponse = new ReviewId(reviewId);
 
@@ -78,7 +71,7 @@ class ReviewApiControllerTest {
 
         mockMvc.perform(post(uri).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(req)
+                .content(objectMapper.writeValueAsString(request))
                 .sessionAttr("member", sessionMember))
             .andExpect(status().isBadRequest());
     }

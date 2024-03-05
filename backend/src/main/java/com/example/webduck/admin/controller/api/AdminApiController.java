@@ -3,7 +3,8 @@ package com.example.webduck.admin.controller.api;
 
 import com.example.webduck.webtoon.dto.WebtoonUpload;
 import com.example.webduck.admin.service.UploadService;
-import jakarta.validation.Valid;
+
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

@@ -1,14 +1,13 @@
 package com.example.webduck.genre.entity;
 
-import com.example.webduck.genre.entity.Genre;
 import com.example.webduck.webtoon.entity.Webtoon;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * 웹툰 - 장르 테이블을 연결시켜주는 중간 테이블
