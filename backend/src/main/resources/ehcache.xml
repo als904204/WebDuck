@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+
+  <!--
+      maxElementsInMemory : 메모리에 저장할 수 있는 최대 요소(객체) 수 초과하면 memoryStoreEvictionPolicy(LRU) 방식으로 제거
+      maxElementsOnDisk   : 디스크에 저장할 수 있는 최대 요소 수
+      eternal             : 캐시된 요소가 만료되지 않도록 설정합니다. true일 경우, timeToIdleSeconds와 timeToLiveSeconds 설정이 무시
+      statistics          : 캐시 통계 수집을 활성화할지 여부를 결정
+      timeToIdleSeconds   : 요소가 마지막으로 접근된 후 제거되기까지의 시간(초) 이 시간 동안 요소에 접근이 없으면 요소는 만료
+      timeToLiveSeconds   : 요소가 생성되고 나서 제거되기까지의 최대 시간(초). 이 시간을 초과하면 요소는 만료
+      overflowToDisk      : 메모리 한계에 도달했을 때 요소를 디스크로 오버플로할지 여부를 결정. 여기서는 false로 설정되어 있어 오버플로가 비활성화
+      diskPersistent      :  디스크에 저장된 캐시 데이터가 애플리케이션 재시작 후에도 유지될지 여부를 결정
+      memoryStoreEvictionPolicy : 메모리 저장소에서 요소를 제거하는 정책
+  -->
+
+  <!--특정 캐시에 대한 설정이 제공되지 않은 경우, 이 기본 설정이 사용됨-->
+  <defaultCache
+    maxElementsInMemory="1000"
+    maxElementsOnDisk="0"
+    eternal="false"
+    statistics="false"
+    timeToIdleSeconds="200"
+    timeToLiveSeconds="200"
+    overflowToDisk="false"
+    diskPersistent="false"
+    memoryStoreEvictionPolicy="LRU"/>
+
+  <cache
+    name="findWebtoonsByPublishDayCache"
+    maxElementsInMemory="10000"
+    maxElementsOnDisk="0"
+    eternal="false"
+    statistics="false"
+    timeToIdleSeconds="200"
+    timeToLiveSeconds="200"
+    overflowToDisk="false"
+    diskPersistent="false"
+    memoryStoreEvictionPolicy="LRU"/>
+
+</ehcache>
+
+
