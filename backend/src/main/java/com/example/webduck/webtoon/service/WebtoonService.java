@@ -12,10 +12,14 @@ import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,6 +71,7 @@ public class WebtoonService {
 
     // 요청에 따른 요일 웹툰 목록 조회 (MONDAY,SUNDAY..)
     @Transactional(readOnly = true)
+    @Cacheable(value = "findWebtoonsByPublishDayCache", key = "#publishDay")
     public List<WebtoonResponse> findWebtoonsByPublishDay(PublishDay publishDay) {
         List<Webtoon> webtoons = webtoonRepository.findWebtoonsByPublishDay(publishDay);
         return webtoons.stream()

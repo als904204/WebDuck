@@ -41,10 +41,11 @@ logging:
     org:
       springframework:
         web: debug
+        cache: debug
+      ehcache: debug
 
 secret:
   key: "b14f7c3f2e4a9d034d9f9c3b15b30a0e3d2b6bca0fa01d8c6f1c66f8a6d376b1"
-
 
 
 

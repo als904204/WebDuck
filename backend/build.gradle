@@ -51,11 +51,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 
-
     // DB
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.4'
     runtimeOnly 'com.h2database:h2'
+
+    // CACHE
+    implementation group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.6'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+
 
     // queryDSL 설정
     implementation "com.querydsl:querydsl-jpa"
