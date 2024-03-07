@@ -71,7 +71,7 @@ public class WebtoonService {
 
     // 요청에 따른 요일 웹툰 목록 조회 (MONDAY,SUNDAY..)
     @Transactional(readOnly = true)
-    @Cacheable(value = "findWebtoonsByPublishDayCache", key = "#publishDay")
+    @Cacheable(value = "findWebtoonsByPublishDayCache", key = "#publishDay", condition = "#publishDay == T(com.example.webduck.webtoon.entity.PublishDay).MONDAY")
     public List<WebtoonResponse> findWebtoonsByPublishDay(PublishDay publishDay) {
         List<Webtoon> webtoons = webtoonRepository.findWebtoonsByPublishDay(publishDay);
         return webtoons.stream()
@@ -79,6 +79,7 @@ public class WebtoonService {
     }
 
     // 요청에 따른 플랫폼 별 웹툰 목록 조회 (NAVER,KAKAO..)
+    @Cacheable(value = "findWebtoonsByPlatformCache", key = "#platform", condition = "#platform == T(com.example.webduck.webtoon.entity.Platform).KAKAO")
     @Transactional(readOnly = true)
     public List<WebtoonResponse> findWebtoonsByPlatform(Platform platform) {
         List<Webtoon> webtoons = webtoonRepository.findWebtoonsByPlatform(platform);
