@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.webduck.admin.controller.AdminApiController;
 import com.example.webduck.admin.service.UploadService;
 import com.example.webduck.webtoon.dto.WebtoonUpload;
 import com.example.webduck.webtoon.entity.Platform;

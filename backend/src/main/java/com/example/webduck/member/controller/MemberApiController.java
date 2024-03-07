@@ -1,7 +1,7 @@
 package com.example.webduck.member.controller;
 
-import com.example.webduck.config.security.oauth.dto.LoginMember;
-import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.security.oauth.dto.LoginMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.member.domain.MemberProfile;
 import com.example.webduck.member.dto.MemberUpdate.ProfileRequest;
 import com.example.webduck.member.dto.MemberUpdate.ProfileResponse;

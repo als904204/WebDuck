@@ -1,4 +1,4 @@
-package com.example.webduck.config.security;
+package com.example.webduck.global.security;
 
 import static com.example.webduck.member.entity.Role.ADMIN;
 import static com.example.webduck.member.entity.Role.USER;
@@ -6,9 +6,9 @@ import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
-import com.example.webduck.config.security.oauth.handler.OAuth2LoginFailureHandler;
-import com.example.webduck.config.security.oauth.handler.OAuth2LoginSuccessHandler;
-import com.example.webduck.config.security.oauth.service.CustomOAuth2UserService;
+import com.example.webduck.global.security.oauth.handler.OAuth2LoginFailureHandler;
+import com.example.webduck.global.security.oauth.handler.OAuth2LoginSuccessHandler;
+import com.example.webduck.global.security.oauth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

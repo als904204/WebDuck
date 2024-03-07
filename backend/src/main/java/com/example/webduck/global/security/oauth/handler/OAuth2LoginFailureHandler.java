@@ -1,4 +1,4 @@
-package com.example.webduck.config.security.oauth.handler;
+package com.example.webduck.global.security.oauth.handler;
 
 
 import java.io.IOException;

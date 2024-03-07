@@ -1,15 +1,15 @@
-package com.example.webduck.config.security.oauth.service;
+package com.example.webduck.global.security.oauth.service;
 
 import static com.example.webduck.global.exception.exceptionCode.ValidationExceptionCode.INVALID_OAUTH_TYPE;
 
-import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.global.exception.CustomException;
+import com.example.webduck.global.security.oauth.entity.userInfo.GoogleUserInfo;
+import com.example.webduck.global.security.oauth.entity.userInfo.KakaoUserInfo;
+import com.example.webduck.global.security.oauth.entity.userInfo.OAuth2UserInfo;
 import com.example.webduck.member.entity.Member;
 import com.example.webduck.member.entity.Role;
 import com.example.webduck.member.repository.MemberRepository;
-import com.example.webduck.config.security.oauth.entity.userInfo.GoogleUserInfo;
-import com.example.webduck.config.security.oauth.entity.userInfo.KakaoUserInfo;
-import com.example.webduck.config.security.oauth.entity.userInfo.OAuth2UserInfo;
 import com.example.webduck.member.service.NicknameGenerator;
 import java.time.LocalDateTime;
 import java.util.Collections;

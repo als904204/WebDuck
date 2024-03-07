@@ -1,6 +1,6 @@
 package com.example.webduck.member.customMock;
 
-import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.member.entity.Member;
 import java.util.List;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

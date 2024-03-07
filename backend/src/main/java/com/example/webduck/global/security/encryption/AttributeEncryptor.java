@@ -1,4 +1,4 @@
-package com.example.webduck.config.security.encryption;
+package com.example.webduck.global.security.encryption;
 
 import static com.example.webduck.global.exception.exceptionCode.LogicExceptionCode.BAD_REQUEST;
 

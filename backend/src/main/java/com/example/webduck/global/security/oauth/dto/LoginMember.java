@@ -1,4 +1,4 @@
-package com.example.webduck.config.security.oauth.dto;
+package com.example.webduck.global.security.oauth.dto;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

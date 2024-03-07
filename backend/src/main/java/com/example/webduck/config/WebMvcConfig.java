@@ -1,6 +1,6 @@
 package com.example.webduck.config;
 
-import com.example.webduck.config.security.oauth.resolver.LoginMemberArgumentResolver;
+import com.example.webduck.global.security.oauth.resolver.LoginMemberArgumentResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

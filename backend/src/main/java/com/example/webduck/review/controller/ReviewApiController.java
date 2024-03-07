@@ -1,7 +1,7 @@
 package com.example.webduck.review.controller;
 
-import com.example.webduck.config.security.oauth.dto.LoginMember;
-import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.security.oauth.dto.LoginMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
 import com.example.webduck.review.dto.ReviewSave;
 import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;

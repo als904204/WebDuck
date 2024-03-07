@@ -4,7 +4,7 @@ package com.example.webduck.member.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.member.dto.MemberUpdate.ProfileRequest;
 import com.example.webduck.member.entity.Member;

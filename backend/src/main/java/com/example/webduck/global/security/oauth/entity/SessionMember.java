@@ -1,4 +1,4 @@
-package com.example.webduck.config.security.oauth.entity;
+package com.example.webduck.global.security.oauth.entity;
 
 import com.example.webduck.member.entity.Member;
 

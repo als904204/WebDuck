@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.member.customMock.WithMockCustomUser;
+import com.example.webduck.webtoon.controller.WebtoonApiController;
 import com.example.webduck.webtoon.service.WebtoonService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

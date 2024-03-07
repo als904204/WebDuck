@@ -1,9 +1,7 @@
-package com.example.webduck.config.security.oauth.resolver;
+package com.example.webduck.global.security.oauth.resolver;
 
-import com.example.webduck.config.security.oauth.dto.LoginMember;
-import com.example.webduck.config.security.oauth.entity.SessionMember;
-import com.example.webduck.global.exception.CustomException;
-import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
+import com.example.webduck.global.security.oauth.dto.LoginMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import javax.servlet.http.HttpSession;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
