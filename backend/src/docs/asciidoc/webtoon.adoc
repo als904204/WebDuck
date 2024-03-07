@@ -30,7 +30,7 @@ include::{snippets}/get-v1-get-webtoons/response-fields.adoc[]
 
 ==== Request
 include::{snippets}/get-v1-get-webtoonsByPublish/http-request.adoc[]
-include::{snippets}/get-v1-get-webtoonsByPublish/query-parameters.adoc[]
+include::{snippets}/get-v1-get-webtoonsByPublish/request-parameters.adoc[]
 
 ==== Response
 include::{snippets}/get-v1-get-webtoonsByPublish/http-response.adoc[]
@@ -42,7 +42,7 @@ include::{snippets}/get-v1-get-webtoonsByPublish/response-fields.adoc[]
 
 ==== Request
 include::{snippets}/get-v1-get-webtoonsByPlatform/http-request.adoc[]
-include::{snippets}/get-v1-get-webtoonsByPlatform/query-parameters.adoc[]
+include::{snippets}/get-v1-get-webtoonsByPlatform/request-parameters.adoc[]
 
 ==== Response
 include::{snippets}/get-v1-get-webtoonsByPlatform/http-response.adoc[]
@@ -53,7 +53,7 @@ include::{snippets}/get-v1-get-webtoonsByPlatform/response-fields.adoc[]
 
 ==== Request
 include::{snippets}/get-v1-get-webtoonsByGenre/http-request.adoc[]
-include::{snippets}/get-v1-get-webtoonsByGenre/query-parameters.adoc[]
+include::{snippets}/get-v1-get-webtoonsByGenre/request-parameters.adoc[]
 
 ==== Response
 include::{snippets}/get-v1-get-webtoonsByGenre/http-response.adoc[]
@@ -65,7 +65,7 @@ include::{snippets}/get-v1-get-webtoonsByGenre/response-fields.adoc[]
 
 ==== Request
 include::{snippets}/get-v1-get-webtoonsByGenres/http-request.adoc[]
-include::{snippets}/get-v1-get-webtoonsByGenres/query-parameters.adoc[]
+include::{snippets}/get-v1-get-webtoonsByGenres/request-parameters.adoc[]
 
 ==== Response
 include::{snippets}/get-v1-get-webtoonsByGenres/http-response.adoc[]
@@ -77,7 +77,7 @@ include::{snippets}/get-v1-get-webtoonsByGenres/response-fields.adoc[]
 ==== Request
 해당 정렬은 "rating(리뷰 평점순)" 을 기준으로 정렬
 include::{snippets}/get-v1-get-webtoonsByCondition/http-request.adoc[]
-include::{snippets}/get-v1-get-webtoonsByCondition/query-parameters.adoc[]
+include::{snippets}/get-v1-get-webtoonsByCondition/request-parameters.adoc[]
 
 ===== Response
 include::{snippets}/get-v1-get-webtoonsByCondition/http-response.adoc[]
