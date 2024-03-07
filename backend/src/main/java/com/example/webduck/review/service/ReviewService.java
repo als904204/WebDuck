@@ -1,6 +1,6 @@
 package com.example.webduck.review.service;
 
-import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;

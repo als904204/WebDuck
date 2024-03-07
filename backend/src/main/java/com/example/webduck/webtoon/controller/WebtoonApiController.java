@@ -1,4 +1,4 @@
-package com.example.webduck.webtoon.controller.api;
+package com.example.webduck.webtoon.controller;
 
 import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;

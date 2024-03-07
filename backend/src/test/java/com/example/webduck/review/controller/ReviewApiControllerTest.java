@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
 import com.example.webduck.review.dto.ReviewSave;

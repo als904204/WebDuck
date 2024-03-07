@@ -1,4 +1,4 @@
-package com.example.webduck.admin.controller.api;
+package com.example.webduck.admin.controller;
 
 
 import com.example.webduck.webtoon.dto.WebtoonUpload;

@@ -15,6 +15,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.requestP
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.review.entity.Review;
+import com.example.webduck.webtoon.controller.WebtoonApiController;
 import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;

@@ -18,7 +18,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.requestP
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
 import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;

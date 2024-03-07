@@ -1,18 +1,15 @@
 package com.example.webduck.member.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
-import com.example.webduck.member.dto.MemberUpdate;
 import com.example.webduck.member.dto.MemberUpdate.ProfileRequest;
 import com.example.webduck.member.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
