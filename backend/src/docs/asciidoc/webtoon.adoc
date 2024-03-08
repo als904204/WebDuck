@@ -49,17 +49,6 @@ include::{snippets}/get-v1-get-webtoonsByPlatform/http-response.adoc[]
 include::{snippets}/get-v1-get-webtoonsByPlatform/response-body.adoc[]
 include::{snippets}/get-v1-get-webtoonsByPlatform/response-fields.adoc[]
 
-=== 장르별 웹툰 조회
-
-==== Request
-include::{snippets}/get-v1-get-webtoonsByGenre/http-request.adoc[]
-include::{snippets}/get-v1-get-webtoonsByGenre/request-parameters.adoc[]
-
-==== Response
-include::{snippets}/get-v1-get-webtoonsByGenre/http-response.adoc[]
-include::{snippets}/get-v1-get-webtoonsByGenre/response-body.adoc[]
-include::{snippets}/get-v1-get-webtoonsByGenre/response-fields.adoc[]
-
 
 === 장르별 웹툰 조회
 
