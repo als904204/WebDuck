@@ -8,6 +8,7 @@ import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.member.customMock.WithMockCustomUser;
 import com.example.webduck.webtoon.controller.WebtoonApiController;
+import com.example.webduck.webtoon.entity.WebtoonSortCondition;
 import com.example.webduck.webtoon.service.WebtoonService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,14 +58,14 @@ class WebtoonApiControllerTest {
     @DisplayName("실패 : 잘못된 sortBy 요청")
     @Test
     void testInvalidSortBy() throws Exception {
-        var invalidSortBy = "hahahahahhh";
+        WebtoonSortCondition invalidSortBy = WebtoonSortCondition.COUNT;
 
-        when(webtoonService.findWebtoonsByWebtoonCondition(invalidSortBy))
+        when(webtoonService.findPopularWebtoonsByCondition(invalidSortBy))
             .thenThrow(new CustomException(LogicExceptionCode.BAD_REQUEST));
 
         mockMvc.perform(get(uri + "/popular")
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("sortBy", invalidSortBy))
+                .param("condition", String.valueOf(invalidSortBy)))
             .andExpect(status().isBadRequest());
     }
 

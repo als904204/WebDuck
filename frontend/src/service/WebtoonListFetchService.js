@@ -3,7 +3,7 @@ import axios from 'axios';
 // 인기별 웹툰 요청 평점순,리뷰순 (RATING,COUNT)
 export const getWebtoonsByPopular = async (condition) => {
   try {
-    const response = await axios.get(`/api/v1/webtoon/popular?sortBy=${condition}`);
+    const response = await axios.get(`/api/v1/webtoon/popular?condition=${condition}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching webtoons for popular', condition, error);

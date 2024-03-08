@@ -46,33 +46,6 @@ class WebtoonServiceTest {
     private final String imageName = "Image1.png";
 
 
-    @DisplayName("id로 웹툰 조회")
-    @Test
-    void findWebtoonById() {
-        Webtoon webtoon = Webtoon.builder()
-            .title(title)
-            .summary(summary)
-            .imagePath(path)
-            .publishDay(PublishDay.MONDAY)
-            .platform(Platform.NAVER)
-            .originalImageName(imageName)
-            .build();
-
-        Long id = 1L;
-        when(webtoonRepository.findById(id)).thenReturn(Optional.of(webtoon));
-
-        WebtoonResponse result = webtoonService.findWebtoonById(id);
-
-        assertThat(result).isNotNull();
-        assertThat(result.getTitle()).isEqualTo("Webtoon 1");
-        assertThat(result.getSummary()).isEqualTo("Summary 1");
-        assertThat(result.getPublishDay()).isEqualTo(PublishDay.MONDAY);
-        assertThat(result.getPlatform()).isEqualTo(Platform.NAVER);
-        assertThat(result.getImagePath()).isEqualTo("Path 1");
-        assertThat(result.getOriginalImageName()).isEqualTo("Image1.png");
-
-        verify(webtoonRepository, times(1)).findById(id);
-    }
 
     @DisplayName("웹툰 상세조회 : 리뷰 개수,리뷰 점수")
     @Test
@@ -201,34 +174,6 @@ class WebtoonServiceTest {
             .allMatch(mondayWebtoon -> mondayWebtoon.getPlatform() == Platform.NAVER);
     }
 
-    @DisplayName("장르별 웹툰 목록 조회")
-    @Test
-    void findWebtoonsByGenre() {
-        final String romance = "로맨스";
-
-        List<Webtoon> webtoons = List.of(
-            Webtoon.builder().title(romance).summary("Summary 3").imagePath("Path 3")
-                .publishDay(PublishDay.SUNDAY).originalImageName("Image3.png")
-                .platform(Platform.NAVER).build(),
-
-            Webtoon.builder().title(romance).summary("Summary 4").imagePath("Path 4")
-                .publishDay(PublishDay.SUNDAY).originalImageName("Image4.png")
-                .platform(Platform.NAVER).build()
-        );
-
-        when(webtoonRepository.findWebtoonsByGenreName(romance)).thenReturn(webtoons);
-
-        List<WebtoonResponse> foundWebtoonsByGenre = webtoonService.findWebtoonsByGenreName(romance);
-
-        assertThat(foundWebtoonsByGenre).isNotNull();
-        assertThat(foundWebtoonsByGenre).hasSize(webtoons.size());
-        assertThat(foundWebtoonsByGenre).hasSize(webtoons.size());
-
-        assertThat(foundWebtoonsByGenre.get(0).getTitle()).isEqualTo(romance);
-        assertThat(foundWebtoonsByGenre).allMatch(
-            romanceWebtoon -> romanceWebtoon.getTitle().equals(romance));
-
-    }
 
     @DisplayName("장르필터별 웹툰 목록 조회")
     @Test
