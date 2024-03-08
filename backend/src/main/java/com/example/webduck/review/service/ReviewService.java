@@ -147,12 +147,15 @@ public class ReviewService {
 
         boolean hasLikes = reviewLikesRepository.existsByReviewIdAndMemberId(reviewId, memberId);
 
+        // 이미 좋아요를 했다면 취소한다
         if (hasLikes) {
             reviewLikesRepository.deleteByReviewIdAndMemberId(reviewId, memberId);
             review.downLikesCount();
             int likesCount = review.getLikesCount();
             return new ReviewLikesResponse(true, likesCount);
         }else{
+
+            // 안했다면 좋아요
             ReviewLikes reviewLikes = ReviewLikes.builder()
                 .reviewId(reviewId)
                 .memberId(memberId)
