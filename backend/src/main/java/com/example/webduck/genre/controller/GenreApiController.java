@@ -18,7 +18,7 @@ public class GenreApiController {
     private final GenreService genreService;
 
     @GetMapping
-    public ResponseEntity<List<GenreResponse>> getGenreList() {
+    public ResponseEntity<List<GenreResponse>> findGenreList() {
         List<GenreResponse> genreList = genreService.findAllGenres();
         return ResponseEntity.ok(genreList);
     }
