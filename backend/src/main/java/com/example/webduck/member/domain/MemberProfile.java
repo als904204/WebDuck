@@ -27,7 +27,7 @@ public class MemberProfile {
     }
 
 
-    public static MemberProfile of(Member member, List<Review> memberReviews) {
+    public static MemberProfile from(Member member, List<Review> memberReviews) {
 
         // 좋아요 개수
         int likesCount = 0;

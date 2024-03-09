@@ -7,7 +7,6 @@ import com.example.webduck.member.entity.Member;
 import com.example.webduck.member.entity.Role;
 import com.example.webduck.member.entity.SocialType;
 import com.example.webduck.review.entity.Review;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +43,7 @@ class MemberProfileTest {
                 .build()
         );
 
-        MemberProfile profile = MemberProfile.of(member, reviews);
+        MemberProfile profile = MemberProfile.from(member, reviews);
         assertThat(profile.getUsername()).isEqualTo(nickname);
         assertThat(profile.getReviewCount()).isEqualTo(2);
 
@@ -81,7 +80,7 @@ class MemberProfileTest {
                 .build()
         );
 
-        assertThatThrownBy(() -> MemberProfile.of(member, reviews))
+        assertThatThrownBy(() -> MemberProfile.from(member, reviews))
             .isInstanceOf(AssertionError.class)
             .hasMessageContaining("username은 null이거나 비어있을 수 없습니다.");
 

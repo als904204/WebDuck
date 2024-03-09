@@ -43,7 +43,7 @@ public class MemberService {
 
         List<Review> memberReviews = reviewRepository.findByMemberId(sessionMemberId);
 
-        return MemberProfile.of(member, memberReviews);
+        return MemberProfile.from(member, memberReviews);
     }
 
 
@@ -57,11 +57,10 @@ public class MemberService {
 
         String username = request.getUsername();
 
-        if (member.getUsername().equals(username)) {
-            log.warn("request username is same as before={}", username);
-            throw new CustomException(LogicExceptionCode.DUPLICATE_REQUEST);
-        }
+        // 요청 username 이 기존 username 이랑 같은지
+        member.validateUsername(username);
 
+        // 요청 username 이 이미 DB 에 이미 있는지
         boolean isDuplicatedName = memberRepository.existsByUsername(username);
 
         if (isDuplicatedName) {
@@ -71,7 +70,7 @@ public class MemberService {
 
         member.updateProfile(username);
         sessionMember.setUsername(username);
-        log.info("member username updated={}", member.getUsername());
+
         return new ProfileResponse(member);
     }
 

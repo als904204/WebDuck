@@ -2,6 +2,8 @@ package com.example.webduck.member.entity;
 
 import com.example.webduck.global.common.BaseTime;
 import com.example.webduck.global.converter.EncryptorConverter;
+import com.example.webduck.global.exception.CustomException;
+import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -68,6 +70,13 @@ public class Member extends BaseTime {
 
     public void updateProfile(String username) {
         this.username = username;
+    }
+
+    // 요청 username 이 기존 username 이랑 같은지
+    public void validateUsername(String username) {
+        if (this.username.equals(username)) {
+            throw new CustomException(LogicExceptionCode.DUPLICATE_REQUEST);
+        }
     }
 
     public void updatePrevLoginAt(LocalDateTime now) {

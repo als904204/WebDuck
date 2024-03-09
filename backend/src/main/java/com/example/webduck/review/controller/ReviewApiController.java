@@ -46,7 +46,7 @@ public class ReviewApiController {
     }
 
     @GetMapping("/{webtoonId}")
-    public ResponseEntity<SliceResponse<SliceReviewResponse>> getReviewsByWebtoonId(
+    public ResponseEntity<SliceResponse<SliceReviewResponse>> findReviewsByWebtoonId(
         @PathVariable Long webtoonId,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(value = "size", defaultValue = "5") int size,
