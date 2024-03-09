@@ -2,14 +2,14 @@ package com.example.webduck.collection.service;
 
 import com.example.webduck.collection.domain.Collection;
 import com.example.webduck.collection.domain.CollectionCreate;
-import com.example.webduck.collection.infrastructrue.CollectionWebtoons;
+import com.example.webduck.collection.infrastructure.CollectionWebtoons;
 import com.example.webduck.collection.service.port.CollectionRepository;
 import com.example.webduck.collection.service.port.CollectionWebtoonsRepository;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.member.entity.Member;
-import com.example.webduck.member.repository.MemberRepository;
+import com.example.webduck.member.infrastructure.MemberRepository;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
 import java.util.ArrayList;

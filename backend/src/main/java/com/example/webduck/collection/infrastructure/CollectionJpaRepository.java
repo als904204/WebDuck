@@ -1,4 +1,4 @@
-package com.example.webduck.collection.infrastructrue;
+package com.example.webduck.collection.infrastructure;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package com.example.webduck.collection.infrastructrue;
+package com.example.webduck.collection.infrastructure;
 
 import com.example.webduck.collection.domain.Collection;
 import com.example.webduck.collection.service.port.CollectionRepository;
