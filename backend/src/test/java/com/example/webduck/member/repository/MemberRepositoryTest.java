@@ -1,7 +1,5 @@
 package com.example.webduck.member.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.example.webduck.config.ConverterConfigTest;
 import com.example.webduck.config.QueryDslConfigTest;
 import com.example.webduck.member.entity.Member;
@@ -16,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @Import({QueryDslConfigTest.class, ConverterConfigTest.class})
 @ActiveProfiles("test")

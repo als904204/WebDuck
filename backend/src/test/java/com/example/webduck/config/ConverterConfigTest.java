@@ -1,6 +1,6 @@
 package com.example.webduck.config;
 
-import com.example.webduck.config.security.encryption.AttributeEncryptor;
+import com.example.webduck.global.security.encryption.AttributeEncryptor;
 import com.example.webduck.global.converter.EncryptorConverter;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;

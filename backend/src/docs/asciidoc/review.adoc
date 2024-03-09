@@ -27,7 +27,7 @@ include::{snippets}/delete-v1-delete-review/path-parameters.adoc[]
 ==== Request
 include::{snippets}/get-v1-get-reviewsByWebtoonId/http-request.adoc[]
 include::{snippets}/get-v1-get-reviewsByWebtoonId/path-parameters.adoc[]
-include::{snippets}/get-v1-get-reviewsByWebtoonId/query-parameters.adoc[]
+include::{snippets}/get-v1-get-reviewsByWebtoonId/request-parameters.adoc[]
 
 ==== Response
 include::{snippets}/get-v1-get-reviewsByWebtoonId/http-response.adoc[]

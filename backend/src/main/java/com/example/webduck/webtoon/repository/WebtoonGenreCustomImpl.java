@@ -6,8 +6,9 @@ import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.review.entity.QReview;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
-import com.example.webduck.webtoon.dto.WebtoonSortCondition.WebtoonConditionResponse;
+import com.example.webduck.webtoon.dto.WebtoonPopularResponse;
 import com.example.webduck.webtoon.entity.QWebtoon;
+import com.example.webduck.webtoon.entity.WebtoonSortCondition;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -41,13 +42,13 @@ public class WebtoonGenreCustomImpl implements WebtoonGenreCustom{
     }
 
     @Override
-    public List<WebtoonConditionResponse> findPopularWebtoonsByCondition(
-        String condition) {
+    public List<WebtoonPopularResponse> findPopularWebtoonsByCondition(
+        WebtoonSortCondition condition) {
         QWebtoon webtoon = QWebtoon.webtoon;
         QReview review = QReview.review;
 
         return queryFactory.select(
-                Projections.constructor(WebtoonConditionResponse.class,
+                Projections.constructor(WebtoonPopularResponse.class,
                     webtoon.id,
                     webtoon.title,
                     webtoon.imagePath,
@@ -65,12 +66,14 @@ public class WebtoonGenreCustomImpl implements WebtoonGenreCustom{
             .fetch();
     }
 
-    private OrderSpecifier<?> sortByRatingOrReviewCount(String condition) {
+    private OrderSpecifier<?> sortByRatingOrReviewCount(WebtoonSortCondition condition) {
         QReview review = QReview.review;
         QWebtoon webtoon = QWebtoon.webtoon;
 
+        String sortBy = condition.getCondition();
+
         OrderSpecifier<?> orderSpecifier;
-        switch (condition.toUpperCase()) {
+        switch (sortBy.toUpperCase()) {
             case "RATING":
                 orderSpecifier = review.rating.avg().desc();
                 break;

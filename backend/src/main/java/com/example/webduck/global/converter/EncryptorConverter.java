@@ -1,6 +1,6 @@
 package com.example.webduck.global.converter;
 
-import com.example.webduck.config.security.encryption.AttributeEncryptor;
+import com.example.webduck.global.security.encryption.AttributeEncryptor;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 

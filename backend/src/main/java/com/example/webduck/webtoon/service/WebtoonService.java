@@ -6,17 +6,15 @@ import com.example.webduck.review.entity.Review;
 import com.example.webduck.review.repository.ReviewRepository;
 import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
+import com.example.webduck.webtoon.dto.WebtoonPopularResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
-import com.example.webduck.webtoon.dto.WebtoonSortCondition.WebtoonConditionResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
+import com.example.webduck.webtoon.entity.WebtoonSortCondition;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -31,15 +29,6 @@ public class WebtoonService {
     private final WebtoonRepository webtoonRepository;
 
     private final ReviewRepository reviewRepository;
-
-    // ID로 웹툰 조회
-    @Transactional(readOnly = true)
-    public WebtoonResponse findWebtoonById(Long id) {
-        Webtoon webtoon = webtoonRepository.findById(id)
-            .orElseThrow(() -> new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND));
-
-        return new WebtoonResponse(webtoon);
-    }
 
     /**
      * 웹툰 상세보기
@@ -71,7 +60,7 @@ public class WebtoonService {
 
     // 요청에 따른 요일 웹툰 목록 조회 (MONDAY,SUNDAY..)
     @Transactional(readOnly = true)
-    @Cacheable(value = "findWebtoonsByPublishDayCache", key = "#publishDay")
+    @Cacheable(value = "findWebtoonsByPublishDayCache", key = "#publishDay", condition = "#publishDay == T(com.example.webduck.webtoon.entity.PublishDay).MONDAY")
     public List<WebtoonResponse> findWebtoonsByPublishDay(PublishDay publishDay) {
         List<Webtoon> webtoons = webtoonRepository.findWebtoonsByPublishDay(publishDay);
         return webtoons.stream()
@@ -79,6 +68,7 @@ public class WebtoonService {
     }
 
     // 요청에 따른 플랫폼 별 웹툰 목록 조회 (NAVER,KAKAO..)
+    @Cacheable(value = "findWebtoonsByPlatformCache", key = "#platform", condition = "#platform == T(com.example.webduck.webtoon.entity.Platform).KAKAO")
     @Transactional(readOnly = true)
     public List<WebtoonResponse> findWebtoonsByPlatform(Platform platform) {
         List<Webtoon> webtoons = webtoonRepository.findWebtoonsByPlatform(platform);
@@ -86,15 +76,7 @@ public class WebtoonService {
             .map(WebtoonResponse::new).collect(Collectors.toList());
     }
 
-    // 단건 장르 웹툰 목록 조회 (무협 웹툰만 조회,로맨스 웹툰만 조회)
-    @Transactional(readOnly = true)
-    public List<WebtoonResponse> findWebtoonsByGenreName(String name) {
-        List<Webtoon> webtoonsByGenre = webtoonRepository.findWebtoonsByGenreName(name);
-        return webtoonsByGenre.stream()
-            .map(WebtoonResponse::new).collect(Collectors.toList());
-    }
-
-    // 장르 요청에 따른 웹툰 목록 조회 (무협,개그,판타지 장르를 포함한 웹툰)
+    // 장르 요청에 따른 웹툰 목록 조회 (ex : 무협,개그,판타지 장르를 포함한 웹툰)
     @Transactional(readOnly = true)
     public List<WebtoonGenreResponse> findWebtoonsByGenreNames(List<String> genreNames) {
         List<WebtoonGenreResponse> webtoonsByGenres = webtoonRepository.findWebtoonsByGenres(
@@ -106,9 +88,10 @@ public class WebtoonService {
         return webtoonsByGenres;
     }
 
+    // 인기 웹툰 조회 (리뷰 개수 순, 평점 순)
     @Transactional(readOnly = true)
-    public List<WebtoonConditionResponse> findWebtoonsByWebtoonCondition(
-        String condition) {
+    public List<WebtoonPopularResponse> findPopularWebtoonsByCondition(
+        WebtoonSortCondition condition) {
         return webtoonRepository.findPopularWebtoonsByCondition(condition);
     }
 }

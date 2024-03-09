@@ -11,7 +11,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.webduck.config.security.oauth.entity.SessionMember;
+import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.member.customMock.MockMemberUtil;
 import com.example.webduck.member.customMock.WithMockCustomUser;
 import com.example.webduck.member.domain.MemberProfile;
@@ -94,7 +94,7 @@ class MemberApiControllerDocsTest {
                 .build()
         );
 
-        MemberProfile response = MemberProfile.of(member, reviews);
+        MemberProfile response = MemberProfile.from(member, reviews);
 
         Mockito.when(memberService.getProfile(Mockito.any(SessionMember.class)))
             .thenReturn(response);

@@ -1,6 +1,8 @@
 package com.example.webduck.webtoon.entity;
 
 import com.example.webduck.genre.entity.WebtoonGenre;
+import com.example.webduck.global.exception.CustomException;
+import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -88,6 +90,11 @@ public class Webtoon{
         }
     }
 
+    public static void validateSizeMismatch(int actual,int expected) {
+        if (actual != expected) {
+            throw new CustomException(LogicExceptionCode.BAD_REQUEST);
+        }
+    }
     public Long getId() {
         return id;
     }

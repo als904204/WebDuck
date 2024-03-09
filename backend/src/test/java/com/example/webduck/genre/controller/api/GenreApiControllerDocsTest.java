@@ -8,6 +8,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.webduck.genre.controller.GenreApiController;
 import com.example.webduck.genre.dto.GenreResponse;
 import com.example.webduck.genre.entity.Genre;
 import com.example.webduck.genre.service.GenreService;

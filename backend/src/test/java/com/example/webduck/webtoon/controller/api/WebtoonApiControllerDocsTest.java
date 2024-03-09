@@ -15,13 +15,15 @@ import static org.springframework.restdocs.request.RequestDocumentation.requestP
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.review.entity.Review;
+import com.example.webduck.webtoon.controller.WebtoonApiController;
 import com.example.webduck.webtoon.dto.WebtoonDetails;
 import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
+import com.example.webduck.webtoon.dto.WebtoonPopularResponse;
 import com.example.webduck.webtoon.dto.WebtoonResponse;
-import com.example.webduck.webtoon.dto.WebtoonSortCondition.WebtoonConditionResponse;
 import com.example.webduck.webtoon.entity.Platform;
 import com.example.webduck.webtoon.entity.PublishDay;
 import com.example.webduck.webtoon.entity.Webtoon;
+import com.example.webduck.webtoon.entity.WebtoonSortCondition;
 import com.example.webduck.webtoon.service.WebtoonService;
 import java.util.Arrays;
 import java.util.List;
@@ -206,34 +208,7 @@ class WebtoonApiControllerDocsTest {
             ));
     }
 
-    @DisplayName("조회 : 장르별 웹툰 조회")
-    @Test
-    void testWebtoonListByGenre() throws Exception {
-        String[] genres = {"ROMANCE", "FANTASY", "GAG", "ACTION", "DAILY_LIFE", "THRILLER", "MARTIAL_ARTS", "DRAMA", "SPORTS", "ADULT"};
 
-        Mockito.when(webtoonService.findWebtoonsByGenreName(Mockito.anyString()))
-            .thenReturn(mockWebtoonResponses);
-
-        mockMvc.perform(get(uri + "/genre")
-                .param("name", "FANTASY"))
-            .andExpect(status().isOk())
-            .andDo(document("get-v1-get-webtoonsByGenre",
-                preprocessResponse(prettyPrint()),
-                requestParameters(
-                    parameterWithName("name").description("웹툰을 조회하기 위한 장르 이름. 가능한 값: " + String.join(", ", genres))
-                ),
-                responseFields(
-                    fieldWithPath("[].id").description("웹툰의 ID").type(Long.class),
-                    fieldWithPath("[].title").description("웹툰의 제목").type(JsonFieldType.STRING),
-                    fieldWithPath("[].summary").description("웹툰의 요약").type(JsonFieldType.STRING),
-                    fieldWithPath("[].originalImageName").description("원본 이미지 파일명").type(JsonFieldType.STRING),
-                    fieldWithPath("[].imagePath").description("이미지 파일 경로").type(JsonFieldType.STRING),
-                    fieldWithPath("[].publishDay").description("웹툰의 연재 요일").type(JsonFieldType.STRING),
-                    fieldWithPath("[].platform").description("웹툰이 연재되는 플랫폼").type(JsonFieldType.STRING),
-                    fieldWithPath("[].author").description("웹툰의 작가").type(JsonFieldType.STRING)
-                )
-            ));
-    }
 
     @DisplayName("조회: 장르별 웹툰 목록")
     @Test
@@ -273,8 +248,8 @@ class WebtoonApiControllerDocsTest {
     @Test
     void testPopularWebtoonListByCondition() throws Exception {
 
-        List<WebtoonConditionResponse> mockWebtoonConditionResponses = List.of(
-            new WebtoonConditionResponse(
+        List<WebtoonPopularResponse> mockPopularResponse = List.of(
+            new WebtoonPopularResponse(
                 2L,
                 "화산귀환",
                 "/images/화산귀환.jpg",
@@ -284,7 +259,7 @@ class WebtoonApiControllerDocsTest {
                 50,
                 5.0
             ),
-            new WebtoonConditionResponse(
+            new WebtoonPopularResponse(
                 1L,
                 "나혼자만 레벨업",
                 "/images/나혼자만 레벨업.jpg",
@@ -296,18 +271,18 @@ class WebtoonApiControllerDocsTest {
             )
         );
 
-        String sortBy = "rating"; // 'rating' 또는 'count'
+        WebtoonSortCondition sortCondition = WebtoonSortCondition.RATING;
 
-        Mockito.when(webtoonService.findWebtoonsByWebtoonCondition(Mockito.anyString()))
-            .thenReturn(mockWebtoonConditionResponses);
+        Mockito.when(webtoonService.findPopularWebtoonsByCondition(Mockito.any(WebtoonSortCondition.class)))
+            .thenReturn(mockPopularResponse);
 
         mockMvc.perform(get(uri+"/popular")
-                .param("sortBy", sortBy))
+                .param("condition", String.valueOf(sortCondition)))
             .andExpect(status().isOk())
             .andDo(document("get-v1-get-webtoonsByCondition",
                 preprocessResponse(prettyPrint()),
                 requestParameters(
-                    parameterWithName("sortBy").description("정렬 기준 (평점순,리뷰순): 'rating', 'count'")
+                    parameterWithName("condition").description("정렬 기준 (평점순,리뷰순): 'rating', 'count'")
                 ),
                 responseFields(
                     fieldWithPath("[].id").description("웹툰의 ID").type(Long.class),
