@@ -1,4 +1,4 @@
-package com.example.webduck.collection.infrastructure;
+package com.example.webduck.collection.infrastructure.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

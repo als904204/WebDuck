@@ -1,4 +1,4 @@
-package com.example.webduck.collection.infrastructure;
+package com.example.webduck.collection.infrastructure.entity;
 
 import com.example.webduck.collection.domain.Collection;
 import com.example.webduck.global.common.BaseTime;

@@ -2,7 +2,7 @@ package com.example.webduck.collection.service;
 
 import com.example.webduck.collection.domain.Collection;
 import com.example.webduck.collection.domain.CollectionCreate;
-import com.example.webduck.collection.infrastructure.CollectionWebtoons;
+import com.example.webduck.collection.infrastructure.entity.CollectionWebtoons;
 import com.example.webduck.collection.service.port.CollectionRepository;
 import com.example.webduck.collection.service.port.CollectionWebtoonsRepository;
 import com.example.webduck.global.exception.CustomException;
