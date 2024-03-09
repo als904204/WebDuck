@@ -94,7 +94,7 @@ class MemberApiControllerDocsTest {
                 .build()
         );
 
-        MemberProfile response = MemberProfile.of(member, reviews);
+        MemberProfile response = MemberProfile.from(member, reviews);
 
         Mockito.when(memberService.getProfile(Mockito.any(SessionMember.class)))
             .thenReturn(response);

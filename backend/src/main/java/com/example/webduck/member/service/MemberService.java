@@ -43,7 +43,7 @@ public class MemberService {
 
         List<Review> memberReviews = reviewRepository.findByMemberId(sessionMemberId);
 
-        return MemberProfile.of(member, memberReviews);
+        return MemberProfile.from(member, memberReviews);
     }
 
 
@@ -70,7 +70,7 @@ public class MemberService {
 
         member.updateProfile(username);
         sessionMember.setUsername(username);
-        log.info("member username updated={}", member.getUsername());
+
         return new ProfileResponse(member);
     }
 
