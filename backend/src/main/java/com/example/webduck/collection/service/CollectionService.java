@@ -9,7 +9,7 @@ import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.member.entity.Member;
-import com.example.webduck.member.infrastructure.MemberRepository;
+import com.example.webduck.member.repository.MemberRepository;
 import com.example.webduck.webtoon.entity.Webtoon;
 import com.example.webduck.webtoon.repository.WebtoonRepository;
 import java.util.ArrayList;
