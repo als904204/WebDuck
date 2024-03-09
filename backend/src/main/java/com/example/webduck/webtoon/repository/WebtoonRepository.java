@@ -14,4 +14,8 @@ public interface WebtoonRepository extends JpaRepository<Webtoon, Long>,WebtoonG
 
     List<Webtoon> findWebtoonsByPlatform(Platform platform);
 
+    // ID 값들로 조회
+    List<Webtoon> findAllByIdIn(List<Long> webtoonIds);
+
+
 }
