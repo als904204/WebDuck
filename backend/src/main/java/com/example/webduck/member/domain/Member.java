@@ -37,7 +37,7 @@ public class Member {
         this.currentLoginAt = currentLoginAt;
     }
 
-    public static Member save(OAuth2UserInfo oAuth2UserInfo, String randomNickname) {
+    public static Member create(OAuth2UserInfo oAuth2UserInfo, String randomNickname) {
         return Member.builder()
             .username(randomNickname)
             .email(oAuth2UserInfo.getEmail())

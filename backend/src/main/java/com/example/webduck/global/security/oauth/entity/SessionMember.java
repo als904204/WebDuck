@@ -1,6 +1,6 @@
 package com.example.webduck.global.security.oauth.entity;
 
-import com.example.webduck.member.entity.Member;
+import com.example.webduck.member.domain.Member;
 
 import java.io.Serializable;
 

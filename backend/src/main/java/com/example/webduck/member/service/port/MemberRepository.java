@@ -8,14 +8,9 @@ public interface MemberRepository {
 
     Member save(Member member);
     Optional<Member> findByEmailAndSocialType(String email, SocialType socialType);
-
     Optional<Member> findById(Long id);
-
     Member getById(Long id);
-
     Optional<Member> findByUsername(String username);
-
     boolean existsByUsername(String username);
-
 
 }
