@@ -1,17 +1,15 @@
 package com.example.webduck.member.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.global.security.oauth.entity.SessionMember;
-import com.example.webduck.member.customMock.MockMemberUtil;
-import com.example.webduck.member.customMock.WithMockCustomUser;
-import com.example.webduck.member.dto.MemberUpdate.ProfileRequest;
-import com.example.webduck.member.service.MemberService;
+import com.example.webduck.member.domain.MemberUpdate;
+import com.example.webduck.mock.member.MockMemberUtil;
+import com.example.webduck.mock.member.WithMockCustomUser;
+import com.example.webduck.member.service.MemberServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +28,7 @@ class MemberApiControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private MemberService memberService;
+    private MemberServiceImpl memberServiceImpl;
 
     private final String uri = "/api/v1/member";
 
@@ -42,8 +40,7 @@ class MemberApiControllerTest {
     @Test
     void testFailInvalidRequest() throws Exception{
 
-
-        ProfileRequest request = new ProfileRequest("");
+        MemberUpdate request = new MemberUpdate("");
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
         mockMvc.perform(patch(uri + "/profile").with(csrf())

@@ -1,10 +1,7 @@
-package com.example.webduck.member.repository;
+package com.example.webduck.member.infrastructure;
 
 import com.example.webduck.config.ConverterConfigTest;
 import com.example.webduck.config.QueryDslConfigTest;
-import com.example.webduck.member.entity.Member;
-import com.example.webduck.member.entity.Role;
-import com.example.webduck.member.entity.SocialType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,12 +16,12 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 @DataJpaTest
-class MemberRepositoryTest {
+class MemberEntityJpaRepositoryTest {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberJpaRepository memberJpaRepository;
 
-    private Member member;
+    private MemberEntity memberEntity;
 
     private final String username = "webduck";
     private final SocialType socialType = SocialType.GOOGLE;
@@ -34,7 +31,7 @@ class MemberRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        member = Member.builder()
+        memberEntity = MemberEntity.builder()
             .username(username)
             .socialType(socialType)
             .socialPk(socialPk)
@@ -42,14 +39,14 @@ class MemberRepositoryTest {
             .role(Role.USER)
             .email(email)
             .build();
-        memberRepository.save(member);
+        memberJpaRepository.save(memberEntity);
     }
 
     @Test
     void findByUsername() {
-        Member findMember = memberRepository.findByUsername(username).orElseThrow();
+        MemberEntity findMemberEntity = memberJpaRepository.findByUsername(username).orElseThrow();
 
-        Assertions.assertThat(findMember).isNotNull();
-        Assertions.assertThat(findMember.getUsername()).isEqualTo(username);
+        Assertions.assertThat(findMemberEntity).isNotNull();
+        Assertions.assertThat(findMemberEntity.getUsername()).isEqualTo(username);
     }
 }
