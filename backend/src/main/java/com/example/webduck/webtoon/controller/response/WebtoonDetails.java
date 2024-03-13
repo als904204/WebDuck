@@ -1,8 +1,9 @@
-package com.example.webduck.webtoon.dto;
+package com.example.webduck.webtoon.controller.response;
 
-import com.example.webduck.webtoon.entity.Platform;
-import com.example.webduck.webtoon.entity.PublishDay;
-import com.example.webduck.webtoon.entity.Webtoon;
+import com.example.webduck.webtoon.domain.Webtoon;
+import com.example.webduck.webtoon.infrastructure.Platform;
+import com.example.webduck.webtoon.infrastructure.PublishDay;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity;
 import lombok.Getter;
 
 @Getter

@@ -1,4 +1,4 @@
-package com.example.webduck.webtoon.repository;
+package com.example.webduck.webtoon.infrastructure;
 
 
 
@@ -11,11 +11,8 @@ import com.example.webduck.genre.entity.Genre;
 import com.example.webduck.genre.entity.QGenre;
 import com.example.webduck.genre.entity.QWebtoonGenre;
 import com.example.webduck.genre.entity.WebtoonGenre;
-import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
-import com.example.webduck.webtoon.entity.Platform;
-import com.example.webduck.webtoon.entity.PublishDay;
-import com.example.webduck.webtoon.entity.QWebtoon;
-import com.example.webduck.webtoon.entity.Webtoon;
+import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
+
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import java.util.Arrays;
@@ -36,7 +33,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-class WebtoonGenreCustomImplTest {
+class WebtoonEntityGenreCustomImplTest {
 
     @Autowired
     private TestEntityManager testEntityManager;
@@ -50,8 +47,8 @@ class WebtoonGenreCustomImplTest {
     private String gWebtoonTitle = "개그 웹툰";
 
     // 개그만 포함하고있는 웹툰, 개그 판타지를 포함하고 있는 웹툰 객체
-    private Webtoon onlyGagWebtoon;
-    private Webtoon gagFantasyWebtoon;
+    private WebtoonEntity onlyGagWebtoonEntity;
+    private WebtoonEntity gagFantasyWebtoonEntity;
 
     // 장르 (개그,판타지)
     final String gag = "GAG";
@@ -69,8 +66,8 @@ class WebtoonGenreCustomImplTest {
         testEntityManager.persist(fantasyGenre);
 
         // 웹툰 저장
-        gagFantasyWebtoon = testEntityManager.persist(
-            Webtoon.builder()
+        gagFantasyWebtoonEntity = testEntityManager.persist(
+            WebtoonEntity.builder()
                 .title(gfWebtoonTitle)
                 .summary(summary)
                 .imagePath(imagePath)
@@ -80,8 +77,8 @@ class WebtoonGenreCustomImplTest {
                 .originalImageName(originalImageName)
                 .build());
 
-        onlyGagWebtoon = testEntityManager.persist(
-            Webtoon.builder()
+        onlyGagWebtoonEntity = testEntityManager.persist(
+            WebtoonEntity.builder()
                 .title(gWebtoonTitle)
                 .summary(summary)
                 .imagePath(imagePath)
@@ -94,18 +91,18 @@ class WebtoonGenreCustomImplTest {
         // 첫 번째 웹툰 : (개그) 장르 설정
         WebtoonGenre gagWebtoonGenre = new WebtoonGenre();
         gagWebtoonGenre.setGenre(gagGenre);
-        gagWebtoonGenre.setWebtoon(gagFantasyWebtoon);
+        gagWebtoonGenre.setWebtoon(gagFantasyWebtoonEntity);
         testEntityManager.persist(gagWebtoonGenre);
         // 첫 번째 웹툰 : (판타지) 장르 설정
         WebtoonGenre fantasyWebtoonGenre = new WebtoonGenre();
         fantasyWebtoonGenre.setGenre(fantasyGenre);
-        fantasyWebtoonGenre.setWebtoon(gagFantasyWebtoon);
+        fantasyWebtoonGenre.setWebtoon(gagFantasyWebtoonEntity);
         testEntityManager.persist(fantasyWebtoonGenre);
 
         // 두번째 웹툰 : (개그) 장르 설정
         WebtoonGenre onlyGag = new WebtoonGenre();
         onlyGag.setGenre(gagGenre);
-        onlyGag.setWebtoon(onlyGagWebtoon);
+        onlyGag.setWebtoon(onlyGagWebtoonEntity);
         testEntityManager.persist(onlyGag);
 
 
@@ -116,9 +113,9 @@ class WebtoonGenreCustomImplTest {
     void findGagWebtoonsByGenreNames() {
         List<String> genreNamesRequest = Arrays.asList(gag);
 
-        JPAQuery<Webtoon> query = new JPAQuery<>(em);
+        JPAQuery<WebtoonEntity> query = new JPAQuery<>(em);
 
-        QWebtoon webtoon = new QWebtoon("w");
+        QWebtoonEntity webtoon = new QWebtoonEntity("w");
         QWebtoonGenre webtoonGenre = new QWebtoonGenre("wg");
         QGenre genre = new QGenre("g");
 
@@ -147,9 +144,9 @@ class WebtoonGenreCustomImplTest {
     void findGagFantasyWebtoonsByGenreNames() {
         List<String> genreNamesRequest = Arrays.asList(gag, fantasy);
 
-        JPAQuery<Webtoon> query = new JPAQuery<>(em);
+        JPAQuery<WebtoonEntity> query = new JPAQuery<>(em);
 
-        QWebtoon webtoon = new QWebtoon("w");
+        QWebtoonEntity webtoon = new QWebtoonEntity("w");
         QWebtoonGenre webtoonGenre = new QWebtoonGenre("wg");
         QGenre genre = new QGenre("g");
 

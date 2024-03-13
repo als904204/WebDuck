@@ -1,14 +1,12 @@
-package com.example.webduck.webtoon.repository;
+package com.example.webduck.webtoon.infrastructure;
 
 import com.example.webduck.genre.entity.QGenre;
 import com.example.webduck.genre.entity.QWebtoonGenre;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
-import com.example.webduck.review.entity.QReview;
-import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
-import com.example.webduck.webtoon.dto.WebtoonPopularResponse;
-import com.example.webduck.webtoon.entity.QWebtoon;
-import com.example.webduck.webtoon.entity.WebtoonSortCondition;
+import com.example.webduck.review.infrastructure.QReviewEntity;
+import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
+import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,9 +17,11 @@ import lombok.RequiredArgsConstructor;
 public class WebtoonGenreCustomImpl implements WebtoonGenreCustom{
 
     private final JPAQueryFactory queryFactory;
+
     @Override
     public List<WebtoonGenreResponse> findWebtoonsByGenres(List<String> genreNames) {
-        QWebtoon webtoon = QWebtoon.webtoon;
+        QWebtoonEntity webtoon = QWebtoonEntity.webtoonEntity;
+
         QWebtoonGenre webtoonGenre = QWebtoonGenre.webtoonGenre;
         QGenre genre = QGenre.genre;
 
@@ -44,8 +44,8 @@ public class WebtoonGenreCustomImpl implements WebtoonGenreCustom{
     @Override
     public List<WebtoonPopularResponse> findPopularWebtoonsByCondition(
         WebtoonSortCondition condition) {
-        QWebtoon webtoon = QWebtoon.webtoon;
-        QReview review = QReview.review;
+        QWebtoonEntity webtoon = QWebtoonEntity.webtoonEntity;
+        QReviewEntity review = QReviewEntity.reviewEntity;
 
         return queryFactory.select(
                 Projections.constructor(WebtoonPopularResponse.class,
@@ -67,8 +67,8 @@ public class WebtoonGenreCustomImpl implements WebtoonGenreCustom{
     }
 
     private OrderSpecifier<?> sortByRatingOrReviewCount(WebtoonSortCondition condition) {
-        QReview review = QReview.review;
-        QWebtoon webtoon = QWebtoon.webtoon;
+        QReviewEntity review = QReviewEntity.reviewEntity;
+        QWebtoonEntity webtoon = QWebtoonEntity.webtoonEntity;
 
         String sortBy = condition.getCondition();
 

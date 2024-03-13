@@ -1,4 +1,4 @@
-package com.example.webduck.webtoon.entity;
+package com.example.webduck.webtoon.infrastructure;
 
 public enum PublishDay {
     MONDAY,

@@ -1,4 +1,4 @@
-package com.example.webduck.webtoon.dto;
+package com.example.webduck.webtoon.controller.response;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -14,17 +14,18 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.webduck.review.entity.Review;
+import com.example.webduck.review.domain.Review;
+import com.example.webduck.review.infrastructure.ReviewEntity;
 import com.example.webduck.webtoon.controller.WebtoonApiController;
-import com.example.webduck.webtoon.dto.WebtoonDetails;
-import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
-import com.example.webduck.webtoon.dto.WebtoonPopularResponse;
-import com.example.webduck.webtoon.dto.WebtoonResponse;
-import com.example.webduck.webtoon.entity.Platform;
-import com.example.webduck.webtoon.entity.PublishDay;
-import com.example.webduck.webtoon.entity.Webtoon;
-import com.example.webduck.webtoon.entity.WebtoonSortCondition;
-import com.example.webduck.webtoon.service.WebtoonService;
+import com.example.webduck.webtoon.domain.Webtoon;
+import com.example.webduck.webtoon.controller.response.WebtoonDetails;
+import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
+import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
+import com.example.webduck.webtoon.controller.response.WebtoonResponse;
+import com.example.webduck.webtoon.infrastructure.Platform;
+import com.example.webduck.webtoon.infrastructure.PublishDay;
+import com.example.webduck.webtoon.infrastructure.WebtoonSortCondition;
+import com.example.webduck.webtoon.service.WebtoonServiceImpl;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,13 +52,13 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @ExtendWith(RestDocumentationExtension.class)
 @AutoConfigureRestDocs
 @ActiveProfiles("test")
-class WebtoonApiControllerDocsTest {
+class WebtoonEntityApiControllerDocsTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private WebtoonService webtoonService;
+    private WebtoonServiceImpl webtoonServiceImpl;
 
     private final String uri = "/api/v1/webtoon";
 
@@ -106,10 +107,11 @@ class WebtoonApiControllerDocsTest {
             .build();
 
         mockWebtoonResponses = List.of(
-            new WebtoonResponse(webtoon1),
-            new WebtoonResponse(webtoon2),
-            new WebtoonResponse(webtoon3)
+            WebtoonResponse.from(webtoon1),
+            WebtoonResponse.from(webtoon2),
+            WebtoonResponse.from(webtoon3)
         );
+
     }
 
 
@@ -117,7 +119,7 @@ class WebtoonApiControllerDocsTest {
     @Test
     void testWebtoonList() throws Exception {
 
-        Mockito.when(webtoonService.findWebtoonList()).thenReturn(mockWebtoonResponses);
+        Mockito.when(webtoonServiceImpl.findAll()).thenReturn(mockWebtoonResponses);
 
         mockMvc.perform(get(uri))
             .andExpect(status().isOk())
@@ -143,7 +145,7 @@ class WebtoonApiControllerDocsTest {
         final String endpoint = "/publish";
         String thursday = PublishDay.THURSDAY.name();
 
-        Mockito.when(webtoonService.findWebtoonsByPublishDay(Mockito.any(PublishDay.class)))
+        Mockito.when(webtoonServiceImpl.findWebtoonsByPublishDay(Mockito.any(PublishDay.class)))
             .thenReturn(mockWebtoonResponses);
 
         mockMvc.perform(get(uri + endpoint)
@@ -181,7 +183,7 @@ class WebtoonApiControllerDocsTest {
 
         final String endpoint = "/platform";
 
-        Mockito.when(webtoonService.findWebtoonsByPlatform(Mockito.any(Platform.class)))
+        Mockito.when(webtoonServiceImpl.findWebtoonsByPlatform(Mockito.any(Platform.class)))
             .thenReturn(mockWebtoonResponses);
 
         mockMvc.perform(get(uri + endpoint)
@@ -224,7 +226,7 @@ class WebtoonApiControllerDocsTest {
 
         List<String> mockNames = Arrays.asList("ROMANCE", "ACTION");
 
-        Mockito.when(webtoonService.findWebtoonsByGenreNames(Mockito.anyList()))
+        Mockito.when(webtoonServiceImpl.findWebtoonsByGenreNames(Mockito.anyList()))
             .thenReturn(mockWebtoonGenreResponses);
 
         mockMvc.perform(get(uri +"/genres")
@@ -273,7 +275,7 @@ class WebtoonApiControllerDocsTest {
 
         WebtoonSortCondition sortCondition = WebtoonSortCondition.RATING;
 
-        Mockito.when(webtoonService.findPopularWebtoonsByCondition(Mockito.any(WebtoonSortCondition.class)))
+        Mockito.when(webtoonServiceImpl.findPopularWebtoonsByCondition(Mockito.any(WebtoonSortCondition.class)))
             .thenReturn(mockPopularResponse);
 
         mockMvc.perform(get(uri+"/popular")
@@ -302,7 +304,7 @@ class WebtoonApiControllerDocsTest {
     void testGetWebtoonDetails() throws Exception {
 
         var webtoonId = 1L;
-        Webtoon webtoon = Webtoon.builder()
+        Webtoon webtoonEntity = Webtoon.builder()
             .title("웹툰 제목")
             .summary("웹툰 줄거리")
             .imagePath("썸네일 이미지 경로")
@@ -315,6 +317,7 @@ class WebtoonApiControllerDocsTest {
 
         List<Review> reviews = List.of(
             Review.builder()
+                .id(1L)
                 .webtoonId(webtoonId)
                 .reviewerNickname("user1")
                 .memberId(1L)
@@ -322,6 +325,7 @@ class WebtoonApiControllerDocsTest {
                 .rating(5)
                 .build(),
             Review.builder()
+                .id(2L)
                 .webtoonId(webtoonId)
                 .reviewerNickname("user1")
                 .memberId(1L)
@@ -335,8 +339,8 @@ class WebtoonApiControllerDocsTest {
         int reviewCount = reviews.size();
         Double webtoonAvg = Review.calculateRatingAvg(reviews);
 
-        WebtoonDetails response = new WebtoonDetails(webtoon,reviewCount,webtoonAvg);
-        Mockito.when(webtoonService.getWebtoonDetails(Mockito.any(Long.class)))
+        WebtoonDetails response = new WebtoonDetails(webtoonEntity,reviewCount,webtoonAvg);
+        Mockito.when(webtoonServiceImpl.getWebtoonDetails(Mockito.any(Long.class)))
             .thenReturn(response);
 
         mockMvc.perform(get(uri + "/{id}", webtoonId))

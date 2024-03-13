@@ -1,8 +1,7 @@
-package com.example.webduck.webtoon.entity;
+package com.example.webduck.webtoon.infrastructure;
 
 import com.example.webduck.genre.entity.WebtoonGenre;
-import com.example.webduck.global.exception.CustomException;
-import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
+import com.example.webduck.webtoon.domain.Webtoon;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,10 +13,12 @@ import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.Builder;
 
+@Table(name = "webtoon")
 @Entity
-public class Webtoon{
+public class WebtoonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,11 +64,13 @@ public class Webtoon{
     @Column(nullable = false)
     private int reviewCount = 0;
 
-    protected Webtoon() {}
+    protected WebtoonEntity() {}
 
     @Builder
-    public Webtoon(String title, String summary, String originalImageName, String imagePath,
-        PublishDay publishDay, Platform platform, String author,String webtoonUrl) {
+    public WebtoonEntity(Long id, String title, String summary, String originalImageName,
+        String imagePath,
+        PublishDay publishDay, Platform platform, String author, String webtoonUrl) {
+        this.id = id;
         this.title = title;
         this.summary = summary;
         this.originalImageName = originalImageName;
@@ -78,9 +81,35 @@ public class Webtoon{
         this.webtoonUrl = webtoonUrl;
     }
 
-    public void incrementReviewCount() {
-        ++this.reviewCount;
+    public static WebtoonEntity from(Webtoon webtoon) {
+        return WebtoonEntity.builder()
+            .id(webtoon.getId())
+            .title(webtoon.getTitle())
+            .summary(webtoon.getSummary())
+            .originalImageName(webtoon.getOriginalImageName())
+            .imagePath(webtoon.getImagePath())
+            .publishDay(webtoon.getPublishDay())
+            .platform(webtoon.getPlatform())
+            .author(webtoon.getAuthor())
+            .webtoonUrl(webtoon.getWebtoonUrl())
+            .build();
     }
+    // Entity to Domain
+    public Webtoon toModel() {
+        return Webtoon.builder()
+            .id(id)
+            .title(title)
+            .summary(summary)
+            .originalImageName(originalImageName)
+            .imagePath(imagePath)
+            .publishDay(publishDay)
+            .platform(platform)
+            .author(author)
+            .webtoonUrl(webtoonUrl)
+            .build();
+    }
+
+
 
     // 양방향 관계 객체 연결 (+순환 참조 방지)
     public void addWebtoonGenre(WebtoonGenre webtoonGenre) {
@@ -90,11 +119,6 @@ public class Webtoon{
         }
     }
 
-    public static void validateSizeMismatch(int actual,int expected) {
-        if (actual != expected) {
-            throw new CustomException(LogicExceptionCode.BAD_REQUEST);
-        }
-    }
     public Long getId() {
         return id;
     }

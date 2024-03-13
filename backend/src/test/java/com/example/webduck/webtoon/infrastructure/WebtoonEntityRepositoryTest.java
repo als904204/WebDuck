@@ -1,15 +1,10 @@
-package com.example.webduck.webtoon.repository;
+package com.example.webduck.webtoon.infrastructure;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.webduck.config.ConverterConfigTest;
 import com.example.webduck.config.QueryDslConfigTest;
-import com.example.webduck.genre.entity.Genre;
-import com.example.webduck.genre.entity.WebtoonGenre;
-import com.example.webduck.webtoon.entity.Platform;
-import com.example.webduck.webtoon.entity.PublishDay;
-import com.example.webduck.webtoon.entity.Webtoon;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -30,10 +25,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-class WebtoonRepositoryTest {
+class WebtoonEntityRepositoryTest {
 
     @Autowired
-    private WebtoonRepository webtoonRepository;
+    private WebtoonJpaRepository webtoonJpaRepository;
 
     @Autowired
     private TestEntityManager testEntityManager;
@@ -46,18 +41,18 @@ class WebtoonRepositoryTest {
 
     private final String author = "작가";
 
-    Webtoon savedWebtoon;
-    Webtoon martialArtsWebtoon;
-    Webtoon fantasyWebtoon;
+    WebtoonEntity savedWebtoonEntity;
+    WebtoonEntity martialArtsWebtoonEntity;
+    WebtoonEntity fantasyWebtoonEntity;
 
-    List<Webtoon> webtoons = new ArrayList<>();
+    List<WebtoonEntity> webtoonEntities = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
 
         // 웹툰 한 개
-        this.savedWebtoon = webtoonRepository.save(
-            Webtoon.builder()
+        this.savedWebtoonEntity = webtoonJpaRepository.save(
+            WebtoonEntity.builder()
                 .title(title)
                 .summary(summary)
                 .imagePath(imagePath)
@@ -68,48 +63,48 @@ class WebtoonRepositoryTest {
                 .build());
 
         // 웹툰 데이터 목록 생성
-        this.webtoons = List.of(
-            Webtoon.builder().title("Webtoon 1").summary("Summary 1").imagePath("Path 1")
+        this.webtoonEntities = List.of(
+            WebtoonEntity.builder().title("Webtoon 1").summary("Summary 1").imagePath("Path 1")
                 .author(author)
                 .publishDay(PublishDay.MONDAY).originalImageName("Image1.png")
                 .platform(Platform.NAVER).build(),
 
-            Webtoon.builder().title("Webtoon 2").summary("Summary 2").imagePath("Path 2")
+            WebtoonEntity.builder().title("Webtoon 2").summary("Summary 2").imagePath("Path 2")
                 .author(author)
                 .publishDay(PublishDay.FRIDAY).originalImageName("Image2.png")
                 .platform(Platform.NAVER).build(),
 
-            Webtoon.builder().title("Webtoon 3").summary("Summary 3").imagePath("Path 3")
+            WebtoonEntity.builder().title("Webtoon 3").summary("Summary 3").imagePath("Path 3")
                 .author(author)
                 .publishDay(PublishDay.SUNDAY).originalImageName("Image3.png")
                 .platform(Platform.NAVER).build(),
 
-            Webtoon.builder().title("Webtoon 4").summary("Summary 4").imagePath("Path 4")
+            WebtoonEntity.builder().title("Webtoon 4").summary("Summary 4").imagePath("Path 4")
                 .author(author)
                 .publishDay(PublishDay.SUNDAY).originalImageName("Image4.png")
                 .platform(Platform.NAVER).build()
         );
 
-        webtoonRepository.saveAll(webtoons);
+        webtoonJpaRepository.saveAll(webtoonEntities);
     }
 
     @AfterEach
     void tearDown() {
-        this.savedWebtoon = null;
-        this.webtoons = null;
-        webtoonRepository.deleteAll();
+        this.savedWebtoonEntity = null;
+        this.webtoonEntities = null;
+        webtoonJpaRepository.deleteAll();
     }
 
 
     @DisplayName("웹툰 저장")
     @Test
     void saveWebtoon() {
-        assertThat(savedWebtoon.getTitle()).isEqualTo(title);
-        assertThat(savedWebtoon.getSummary()).isEqualTo(summary);
-        assertThat(savedWebtoon.getImagePath()).isEqualTo(imagePath);
-        assertThat(savedWebtoon.getPublishDay()).isEqualTo(PublishDay.THURSDAY);
-        assertThat(savedWebtoon.getPlatform()).isEqualTo(Platform.NAVER);
-        assertThat(savedWebtoon.getOriginalImageName()).isEqualTo(originalImageName);
+        assertThat(savedWebtoonEntity.getTitle()).isEqualTo(title);
+        assertThat(savedWebtoonEntity.getSummary()).isEqualTo(summary);
+        assertThat(savedWebtoonEntity.getImagePath()).isEqualTo(imagePath);
+        assertThat(savedWebtoonEntity.getPublishDay()).isEqualTo(PublishDay.THURSDAY);
+        assertThat(savedWebtoonEntity.getPlatform()).isEqualTo(Platform.NAVER);
+        assertThat(savedWebtoonEntity.getOriginalImageName()).isEqualTo(originalImageName);
     }
 
     @DisplayName("요일별 웹툰 조회")
@@ -117,38 +112,38 @@ class WebtoonRepositoryTest {
     void findWebtoonByPublishDay() {
 
         // when
-        List<Webtoon> mondayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
+        List<WebtoonEntity> mondayWebtoonEntities = webtoonJpaRepository.findWebtoonsByPublishDay(
             PublishDay.MONDAY);     // 1개
-        List<Webtoon> fridayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
+        List<WebtoonEntity> fridayWebtoonEntities = webtoonJpaRepository.findWebtoonsByPublishDay(
             PublishDay.FRIDAY);     // 1개
-        List<Webtoon> thursdayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
+        List<WebtoonEntity> thursdayWebtoonEntities = webtoonJpaRepository.findWebtoonsByPublishDay(
             PublishDay.THURSDAY); // 1개
-        List<Webtoon> sundayWebtoons = webtoonRepository.findWebtoonsByPublishDay(
+        List<WebtoonEntity> sundayWebtoonEntities = webtoonJpaRepository.findWebtoonsByPublishDay(
             PublishDay.SUNDAY);     // 2개
 
         // then
-        Assertions.assertThat(mondayWebtoons).isNotNull();
-        Assertions.assertThat(fridayWebtoons).isNotNull();
-        Assertions.assertThat(thursdayWebtoons).isNotNull();
-        Assertions.assertThat(sundayWebtoons).isNotNull();
+        Assertions.assertThat(mondayWebtoonEntities).isNotNull();
+        Assertions.assertThat(fridayWebtoonEntities).isNotNull();
+        Assertions.assertThat(thursdayWebtoonEntities).isNotNull();
+        Assertions.assertThat(sundayWebtoonEntities).isNotNull();
 
         // 개수
-        Assertions.assertThat(mondayWebtoons).hasSize(1);
-        Assertions.assertThat(fridayWebtoons).hasSize(1);
-        Assertions.assertThat(thursdayWebtoons).hasSize(1);
-        Assertions.assertThat(sundayWebtoons).hasSize(2);
+        Assertions.assertThat(mondayWebtoonEntities).hasSize(1);
+        Assertions.assertThat(fridayWebtoonEntities).hasSize(1);
+        Assertions.assertThat(thursdayWebtoonEntities).hasSize(1);
+        Assertions.assertThat(sundayWebtoonEntities).hasSize(2);
 
         // 요일 확인
-        Assertions.assertThat(mondayWebtoons)
+        Assertions.assertThat(mondayWebtoonEntities)
             .allMatch(mondayWebtoon -> mondayWebtoon.getPublishDay() == PublishDay.MONDAY);
 
-        Assertions.assertThat(fridayWebtoons)
+        Assertions.assertThat(fridayWebtoonEntities)
             .allMatch(fridayWebtoon -> fridayWebtoon.getPublishDay() == PublishDay.FRIDAY);
 
-        Assertions.assertThat(fridayWebtoons)
+        Assertions.assertThat(fridayWebtoonEntities)
             .allMatch(thursdayWebtoon -> thursdayWebtoon.getPublishDay() == PublishDay.FRIDAY);
 
-        Assertions.assertThat(fridayWebtoons)
+        Assertions.assertThat(fridayWebtoonEntities)
             .allMatch(sundayWebtoon -> sundayWebtoon.getPublishDay() == PublishDay.FRIDAY);
 
     }
@@ -157,11 +152,11 @@ class WebtoonRepositoryTest {
     @Test
     void findWebtoonByPlatform() {
         // 위에 NAVER 5개 저장됨
-        List<Webtoon> naverWebtoons = webtoonRepository.findWebtoonsByPlatform(Platform.NAVER);
-        Assertions.assertThat(naverWebtoons).isNotNull();
-        Assertions.assertThat(naverWebtoons).hasSize(5);
+        List<WebtoonEntity> naverWebtoonEntities = webtoonJpaRepository.findWebtoonsByPlatform(Platform.NAVER);
+        Assertions.assertThat(naverWebtoonEntities).isNotNull();
+        Assertions.assertThat(naverWebtoonEntities).hasSize(5);
 
-        Assertions.assertThat(naverWebtoons)
+        Assertions.assertThat(naverWebtoonEntities)
             .allMatch(naver -> naver.getPlatform() == Platform.NAVER);
 
     }

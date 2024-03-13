@@ -1,8 +1,7 @@
-package com.example.webduck.webtoon.repository;
+package com.example.webduck.webtoon.infrastructure;
 
-import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
-import com.example.webduck.webtoon.dto.WebtoonPopularResponse;
-import com.example.webduck.webtoon.entity.WebtoonSortCondition;
+import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
+import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
 import java.util.List;
 
 public interface WebtoonGenreCustom {

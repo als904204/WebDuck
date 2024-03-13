@@ -1,7 +1,7 @@
-package com.example.webduck.webtoon.dto;
+package com.example.webduck.webtoon.domain;
 
-import com.example.webduck.webtoon.entity.Platform;
-import com.example.webduck.webtoon.entity.PublishDay;
+import com.example.webduck.webtoon.infrastructure.Platform;
+import com.example.webduck.webtoon.infrastructure.PublishDay;
 
 import java.util.List;
 import javax.validation.constraints.NotBlank;

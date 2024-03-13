@@ -6,10 +6,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
-import com.example.webduck.member.customMock.WithMockCustomUser;
+import com.example.webduck.mock.member.WithMockCustomUser;
 import com.example.webduck.webtoon.controller.WebtoonApiController;
-import com.example.webduck.webtoon.entity.WebtoonSortCondition;
-import com.example.webduck.webtoon.service.WebtoonService;
+import com.example.webduck.webtoon.infrastructure.WebtoonSortCondition;
+import com.example.webduck.webtoon.service.WebtoonServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,14 @@ import org.springframework.test.web.servlet.MockMvc;
 @ActiveProfiles("test")
 @WithMockCustomUser
 @WebMvcTest(WebtoonApiController.class)
-class WebtoonApiControllerTest {
+class WebtoonEntityApiControllerTest {
 
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private WebtoonService webtoonService;
+    private WebtoonServiceImpl webtoonServiceImpl;
 
     private final String uri = "/api/v1/webtoon";
 
@@ -60,7 +60,7 @@ class WebtoonApiControllerTest {
     void testInvalidSortBy() throws Exception {
         WebtoonSortCondition invalidSortBy = WebtoonSortCondition.COUNT;
 
-        when(webtoonService.findPopularWebtoonsByCondition(invalidSortBy))
+        when(webtoonServiceImpl.findPopularWebtoonsByCondition(invalidSortBy))
             .thenThrow(new CustomException(LogicExceptionCode.BAD_REQUEST));
 
         mockMvc.perform(get(uri + "/popular")
@@ -74,7 +74,7 @@ class WebtoonApiControllerTest {
     @Test
     void testInvalidWebtoonId() throws Exception {
         var invalidWebtoonId = 1231L;
-        when(webtoonService.getWebtoonDetails(invalidWebtoonId))
+        when(webtoonServiceImpl.getWebtoonDetails(invalidWebtoonId))
             .thenThrow(new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND));
 
         mockMvc.perform(get(uri + "/{id}", invalidWebtoonId)
