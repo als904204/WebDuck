@@ -1,4 +1,4 @@
-package com.example.webduck.member.entity;
+package com.example.webduck.member.infrastructure;
 
 public enum SocialType {
 

@@ -10,7 +10,7 @@ import com.example.webduck.member.domain.MemberUpdate;
 import com.example.webduck.member.domain.Profile;
 import com.example.webduck.member.service.port.MemberRepository;
 import com.example.webduck.member.service.port.NicknameGenerator;
-import com.example.webduck.review.entity.Review;
+import com.example.webduck.review.domain.Review;
 import com.example.webduck.review.service.port.ReviewRepository;
 import java.time.LocalDateTime;
 import java.util.List;
