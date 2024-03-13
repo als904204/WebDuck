@@ -7,9 +7,9 @@ import com.example.webduck.genre.repository.WebtoonGenreRepository;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.global.exception.exceptionCode.ValidationExceptionCode;
-import com.example.webduck.webtoon.dto.WebtoonUpload;
-import com.example.webduck.webtoon.entity.Webtoon;
-import com.example.webduck.webtoon.repository.WebtoonRepository;
+import com.example.webduck.webtoon.domain.WebtoonUpload;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity;
+import com.example.webduck.webtoon.infrastructure.WebtoonJpaRepository;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadService {
 
-    private final WebtoonRepository webtoonRepository;
+    private final WebtoonJpaRepository webtoonJpaRepository;
     private final FileStore fileStore;
     private final GenreRepository genreRepository;
     private final WebtoonGenreRepository webtoonGenreRepository;
@@ -37,7 +37,7 @@ public class UploadService {
             String imagePath = fileStore.upload(imageFile);
             log.info("imagePath={}",imagePath);
 
-            Webtoon webtoon = Webtoon.builder()
+            WebtoonEntity webtoonEntity = WebtoonEntity.builder()
                 .title(webtoonUpload.getTitle())            // 제목
                 .summary(webtoonUpload.getSummary())        // 줄거리
                 .publishDay(webtoonUpload.getPublishDay())  // 요일
@@ -47,7 +47,7 @@ public class UploadService {
                 .author(webtoonUpload.getAuthor())          // 작가
                 .build();
 
-            webtoonRepository.save(webtoon);
+            webtoonJpaRepository.save(webtoonEntity);
 
             // (WebtoonGenre<=>Webtoon) 양방향 참조 연관관계 설정
             // (WebtoonGenre==>Genre) 단방향 참조 설정
@@ -57,9 +57,9 @@ public class UploadService {
 
                 WebtoonGenre webtoonGenre = new WebtoonGenre();
                 webtoonGenre.setGenre(genre);
-                webtoonGenre.setWebtoon(webtoon);
+                webtoonGenre.setWebtoon(webtoonEntity);
 
-                webtoon.addWebtoonGenre(webtoonGenre);
+                webtoonEntity.addWebtoonGenre(webtoonGenre);
 
                 webtoonGenreRepository.save(webtoonGenre);
             }

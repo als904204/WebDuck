@@ -1,7 +1,6 @@
-package com.example.webduck.collection.infrastructure.repository;
+package com.example.webduck.collection.infrastructure;
 
 import com.example.webduck.collection.domain.Collection;
-import com.example.webduck.collection.infrastructure.entity.CollectionEntity;
 import com.example.webduck.collection.service.port.CollectionRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

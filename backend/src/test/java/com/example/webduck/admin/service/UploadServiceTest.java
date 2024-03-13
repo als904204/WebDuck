@@ -9,11 +9,11 @@ import com.example.webduck.genre.entity.Genre;
 import com.example.webduck.genre.entity.WebtoonGenre;
 import com.example.webduck.genre.repository.GenreRepository;
 import com.example.webduck.genre.repository.WebtoonGenreRepository;
-import com.example.webduck.webtoon.dto.WebtoonUpload;
-import com.example.webduck.webtoon.entity.Platform;
-import com.example.webduck.webtoon.entity.PublishDay;
-import com.example.webduck.webtoon.entity.Webtoon;
-import com.example.webduck.webtoon.repository.WebtoonRepository;
+import com.example.webduck.webtoon.domain.WebtoonUpload;
+import com.example.webduck.webtoon.infrastructure.Platform;
+import com.example.webduck.webtoon.infrastructure.PublishDay;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity;
+import com.example.webduck.webtoon.infrastructure.WebtoonJpaRepository;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 class UploadServiceTest {
 
     @Mock
-    private WebtoonRepository webtoonRepository;
+    private WebtoonJpaRepository webtoonJpaRepository;
     @Mock
     private FileStore fileStore;
     @Mock
@@ -50,7 +50,7 @@ class UploadServiceTest {
 
 
     List<String> genreTypes;
-    Webtoon webtoon;
+    WebtoonEntity webtoonEntity;
 
     WebtoonUpload webtoonUpload;
 
@@ -76,7 +76,7 @@ class UploadServiceTest {
             author
         );
 
-        webtoon = Webtoon.builder()
+        webtoonEntity = WebtoonEntity.builder()
             .title(webtoonUpload.getTitle())
             .summary(webtoonUpload.getSummary())
             .imagePath(path)
@@ -93,7 +93,7 @@ class UploadServiceTest {
 
         uploadService.uploadWebtoon(webtoonUpload);
         verify(fileStore).upload(any(MultipartFile.class));
-        verify(webtoonRepository).save(any(Webtoon.class));
+        verify(webtoonJpaRepository).save(any(WebtoonEntity.class));
         verify(genreRepository, times(webtoonUpload.getGenreName().size())).findByName(any(String.class));
         verify(webtoonGenreRepository, times(webtoonUpload.getGenreName().size())).save(any(
             WebtoonGenre.class));

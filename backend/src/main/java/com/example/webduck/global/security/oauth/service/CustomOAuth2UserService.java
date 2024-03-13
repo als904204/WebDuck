@@ -7,8 +7,8 @@ import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.security.oauth.entity.userInfo.GoogleUserInfo;
 import com.example.webduck.global.security.oauth.entity.userInfo.KakaoUserInfo;
 import com.example.webduck.global.security.oauth.entity.userInfo.OAuth2UserInfo;
-import com.example.webduck.member.entity.Member;
-import com.example.webduck.member.service.MemberService;
+import com.example.webduck.member.controller.port.MemberService;
+import com.example.webduck.member.domain.Member;
 import java.util.Collections;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final MemberService memberService;
+
     private final HttpSession httpSession;
     private static final String KAKAO = "kakao";
     private static final String GOOGLE = "google";
@@ -70,9 +71,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 throw new CustomException(INVALID_OAUTH_TYPE);
         }
 
-        Member member = memberService.createOrUpdateMember(oAuth2UserInfo);
+        Member member = memberService.authenticate(oAuth2UserInfo);
 
         httpSession.setAttribute("member", new SessionMember(member));
+
         return new DefaultOAuth2User(
             Collections.singleton(new
                 SimpleGrantedAuthority((member.getRole().getKey()))),

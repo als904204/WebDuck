@@ -1,4 +1,4 @@
-package com.example.webduck.collection.mock;
+package com.example.webduck.mock.collection;
 
 import com.example.webduck.collection.domain.Collection;
 import com.example.webduck.collection.service.port.CollectionRepository;
