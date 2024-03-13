@@ -1,11 +1,11 @@
-package com.example.webduck.review.repository;
+package com.example.webduck.review.infrastructure;
 
-import static com.example.webduck.review.entity.QReview.review;
-import static com.example.webduck.webtoon.entity.QWebtoon.webtoon;
+import static com.example.webduck.review.infrastructure.QReviewEntity.reviewEntity;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 import com.example.webduck.global.common.SliceResponse;
-import com.example.webduck.review.dto.SliceReviewResponse;
+import com.example.webduck.review.controller.response.ReviewSliceResponse;
+import com.example.webduck.webtoon.infrastructure.QWebtoonEntity;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -25,27 +25,31 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
      * @return          no offset 페이징 리뷰 목록
      */
     @Override
-    public SliceResponse<SliceReviewResponse> findSliceReviews(Long webtoonId,Long nextIdReq,
+    public SliceResponse<ReviewSliceResponse> findSliceReviews(Long webtoonId,Long nextIdReq,
         Pageable pageable) {
 
         int pageSize = pageable.getPageSize();
 
-        List<SliceReviewResponse> content = queryFactory.select(
-                Projections.constructor(SliceReviewResponse.class,
-                    review.id,
-                    review.content,
-                    review.reviewerNickname,
-                    review.memberId,
-                    review.rating,
-                    review.createdAt,
-                    review.likesCount
+        QWebtoonEntity webtoon = QWebtoonEntity.webtoonEntity;
+
+
+        List<ReviewSliceResponse> content = queryFactory.select(
+                Projections.constructor(ReviewSliceResponse.class,
+                    reviewEntity.id,
+                    reviewEntity.content,
+                    reviewEntity.reviewerNickname,
+                    reviewEntity.memberId,
+                    reviewEntity.rating,
+                    reviewEntity.createdAt,
+                    reviewEntity.likesCount
                 ))
-            .from(review)
-            .innerJoin(webtoon).on(review.webtoonId.eq(webtoon.id))
+            .from(reviewEntity)
+            .innerJoin(webtoon).on(reviewEntity.webtoonId.eq(webtoon.id))
             .where(webtoon.id.eq(webtoonId).and(ltReviewId(nextIdReq)))
             .limit(pageSize + 1)
-            .orderBy(review.id.desc())
+            .orderBy(reviewEntity.id.desc())
             .fetch();
+
         /**
          * True
          *      item 이 15개고 size 요청이 10이면 limit(pageSize + 1) 11개의 item 조회
@@ -62,7 +66,7 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
 
         if (content.size() > pageSize) {
             content.remove(pageSize);
-            SliceReviewResponse lastReview = content.get(content.size() - 1);
+            ReviewSliceResponse lastReview = content.get(content.size() - 1);
             nextIdRes = lastReview.getReviewId();
             hasNext = true;
         }
@@ -74,6 +78,6 @@ public class ReviewCustomRepositoryImpl implements ReviewCustomRepository {
     private BooleanExpression ltReviewId(Long nextIdReq) {
         // lt() : 작다
         // review.id < reviewId
-        return isEmpty(nextIdReq) ? null : review.id.lt(nextIdReq);
+        return isEmpty(nextIdReq) ? null : reviewEntity.id.lt(nextIdReq);
     }
 }

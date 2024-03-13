@@ -1,5 +1,4 @@
-package com.example.webduck.review.dto;
-
+package com.example.webduck.review.domain;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -7,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class ReviewSave {
+public class ReviewCreate {
 
     @NotNull(message = "webtoonId는 null이 될 수 없습니다")
     private final Long webtoonId;
@@ -22,7 +21,7 @@ public class ReviewSave {
     private final Integer rating;
 
 
-    public ReviewSave(Long webtoonId, String content, int rating) {
+    public ReviewCreate(Long webtoonId, String content, int rating) {
         this.webtoonId = webtoonId;
         this.content = content;
         this.rating = rating;
@@ -31,11 +30,11 @@ public class ReviewSave {
     public Long getWebtoonId() {
         return webtoonId;
     }
-
     public String getContent() {
         return content;
     }
     public int getRating() {
         return rating;
     }
+
 }

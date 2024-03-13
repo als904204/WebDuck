@@ -1,10 +1,10 @@
-package com.example.webduck.review.dto;
+package com.example.webduck.review.controller.response;
 
 import java.time.LocalDateTime;
 import lombok.Getter;
 
 @Getter
-public class SliceReviewResponse {
+public class ReviewSliceResponse {
 
     private final Long reviewId;
     private final String content;
@@ -15,7 +15,7 @@ public class SliceReviewResponse {
     private final int likesCount;
     private boolean isAuthor;
 
-    public SliceReviewResponse(Long reviewId, String content, String reviewerNickname,
+    public ReviewSliceResponse(Long reviewId, String content, String reviewerNickname,
         Long authorId, Integer rating, LocalDateTime createdAt,int likesCount) {
         this.reviewId = reviewId;
         this.content = content;

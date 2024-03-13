@@ -1,19 +1,20 @@
-package com.example.webduck.review.entity;
+package com.example.webduck.review.infrastructure;
 
 import com.example.webduck.global.common.BaseTime;
-import com.example.webduck.global.exception.CustomException;
-import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
+import com.example.webduck.review.domain.Review;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.List;
+import javax.persistence.Table;
 import lombok.Builder;
 
 
+@Table(name = "review")
 @Entity
-public class Review extends BaseTime {
+public class ReviewEntity extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,39 +45,44 @@ public class Review extends BaseTime {
 
     // todo : 세션맴버에서 닉네임 추가하고 리뷰 생성할 때 닉네임으로 설정
     @Builder
-    public Review(Long webtoonId, Long memberId,String reviewerNickname ,String content,Integer rating) {
+    public ReviewEntity(Long id, Long webtoonId, Long memberId, String reviewerNickname, String content,
+        Integer rating,int likesCount) {
+        this.id = id;
         this.webtoonId = webtoonId;
         this.memberId = memberId;
         this.reviewerNickname = reviewerNickname;
         this.content = content;
         this.rating = rating;
+        this.likesCount = likesCount;
     }
 
-    protected Review() {}
+    protected ReviewEntity() {}
 
-
-    // 리뷰점수 평균 구하기
-    public static Double calculateRatingAvg(List<Review> reviews) {
-        if (reviews == null || reviews.isEmpty()) {
-            return 0.0;
-        }
-        int sum = 0;
-        for (Review review : reviews) {
-            sum += review.getRating();
-        }
-        double avg = (double) sum / reviews.size();
-
-        return Math.round(avg * 10.0) / 10.0; // 반올림 후 리턴
+    // Domain to Entity
+    public static ReviewEntity from(Review review) {
+        return ReviewEntity.builder()
+            .id(review.getId())
+            .webtoonId(review.getWebtoonId())
+            .memberId(review.getMemberId())
+            .reviewerNickname(review.getReviewerNickname())
+            .content(review.getContent())
+            .rating(review.getRating())
+            .likesCount(review.getLikesCount())
+            .build();
     }
 
-    public void upLikesCount() {
-        this.likesCount++;
-    }
 
-    public void downLikesCount() {
-        if (this.likesCount > 0) {
-            this.likesCount--;
-        }
+    // Entity to Domain
+    public Review toModel() {
+        return Review.builder()
+            .id(id)
+            .webtoonId(webtoonId)
+            .memberId(memberId)
+            .likesCount(likesCount)
+            .reviewerNickname(reviewerNickname)
+            .content(content)
+            .rating(rating)
+            .build();
     }
 
     public Long getId() {
@@ -97,7 +103,6 @@ public class Review extends BaseTime {
     public Integer getRating() {
         return rating;
     }
-
     public int getLikesCount(){
         return likesCount;
     }
