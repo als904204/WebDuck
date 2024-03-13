@@ -7,11 +7,8 @@ import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.security.oauth.entity.userInfo.GoogleUserInfo;
 import com.example.webduck.global.security.oauth.entity.userInfo.KakaoUserInfo;
 import com.example.webduck.global.security.oauth.entity.userInfo.OAuth2UserInfo;
-import com.example.webduck.member.entity.Member;
-import com.example.webduck.member.entity.Role;
-import com.example.webduck.member.repository.MemberRepository;
-import com.example.webduck.member.service.NicknameGenerator;
-import java.time.LocalDateTime;
+import com.example.webduck.member.controller.port.MemberService;
+import com.example.webduck.member.domain.Member;
 import java.util.Collections;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +31,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final MemberRepository memberRepository;
-    private final NicknameGenerator nicknameGenerator;
+    private final MemberService memberService;
+
     private final HttpSession httpSession;
     private static final String KAKAO = "kakao";
     private static final String GOOGLE = "google";
@@ -74,50 +71,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 throw new CustomException(INVALID_OAUTH_TYPE);
         }
 
-
-        Member member = createOrUpdateMember(oAuth2UserInfo);
+        Member member = memberService.authenticate(oAuth2UserInfo);
 
         httpSession.setAttribute("member", new SessionMember(member));
+
         return new DefaultOAuth2User(
             Collections.singleton(new
-                SimpleGrantedAuthority((member.getRoleKey()))),
+                SimpleGrantedAuthority((member.getRole().getKey()))),
             oAuth2UserInfo.getAttributes(),
             oAuth2UserInfo.userNameAttributeName(
             ));
 
     }
-
-    // 로그인 시 로그인 시간을 기록한다.
-    // 다음 접속 시 현재 로그인한 시간이 아닌 이전에 접속했던 로그인 시간을 보여준다
-    private Member createOrUpdateMember(OAuth2UserInfo oAuth2UserInfo) {
-
-        LocalDateTime now = LocalDateTime.now();
-        return memberRepository.findByEmailAndSocialType(oAuth2UserInfo.getEmail(), oAuth2UserInfo.getSocialType())
-            .map(existingMember -> {
-                existingMember.updatePrevLoginAt(now); // 기존 회원이면 최근 로그인 시간 업데이트
-                return memberRepository.save(existingMember);
-            })
-            .orElseGet(() -> createMember(oAuth2UserInfo));
-    }
-
-
-    private Member createMember(OAuth2UserInfo oAuth2UserInfo){
-        log.info("new user={}",oAuth2UserInfo.getEmail());
-        String randomNickname = nicknameGenerator.getRandomNickname();
-
-        Member newMember = Member.builder()
-            .username(randomNickname)
-            .email(oAuth2UserInfo.getEmail())
-            .socialType(oAuth2UserInfo.getSocialType())
-            .role(Role.USER)
-            .socialId(oAuth2UserInfo.getId())
-            .socialPk(oAuth2UserInfo.getPk())
-            .build();
-
-        newMember.updatePrevLoginAt(LocalDateTime.now());
-
-        return memberRepository.save(newMember);
-
-    }
-
 }

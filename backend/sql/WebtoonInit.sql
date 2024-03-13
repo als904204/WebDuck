@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS webtoon_genre (
                                              id BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
                                              webtoon_id BIGINT(20),
                                              FOREIGN KEY (genre_id) REFERENCES genre(id),
-                                             FOREIGN KEY (webtoon_id) REFERENCES webtoon(id)
+                                             FOREIGN KEY (webtoon_id) REFERENCES webtoon (id)
 );
 
 CREATE TABLE IF NOT EXISTS review (

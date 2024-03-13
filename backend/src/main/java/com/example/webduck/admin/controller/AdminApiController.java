@@ -1,7 +1,7 @@
 package com.example.webduck.admin.controller;
 
 
-import com.example.webduck.webtoon.dto.WebtoonUpload;
+import com.example.webduck.webtoon.domain.WebtoonUpload;
 import com.example.webduck.admin.service.UploadService;
 
 import javax.validation.Valid;

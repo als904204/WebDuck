@@ -1,7 +1,7 @@
 package com.example.webduck.global.security;
 
-import static com.example.webduck.member.entity.Role.ADMIN;
-import static com.example.webduck.member.entity.Role.USER;
+import static com.example.webduck.member.infrastructure.Role.ADMIN;
+import static com.example.webduck.member.infrastructure.Role.USER;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;

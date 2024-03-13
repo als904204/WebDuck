@@ -28,7 +28,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
             oAuth2User, null, oAuth2User.getAuthorities());
+
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
 }

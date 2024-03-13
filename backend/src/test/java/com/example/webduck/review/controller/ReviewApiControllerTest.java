@@ -4,15 +4,15 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.global.security.oauth.entity.SessionMember;
-import com.example.webduck.member.customMock.MockMemberUtil;
-import com.example.webduck.member.customMock.WithMockCustomUser;
-import com.example.webduck.review.dto.ReviewSave;
-import com.example.webduck.review.dto.ReviewResponse.ReviewId;
-import com.example.webduck.review.service.ReviewService;
+import com.example.webduck.mock.member.MockMemberUtil;
+import com.example.webduck.mock.member.WithMockCustomUser;
+import com.example.webduck.review.domain.Review;
+import com.example.webduck.review.domain.ReviewCreate;
+import com.example.webduck.review.service.ReviewLikesServiceImpl;
+import com.example.webduck.review.service.ReviewServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,10 @@ class ReviewApiControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ReviewService reviewService;
+    private ReviewServiceImpl reviewServiceImpl;
+
+    @MockBean
+    private ReviewLikesServiceImpl reviewLikesService;
 
     private final String uri = "/api/v1/review";
 
@@ -44,7 +47,7 @@ class ReviewApiControllerTest {
     @Test
     void testCreateReview_fail_contentIsNull() throws Exception {
 
-        ReviewSave request = new ReviewSave(1L,"",5);
+        ReviewCreate request = new ReviewCreate(1L, "", 5);
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
         mockMvc.perform(post(uri).with(csrf())
@@ -59,13 +62,14 @@ class ReviewApiControllerTest {
     @Test
     void testCreateReview_fail_overRating() throws Exception {
 
+        ReviewCreate request = new ReviewCreate(1L, "", 999);
 
-        var reviewId = 1L;
-        ReviewSave request = new ReviewSave(1L,"",20);
+        Review response = Review.builder()
+            .webtoonId(1L)
+            .rating(9999)
+            .build();
 
-        ReviewId mockResponse = new ReviewId(reviewId);
-
-        when(reviewService.saveReview(Mockito.any(SessionMember.class),Mockito.any(ReviewSave.class))).thenReturn(mockResponse);
+        when(reviewServiceImpl.create(Mockito.any(SessionMember.class),Mockito.any(ReviewCreate.class))).thenReturn(response);
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 

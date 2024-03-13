@@ -31,8 +31,8 @@
     maxElementsOnDisk="0"
     eternal="false"
     statistics="false"
-    timeToIdleSeconds="200"
-    timeToLiveSeconds="200"
+    timeToIdleSeconds="150"
+    timeToLiveSeconds="150"
     overflowToDisk="false"
     diskPersistent="false"
     memoryStoreEvictionPolicy="LRU"/>
