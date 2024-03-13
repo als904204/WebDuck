@@ -6,10 +6,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.global.security.oauth.entity.SessionMember;
-import com.example.webduck.member.domain.MemberUpdate;
+import com.example.webduck.member.controller.port.MemberService;
 import com.example.webduck.mock.member.MockMemberUtil;
 import com.example.webduck.mock.member.WithMockCustomUser;
-import com.example.webduck.member.service.MemberServiceImpl;
+import com.example.webduck.member.domain.MemberUpdate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class MemberApiControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private MemberServiceImpl memberServiceImpl;
+    private MemberService memberService;
 
     private final String uri = "/api/v1/member";
 
@@ -39,6 +39,7 @@ class MemberApiControllerTest {
     @DisplayName("실패 : 회원 프로필 업데이트 필드값 누락 400 오류")
     @Test
     void testFailInvalidRequest() throws Exception{
+
 
         MemberUpdate request = new MemberUpdate("");
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();

@@ -12,13 +12,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.global.security.oauth.entity.SessionMember;
-import com.example.webduck.member.domain.Member;
-import com.example.webduck.member.domain.MemberUpdate;
+import com.example.webduck.member.controller.port.MemberService;
 import com.example.webduck.mock.member.MockMemberUtil;
 import com.example.webduck.mock.member.WithMockCustomUser;
+import com.example.webduck.member.domain.Member;
+import com.example.webduck.member.domain.MemberUpdate;
 import com.example.webduck.member.domain.Profile;
-import com.example.webduck.member.service.MemberServiceImpl;
-import com.example.webduck.review.entity.Review;
+import com.example.webduck.review.domain.Review;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,7 +51,7 @@ class MemberApiControllerDocsTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private MemberServiceImpl memberServiceImpl;
+    private MemberService memberService;
 
     private final String uri = "/api/v1/member";
 
@@ -95,7 +95,7 @@ class MemberApiControllerDocsTest {
 
         Profile response = Profile.from(member, reviews);
 
-        Mockito.when(memberServiceImpl.getProfile(Mockito.any(SessionMember.class)))
+        Mockito.when(memberService.getProfile(Mockito.any(SessionMember.class)))
             .thenReturn(response);
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
@@ -135,7 +135,7 @@ class MemberApiControllerDocsTest {
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
-        Mockito.when(memberServiceImpl.updateMember(Mockito.any(SessionMember.class),
+        Mockito.when(memberService.updateMember(Mockito.any(SessionMember.class),
             Mockito.any(MemberUpdate.class))).thenReturn(response);
 
         mockMvc.perform(patch(uri + "/profile")

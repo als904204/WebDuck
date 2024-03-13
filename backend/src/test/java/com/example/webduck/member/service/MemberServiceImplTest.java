@@ -30,7 +30,6 @@ class MemberServiceImplTest {
         FakeReviewRepository fakeReviewRepository = new FakeReviewRepository();
         FakeMemberRepository fakeMemberRepository = new FakeMemberRepository();
 
-
         memberService = MemberServiceImpl.builder()
             .nicknameGenerator(fakeNicknameGenerator)
             .reviewRepository(fakeReviewRepository)
@@ -155,7 +154,7 @@ class MemberServiceImplTest {
         MemberUpdate update = new MemberUpdate("new WebDuck");
 
         assertThatThrownBy(() -> {
-            memberService.updateMember(sessionMember,update);
+            memberService.updateMember(sessionMember, update);
         }).isInstanceOf(CustomException.class);
     }
 
@@ -172,7 +171,7 @@ class MemberServiceImplTest {
         MemberUpdate update = new MemberUpdate("WebDuck");
 
         assertThatThrownBy(() -> {
-            memberService.updateMember(sessionMember,update);
+            memberService.updateMember(sessionMember, update);
         }).isInstanceOf(CustomException.class);
     }
 

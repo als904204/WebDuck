@@ -70,4 +70,9 @@ public class FakeMemberRepository implements MemberRepository {
         return data.stream().anyMatch(member -> member.getUsername().equals(username));
     }
 
+    @Override
+    public boolean existsById(Long id) {
+        return data.stream().anyMatch(member -> member.getId().equals(id));
+    }
+
 }

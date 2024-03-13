@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.example.webduck.member.infrastructure.Role;
 import com.example.webduck.member.infrastructure.SocialType;
-import com.example.webduck.review.entity.Review;
+import com.example.webduck.review.domain.Review;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

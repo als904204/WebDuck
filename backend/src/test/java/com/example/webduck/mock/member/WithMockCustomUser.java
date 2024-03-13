@@ -1,7 +1,7 @@
-package com.example.webduck.member.customMock;
+package com.example.webduck.mock.member;
 
-import com.example.webduck.member.entity.Role;
-import com.example.webduck.member.entity.SocialType;
+import com.example.webduck.member.infrastructure.Role;
+import com.example.webduck.member.infrastructure.SocialType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import org.springframework.security.test.context.support.WithSecurityContext;

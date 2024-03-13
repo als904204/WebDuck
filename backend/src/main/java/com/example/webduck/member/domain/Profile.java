@@ -1,7 +1,6 @@
 package com.example.webduck.member.domain;
 
-import com.example.webduck.member.infrastructure.MemberEntity;
-import com.example.webduck.review.entity.Review;
+import com.example.webduck.review.domain.Review;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
@@ -27,20 +26,20 @@ public class Profile {
     }
 
     // 회원정보,회원 리뷰 개수,받은 좋아요 수
-    public static Profile from(Member memberEntity, List<Review> memberReviews) {
+    public static Profile from(Member member, List<Review> reviews) {
 
         // 좋아요 개수
         int likesCount = 0;
-        for (Review review : memberReviews) {
+        for (Review review : reviews) {
             likesCount += review.getLikesCount();
         }
 
         // 리뷰 개수
-        int reviewCount = memberReviews.size();
+        int reviewCount = reviews.size();
 
         return Profile.builder()
-            .username(memberEntity.getUsername())
-            .prevLoginAt(memberEntity.getPreviousLoginAt())
+            .username(member.getUsername())
+            .prevLoginAt(member.getPreviousLoginAt())
             .reviewCount(reviewCount)
             .likesCount(likesCount)
             .build();
