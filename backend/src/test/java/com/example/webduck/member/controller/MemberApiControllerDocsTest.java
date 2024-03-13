@@ -12,14 +12,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.global.security.oauth.entity.SessionMember;
-import com.example.webduck.member.customMock.MockMemberUtil;
-import com.example.webduck.member.customMock.WithMockCustomUser;
-import com.example.webduck.member.domain.MemberProfile;
-import com.example.webduck.member.dto.MemberUpdate.ProfileRequest;
-import com.example.webduck.member.dto.MemberUpdate.ProfileResponse;
-import com.example.webduck.member.entity.Member;
-import com.example.webduck.member.service.MemberService;
-import com.example.webduck.review.entity.Review;
+import com.example.webduck.member.controller.port.MemberService;
+import com.example.webduck.mock.member.MockMemberUtil;
+import com.example.webduck.mock.member.WithMockCustomUser;
+import com.example.webduck.member.domain.Member;
+import com.example.webduck.member.domain.MemberUpdate;
+import com.example.webduck.member.domain.Profile;
+import com.example.webduck.review.domain.Review;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -94,7 +93,7 @@ class MemberApiControllerDocsTest {
                 .build()
         );
 
-        MemberProfile response = MemberProfile.from(member, reviews);
+        Profile response = Profile.from(member, reviews);
 
         Mockito.when(memberService.getProfile(Mockito.any(SessionMember.class)))
             .thenReturn(response);
@@ -120,23 +119,29 @@ class MemberApiControllerDocsTest {
     @DisplayName("수정 : 회원 프로필")
     @Test
     void updateMemberProfile() throws Exception {
-        var member = Mockito.mock(Member.class);
-        Mockito.when(member.getId()).thenReturn(1L);
-        Mockito.when(member.getUsername()).thenReturn("WebDuck");
 
-        var updateUsername = "newWebDuck";
-        var updateReq = new ProfileRequest(updateUsername);
-        var updateRes = new ProfileResponse(member);
+        String updateUsername = "newWebDuck";
+
+        MemberUpdate update = new MemberUpdate(updateUsername);
+
+
+        Member member = Member.builder()
+            .id(1L)
+            .username("new webDuck")
+            .build();
+
+
+        Member response = member.update(update);
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
-        Mockito.when(memberService.updateMemberProfile(Mockito.any(SessionMember.class),
-            Mockito.any(ProfileRequest.class))).thenReturn(updateRes);
+        Mockito.when(memberService.updateMember(Mockito.any(SessionMember.class),
+            Mockito.any(MemberUpdate.class))).thenReturn(response);
 
         mockMvc.perform(patch(uri + "/profile")
             .sessionAttr("member", sessionMember)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(updateReq)))
+            .content(new ObjectMapper().writeValueAsString(update)))
             .andExpect(status().isOk())
             .andDo(document(
                 "patch-v1-update-profile",

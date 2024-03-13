@@ -46,7 +46,6 @@ export const updateReviewLikes = async (reviewId) => {
     const response = await axios.patch(`/api/v1/review/${reviewId}/likes`, {
       reviewId,
     });
-
     return response.data;
   }catch(error){
     throw error;

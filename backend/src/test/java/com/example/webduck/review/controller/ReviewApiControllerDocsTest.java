@@ -20,15 +20,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
-import com.example.webduck.member.customMock.MockMemberUtil;
-import com.example.webduck.member.customMock.WithMockCustomUser;
-import com.example.webduck.review.dto.ReviewSave;
-import com.example.webduck.review.dto.ReviewResponse.ReviewAvg;
-import com.example.webduck.review.dto.ReviewResponse.ReviewCount;
-import com.example.webduck.review.dto.ReviewResponse.ReviewId;
-import com.example.webduck.review.dto.ReviewResponse.ReviewLikesResponse;
-import com.example.webduck.review.dto.SliceReviewResponse;
-import com.example.webduck.review.service.ReviewService;
+import com.example.webduck.mock.member.MockMemberUtil;
+import com.example.webduck.mock.member.WithMockCustomUser;
+import com.example.webduck.review.controller.response.ReviewLikesResponse;
+import com.example.webduck.review.domain.Review;
+import com.example.webduck.review.domain.ReviewCreate;
+import com.example.webduck.review.controller.response.ReviewSliceResponse;
+import com.example.webduck.review.service.ReviewLikesServiceImpl;
+import com.example.webduck.review.service.ReviewServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -62,7 +61,10 @@ class ReviewApiControllerDocsTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ReviewService reviewService;
+    private ReviewServiceImpl reviewServiceImpl;
+
+    @MockBean
+    private ReviewLikesServiceImpl reviewLikesService;
 
     private final String uri = "/api/v1/review";
 
@@ -82,12 +84,20 @@ class ReviewApiControllerDocsTest {
     @WithMockCustomUser
     public void testCreateReview() throws Exception {
 
-        // given
-        var request = new ReviewSave(1L, "first review", 5);
-        var responseReviewId = new ReviewId(1L);
+        Review review = Review.builder()
+            .id(1L)
+            .reviewerNickname("WebDuck")
+            .content("fun!")
+            .memberId(1L)
+            .rating(5)
+            .likesCount(0)
+            .build();
 
-        Mockito.when(reviewService.saveReview(Mockito.any(SessionMember.class), Mockito.any(
-            ReviewSave.class))).thenReturn(responseReviewId);
+        ReviewCreate request = new ReviewCreate(review.getId(), review.getContent(),
+            review.getRating());
+
+        Mockito.when(reviewServiceImpl.create(Mockito.any(SessionMember.class), Mockito.any(
+            ReviewCreate.class))).thenReturn(review);
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
@@ -123,9 +133,9 @@ class ReviewApiControllerDocsTest {
 
         // given
         var reviewResponses = List.of(
-            new SliceReviewResponse(1L, "summary1", "nickname1", 1L, 5, now,2),
-            new SliceReviewResponse(2L, "summary2", "nickname2", 2L, 4, now,2),
-            new SliceReviewResponse(3L, "summary2", "nickname2", 2L, 4, now,2)
+            new ReviewSliceResponse(1L, "summary1", "nickname1", 1L, 5, now,2),
+            new ReviewSliceResponse(2L, "summary2", "nickname2", 2L, 4, now,2),
+            new ReviewSliceResponse(3L, "summary2", "nickname2", 2L, 4, now,2)
         );
 
         var sliceResponse = new SliceResponse<>(
@@ -134,7 +144,7 @@ class ReviewApiControllerDocsTest {
 
         // when
         Mockito.when(
-            reviewService.findReviewsByWebtoonId(
+            reviewServiceImpl.findReviewsByWebtoonId(
                 Mockito.any(Long.class),
                 Mockito.any(Long.class),
                 Mockito.any(Integer.class),
@@ -192,7 +202,8 @@ class ReviewApiControllerDocsTest {
     void testDeleteReview() throws Exception{
         var reviewId = 1L;
 
-        Mockito.doNothing().when(reviewService).deleteReview(Mockito.any(Long.class), Mockito.any(SessionMember.class));
+        Mockito.doNothing().when(reviewServiceImpl)
+            .deleteReview(Mockito.any(SessionMember.class), Mockito.any(Long.class));
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
@@ -212,10 +223,11 @@ class ReviewApiControllerDocsTest {
     @Test
     void testGetReviewAvgByWebtoonId() throws Exception {
         var webtoonId = 1L;
-        var reviewAvgRes = new ReviewAvg(4.0);
 
-        Mockito.when(reviewService.getAvg(Mockito.any(Long.class)))
-            .thenReturn(reviewAvgRes);
+        Double response = 5.0;
+
+        Mockito.when(reviewServiceImpl.getAvg(Mockito.any(Long.class)))
+            .thenReturn(response);
 
         mockMvc.perform(get(uri + "/{webtoonId}/avg", webtoonId))
             .andExpect(status().isOk())
@@ -235,10 +247,10 @@ class ReviewApiControllerDocsTest {
     @Test
     void testGetReviewCountByWebtoonId() throws Exception {
         var webtoonId = 1L;
-        var reviewCount = new ReviewCount(250);
+        int response = 10;
 
-        Mockito.when(reviewService.getCount(Mockito.any(Long.class)))
-            .thenReturn(reviewCount);
+        Mockito.when(reviewServiceImpl.getCount(Mockito.any(Long.class)))
+            .thenReturn(response);
 
         mockMvc.perform(get(uri + "/{webtoonId}/count", webtoonId))
             .andExpect(status().isOk())
@@ -258,15 +270,16 @@ class ReviewApiControllerDocsTest {
     @DisplayName("수정 : 리뷰 좋아요")
     @Test
     void testUpdateReviewLikes() throws Exception {
-        var reviewId = 1L;
 
-        var reviewLikesResponse = new ReviewLikesResponse(true, 20);
-
+        Long reviewId = 1L;
+        Review review = Review.builder()
+            .id(reviewId)
+            .likesCount(50).build();
 
 
         Mockito.when(
-                reviewService.updateLikes(Mockito.any(Long.class), Mockito.any(SessionMember.class)))
-            .thenReturn(reviewLikesResponse);
+                reviewLikesService.updateLikes(Mockito.any(Long.class), Mockito.any(SessionMember.class)))
+            .thenReturn(review);
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();
 
@@ -279,7 +292,6 @@ class ReviewApiControllerDocsTest {
                     parameterWithName("reviewId").description("조회할 리뷰 ID")
                 ),
                 responseFields(
-                    fieldWithPath("success").description("성공/실패 여부"),
                     fieldWithPath("likesCount").description("좋아요 개수")
                 )
             ));

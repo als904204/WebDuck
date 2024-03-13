@@ -1,6 +1,6 @@
 package com.example.webduck.global.security.oauth.entity.userInfo;
 
-import com.example.webduck.member.entity.SocialType;
+import com.example.webduck.member.infrastructure.SocialType;
 import java.util.Map;
 
 public class NaverUserInfo extends OAuth2UserInfo {

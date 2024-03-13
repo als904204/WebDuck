@@ -1,13 +1,13 @@
 package com.example.webduck.webtoon.controller;
 
-import com.example.webduck.webtoon.dto.WebtoonDetails;
-import com.example.webduck.webtoon.dto.WebtoonGenreResponse;
-import com.example.webduck.webtoon.dto.WebtoonPopularResponse;
-import com.example.webduck.webtoon.dto.WebtoonResponse;
-import com.example.webduck.webtoon.entity.Platform;
-import com.example.webduck.webtoon.entity.PublishDay;
-import com.example.webduck.webtoon.entity.WebtoonSortCondition;
-import com.example.webduck.webtoon.service.WebtoonService;
+import com.example.webduck.webtoon.controller.port.WebtoonService;
+import com.example.webduck.webtoon.controller.response.WebtoonDetails;
+import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
+import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
+import com.example.webduck.webtoon.controller.response.WebtoonResponse;
+import com.example.webduck.webtoon.infrastructure.Platform;
+import com.example.webduck.webtoon.infrastructure.PublishDay;
+import com.example.webduck.webtoon.infrastructure.WebtoonSortCondition;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +31,8 @@ public class WebtoonApiController {
 
     @GetMapping
     public ResponseEntity<List<WebtoonResponse>> findWebtoonList() {
-        List<WebtoonResponse> webtoonList = webtoonService.findWebtoonList();
-        return ResponseEntity.ok(webtoonList);
+        List<WebtoonResponse> response = webtoonService.findAll();
+        return ResponseEntity.ok(response);
     }
 
     // 요일별 웹툰 목록 조회 (MONDAY,SUNDAY..)

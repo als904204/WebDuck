@@ -7,6 +7,6 @@ public interface CollectionRepository {
 
     Optional<Collection> findById(Long id);
 
-    Collection save(Collection post);
+    Collection save(Collection collection);
 
 }

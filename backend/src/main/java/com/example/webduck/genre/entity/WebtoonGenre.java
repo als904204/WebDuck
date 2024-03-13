@@ -1,6 +1,6 @@
 package com.example.webduck.genre.entity;
 
-import com.example.webduck.webtoon.entity.Webtoon;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,13 +23,13 @@ public class WebtoonGenre {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "webtoon_id")
-    private Webtoon webtoon;
+    private WebtoonEntity webtoon;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    public Webtoon getWebtoon() {
+    public WebtoonEntity getWebtoon() {
         return webtoon;
     }
 
@@ -38,10 +38,10 @@ public class WebtoonGenre {
     }
 
     // 양방향 참조 설정
-    public void setWebtoon(Webtoon webtoon) {
-        this.webtoon = webtoon;
-        if (!webtoon.getWebtoonGenres().contains(this)) {
-            webtoon.getWebtoonGenres().add(this);
+    public void setWebtoon(WebtoonEntity webtoonEntity) {
+        this.webtoon = webtoonEntity;
+        if (!webtoonEntity.getWebtoonGenres().contains(this)) {
+            webtoonEntity.getWebtoonGenres().add(this);
         }
     }
 

@@ -6,9 +6,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.webduck.admin.controller.AdminApiController;
 import com.example.webduck.admin.service.UploadService;
-import com.example.webduck.webtoon.dto.WebtoonUpload;
-import com.example.webduck.webtoon.entity.Platform;
-import com.example.webduck.webtoon.entity.PublishDay;
+import com.example.webduck.webtoon.domain.WebtoonUpload;
+import com.example.webduck.webtoon.infrastructure.Platform;
+import com.example.webduck.webtoon.infrastructure.PublishDay;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
