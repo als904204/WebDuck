@@ -40,8 +40,9 @@ public class CollectionEntity extends BaseTime {
     protected CollectionEntity() {}
 
     @Builder
-    public CollectionEntity(String title, String description, boolean isPublic, Long ownerId,
+    public CollectionEntity(Long id, String title, String description, boolean isPublic, Long ownerId,
         String ownerName) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.isPublic = isPublic;
@@ -51,6 +52,7 @@ public class CollectionEntity extends BaseTime {
 
     public static CollectionEntity from(Collection collection) {
         return CollectionEntity.builder()
+            .id(collection.getId())
             .title(collection.getTitle())
             .description(collection.getDescription())
             .isPublic(collection.isPublic())
@@ -65,6 +67,7 @@ public class CollectionEntity extends BaseTime {
             .title(title)
             .description(description)
             .isPublic(isPublic)
+            .ownerName(ownerName)
             .ownerId(ownerId)
             .build();
     }

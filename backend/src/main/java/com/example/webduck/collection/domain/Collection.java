@@ -1,6 +1,6 @@
 package com.example.webduck.collection.domain;
 
-import com.example.webduck.member.infrastructure.MemberEntity;
+import com.example.webduck.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -24,13 +24,13 @@ public class Collection {
         this.ownerName = ownerName;
     }
 
-    public static Collection from(MemberEntity memberEntity,CollectionCreate collectionCreate) {
+    public static Collection from(Member member,CollectionCreate collectionCreate) {
         return Collection.builder()
             .title(collectionCreate.getTitle())
             .description(collectionCreate.getDescription())
             .isPublic(collectionCreate.isPublic())
-            .ownerId(memberEntity.getId())
-            .ownerName(memberEntity.getUsername())
+            .ownerId(member.getId())
+            .ownerName(member.getUsername())
             .build();
     }
 

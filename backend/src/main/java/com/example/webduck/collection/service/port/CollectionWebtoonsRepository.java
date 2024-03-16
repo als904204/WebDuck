@@ -1,8 +1,11 @@
 package com.example.webduck.collection.service.port;
 
-import com.example.webduck.collection.infrastructure.CollectionWebtoons;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.webduck.collection.domain.CollectionWebtoons;
+import java.util.List;
 
-public interface CollectionWebtoonsRepository extends JpaRepository<CollectionWebtoons,Long> {
+public interface CollectionWebtoonsRepository {
+
+    List<CollectionWebtoons> saveAll(List<CollectionWebtoons> collectionWebtoons);
+
 
 }
