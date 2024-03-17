@@ -17,6 +17,8 @@ import Textarea from 'primevue/textarea';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import Rating from 'primevue/rating';
+import RadioButton from 'primevue/radiobutton';
+import Checkbox from 'primevue/checkbox';
 
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import 'primeicons/primeicons.css'
@@ -47,6 +49,8 @@ app.component('Rating', Rating);
 app.component('Textarea', Textarea);
 app.component('Dialog', Dialog);
 app.component('InputText', InputText);
+app.component('RadioButton', RadioButton);
+app.component('Checkbox', Checkbox);
 
 // axios
 app.use(VueAxios, axios);
