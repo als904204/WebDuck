@@ -19,8 +19,9 @@ const items = computed(() => {
   // 기본 메뉴 항목
   const baseItems = [
     { label: '홈', icon: 'pi pi-home', command: () => router.push("/") },
-    { label: '장르별 웹툰', icon: 'pi pi-book', command: () => router.push("/genre") },
-    { label: '요일별 웹툰', icon: 'pi pi-book', command: () => router.push("/publish") },
+    { label: '보관함 웹툰', icon: 'pi pi-inbox', command: () => router.push("/collection") },
+    { label: '장르별 웹툰', icon: 'pi pi-sort-alpha-down', command: () => router.push("/genre") },
+    { label: '요일별 웹툰', icon: 'pi pi-calendar', command: () => router.push("/publish") },
     { label: '카카오 웹툰', icon: 'pi pi-book', command: () => router.push("/kakao") },
     { label: '네이버 웹툰', icon: 'pi pi-book', command: () => router.push("/naver") },
   ];

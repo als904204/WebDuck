@@ -19,6 +19,8 @@ import InputText from 'primevue/inputtext';
 import Rating from 'primevue/rating';
 import RadioButton from 'primevue/radiobutton';
 import Checkbox from 'primevue/checkbox';
+import InlineMessage from 'primevue/inlinemessage';
+import Tag from 'primevue/tag';
 
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import 'primeicons/primeicons.css'
@@ -51,6 +53,8 @@ app.component('Dialog', Dialog);
 app.component('InputText', InputText);
 app.component('RadioButton', RadioButton);
 app.component('Checkbox', Checkbox);
+app.component('InlineMessage', InlineMessage);
+app.component('Tag', Tag);
 
 // axios
 app.use(VueAxios, axios);

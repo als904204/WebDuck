@@ -133,6 +133,7 @@ const toggleGenre = async (genreName) => {
 .selected {
   background-color: #007bff; /* 예시 색상 */
   color: white;
+  border : none;
 }
 
 

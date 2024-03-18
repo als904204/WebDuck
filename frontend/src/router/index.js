@@ -10,6 +10,9 @@ import Review from "../components/review/Review.vue";
 import Profile from "../components/profile/Profile.vue";
 import NotFound from "../components/common/NotFound.vue";
 import Redirect from "../components/login/Redirect.vue";
+import CollectionList from "../components/collection/Collections.vue";
+import CollectionAdd from "../components/collection/CollectionAdd.vue";
+import CollectionDetails from "../components/collection/CollectionDetails.vue";
 
 const routes = [
   {path : '/',component:Home},
@@ -19,6 +22,9 @@ const routes = [
   {path : '/naver', component: Naver},
   {path : '/login', component: Login},
   {path : '/profile', component: Profile},
+  {path : '/collection', component: CollectionList, name: "collection"},
+  {path : '/collection/add', component: CollectionAdd, name: 'collection/add'},
+  {path : '/collection/:id',component: CollectionDetails, name: 'collectionDetails'},
   {path : '/review/:id',component: Review, name: 'review'},
   {path : '/notFound', component: NotFound, name: 'name'},
   {path: "/:pathMatch(.*)*", redirect: "/notFound"},
