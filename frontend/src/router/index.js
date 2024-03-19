@@ -11,8 +11,9 @@ import Profile from "../components/profile/Profile.vue";
 import NotFound from "../components/common/NotFound.vue";
 import Redirect from "../components/login/Redirect.vue";
 import CollectionList from "../components/collection/Collections.vue";
-import CollectionAdd from "../components/collection/CollectionAdd.vue";
+import CollectionAdd from "../components/collection/CollectionCreate.vue";
 import CollectionDetails from "../components/collection/CollectionDetails.vue";
+import CollectionUpdate from "../components/collection/CollectionUpdate.vue";
 
 const routes = [
   {path : '/',component:Home},
@@ -24,9 +25,10 @@ const routes = [
   {path : '/profile', component: Profile},
   {path : '/collection', component: CollectionList, name: "collection"},
   {path : '/collection/add', component: CollectionAdd, name: 'collection/add'},
+  {path: '/collection/update/:id', component: CollectionUpdate, name: 'collection.update'},
   {path : '/collection/:id',component: CollectionDetails, name: 'collectionDetails'},
   {path : '/review/:id',component: Review, name: 'review'},
-  {path : '/notFound', component: NotFound, name: 'name'},
+  {path : '/notFound', component: NotFound, name: 'notFound'},
   {path: "/:pathMatch(.*)*", redirect: "/notFound"},
   {path: '/oauth2/redirect', component: Redirect}
 ]
