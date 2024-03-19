@@ -15,7 +15,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.requestP
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.review.domain.Review;
-import com.example.webduck.review.infrastructure.ReviewEntity;
 import com.example.webduck.webtoon.controller.WebtoonApiController;
 import com.example.webduck.webtoon.domain.Webtoon;
 import com.example.webduck.webtoon.controller.response.WebtoonDetails;
@@ -52,7 +51,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @ExtendWith(RestDocumentationExtension.class)
 @AutoConfigureRestDocs
 @ActiveProfiles("test")
-class WebtoonEntityApiControllerDocsTest {
+class WebtoonApiControllerDocsTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -118,6 +117,7 @@ class WebtoonEntityApiControllerDocsTest {
     @DisplayName("조회 : 모든 웹툰 조회")
     @Test
     void testWebtoonList() throws Exception {
+
 
         Mockito.when(webtoonServiceImpl.findAll()).thenReturn(mockWebtoonResponses);
 

@@ -33,9 +33,19 @@ public class CollectionRepositoryImpl implements CollectionRepository {
     }
 
     @Override
-    public List<Collection> findByOwnerId(Long id) {
-        List<CollectionEntity> entities = collectionJpaRepository.findByOwnerId(id);
+    public List<Collection> findCollectionsByOwnerId(Long id) {
+        List<CollectionEntity> entities = collectionJpaRepository.findCollectionsByOwnerId(id);
         return entities.stream().map(CollectionEntity::toModel).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Collection> findCollectionByOwnerId(Long id) {
+        return collectionJpaRepository.findCollectionByOwnerId(id).map(CollectionEntity::toModel);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        collectionJpaRepository.deleteById(id);
     }
 
 }

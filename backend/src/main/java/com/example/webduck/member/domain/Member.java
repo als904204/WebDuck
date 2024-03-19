@@ -12,6 +12,7 @@ import lombok.Getter;
 @Getter
 public class Member {
 
+
     private Long id;
     private String username;
     private String email;

@@ -1,5 +1,8 @@
 package com.example.webduck.webtoon.infrastructure;
 
+import com.example.webduck.collection.controller.response.CollectionDetailResponse.WebtoonInfo;
+import com.example.webduck.collection.infrastructure.QCollectionEntity;
+import com.example.webduck.collection.infrastructure.QCollectionWebtoonsEntity;
 import com.example.webduck.genre.entity.QGenre;
 import com.example.webduck.genre.entity.QWebtoonGenre;
 import com.example.webduck.global.exception.CustomException;
@@ -7,6 +10,7 @@ import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.review.infrastructure.QReviewEntity;
 import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
 import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
+import com.example.webduck.webtoon.domain.Webtoon;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -63,6 +67,24 @@ public class WebtoonGenreCustomImpl implements WebtoonGenreCustom{
             .groupBy(webtoon.id)
             .orderBy(sortByRatingOrReviewCount(condition))
             .limit(12)
+            .fetch();
+    }
+
+    // SELECT w.*
+    // FROM webtoon w
+    // JOIN collection_webtoons cw ON w.id = cw.webtoon_id
+    // WHERE cw.collection_id = 1;
+    @Override
+    public List<WebtoonEntity> findWebtoonsByCollectionId(Long collectionId) {
+
+
+        QWebtoonEntity webtoon = QWebtoonEntity.webtoonEntity;
+        QCollectionWebtoonsEntity collectionWebtoons = QCollectionWebtoonsEntity.collectionWebtoonsEntity;
+
+        return queryFactory.select(webtoon)
+            .from(webtoon)
+            .join(collectionWebtoons).on(webtoon.id.eq(collectionWebtoons.webtoonId))
+            .where(collectionWebtoons.collectionId.eq(collectionId))
             .fetch();
     }
 

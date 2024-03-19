@@ -94,4 +94,9 @@ public class WebtoonServiceImpl implements WebtoonService {
         WebtoonSortCondition condition) {
         return webtoonRepository.findPopularWebtoonsByCondition(condition);
     }
+
+    @Override
+    public List<Webtoon> findByCollectionId(Long id) {
+        return webtoonRepository.findByCollectionId(id);
+    }
 }

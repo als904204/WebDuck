@@ -78,6 +78,15 @@ public class WebtoonRepositoryImpl implements WebtoonRepository {
         return entities.stream().map(WebtoonEntity::toModel).collect(Collectors.toList());
     }
 
+    @Override
+    public List<Webtoon> findByCollectionId(Long id) {
+        List<WebtoonEntity> entities = webtoonJpaRepository.findWebtoonsByCollectionId(
+            id);
+
+        return entities.stream()
+            .map(WebtoonEntity::toModel)
+            .collect(Collectors.toList());
+    }
 
 
 }

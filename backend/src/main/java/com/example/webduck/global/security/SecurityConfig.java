@@ -52,7 +52,8 @@ public class SecurityConfig {
         "/api/v1/webtoon/**",
         "/api/v1/genre/**",
         "/api/v1/review/**",
-        "/api/v1/auth/status"
+        "/api/v1/auth/status",
+        "/api/v1/collection/**"
     };
 
     private static final String[] POST_API_LIST_URL = {
@@ -62,7 +63,7 @@ public class SecurityConfig {
         "/api/v1/review/**",
     };
     private static final String[] GET_API_LIST_URL = {
-        "/api/v1/auth/**"
+        "/api/v1/auth/**",
     };
     private static final String[] ADMIN_URL = {
         "/api/v1/admin/**",

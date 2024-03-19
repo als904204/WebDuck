@@ -5,7 +5,10 @@ import java.util.List;
 
 public interface CollectionWebtoonsRepository {
 
-    List<CollectionWebtoons> saveAll(List<CollectionWebtoons> collectionWebtoons);
+    void saveAll(List<CollectionWebtoons> collectionWebtoons);
 
+    void deleteAllByCollectionId(Long id);
 
+    // Collection ID 로 CollectionWebtoons 조회
+    List<CollectionWebtoons> findByCollectionId(Long id);
 }

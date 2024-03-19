@@ -19,6 +19,7 @@ public class WebtoonResponse {
     private final PublishDay publishDay;
     private final Platform platform;
     private final String author;
+    private final String webtoonUrl;
 
     public static WebtoonResponse from(Webtoon webtoon) {
         return WebtoonResponse.builder()
@@ -28,8 +29,10 @@ public class WebtoonResponse {
             .originalImageName(webtoon.getOriginalImageName())
             .imagePath(webtoon.getImagePath())
             .publishDay(webtoon.getPublishDay())
+            .webtoonUrl(webtoon.getWebtoonUrl())
             .platform(webtoon.getPlatform())
             .author(webtoon.getAuthor())
             .build();
     }
+
 }

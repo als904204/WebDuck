@@ -11,15 +11,30 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CollectionWebtoonsRepositoryImpl implements CollectionWebtoonsRepository {
 
-    private final CollectionWebtoonsJpaRepository collectionWebtoonsJpaRepository;
+    private final CollectionWebtoonsJpa collectionWebtoonsJpaRepository;
 
     @Override
-    public List<CollectionWebtoons> saveAll(List<CollectionWebtoons> collectionWebtoons) {
+    public void saveAll(List<CollectionWebtoons> collectionWebtoons) {
         List<CollectionWebtoonsEntity> entities = collectionWebtoons.stream()
             .map(CollectionWebtoonsEntity::from)
             .collect(Collectors.toList());
 
-        return collectionWebtoonsJpaRepository.saveAll(entities).stream()
+        collectionWebtoonsJpaRepository.saveAll(entities).stream()
+            .map(CollectionWebtoonsEntity::toModel)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteAllByCollectionId(Long id) {
+        collectionWebtoonsJpaRepository.deleteAllByCollectionId(id);
+    }
+
+    @Override
+    public List<CollectionWebtoons> findByCollectionId(Long id) {
+        List<CollectionWebtoonsEntity> entities = collectionWebtoonsJpaRepository.findByCollectionId(
+            id);
+
+        return entities.stream()
             .map(CollectionWebtoonsEntity::toModel)
             .collect(Collectors.toList());
     }

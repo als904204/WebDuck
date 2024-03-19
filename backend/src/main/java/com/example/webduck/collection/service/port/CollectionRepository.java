@@ -12,6 +12,11 @@ public interface CollectionRepository {
 
     Collection save(Collection collection);
 
-    List<Collection> findByOwnerId(Long id);
+    List<Collection> findCollectionsByOwnerId(Long id);
+
+    Optional<Collection> findCollectionByOwnerId(Long id);
+
+    void deleteById(Long id);
+
 
 }

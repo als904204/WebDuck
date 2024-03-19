@@ -7,16 +7,16 @@ import lombok.Getter;
 public class CollectionWebtoons {
 
     private Long id;
-
     private Long ownerId;
-
     private Long webtoonId;
+    private Long collectionId;
 
     @Builder
-    public CollectionWebtoons(Long id, Long ownerId, Long webtoonId) {
+    public CollectionWebtoons(Long id, Long ownerId, Long webtoonId,Long collectionId) {
         this.id = id;
         this.ownerId = ownerId;
         this.webtoonId = webtoonId;
+        this.collectionId = collectionId;
     }
 
     public static CollectionWebtoons from(CollectionWebtoons collectionWebtoons) {
@@ -24,6 +24,7 @@ public class CollectionWebtoons {
             .id(collectionWebtoons.id)
             .ownerId(collectionWebtoons.ownerId)
             .webtoonId(collectionWebtoons.webtoonId)
+            .collectionId(collectionWebtoons.collectionId)
             .build();
     }
 

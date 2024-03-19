@@ -20,14 +20,19 @@ public class CollectionWebtoonsEntity {
     @Column(name = "ownerId")
     private Long ownerId;
 
+    // todo 꼭 필요한가?
     @Column(name = "webtoon_id")
     private Long webtoonId;
 
+    @Column(name = "collection_id")
+    private Long collectionId;
+
     @Builder
-    public CollectionWebtoonsEntity(Long id, Long webtoonId, Long ownerId) {
+    public CollectionWebtoonsEntity(Long id, Long webtoonId, Long ownerId, Long collectionId) {
         this.id = id;
         this.webtoonId = webtoonId;
         this.ownerId = ownerId;
+        this.collectionId = collectionId;
     }
 
     protected CollectionWebtoonsEntity() {
@@ -38,6 +43,7 @@ public class CollectionWebtoonsEntity {
             .id(collectionWebtoons.getId())
             .ownerId(collectionWebtoons.getOwnerId())
             .webtoonId(collectionWebtoons.getWebtoonId())
+            .collectionId(collectionWebtoons.getCollectionId())
             .build();
     }
 
@@ -46,6 +52,7 @@ public class CollectionWebtoonsEntity {
             .id(id)
             .ownerId(ownerId)
             .webtoonId(webtoonId)
+            .collectionId(collectionId)
             .build();
     }
 }
