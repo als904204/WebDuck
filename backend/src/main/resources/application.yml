@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev # prod,dev,test
+    active: test # prod,dev,test
   jpa:
     open-in-view: false
 ---
