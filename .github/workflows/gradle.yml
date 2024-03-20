@@ -30,24 +30,24 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: aws-region: ap-northeast-2
+        aws-region: ap-northeast-2 # 수정됨: aws-region: aws-region: ap-northeast-2 에서 aws-region: ap-northeast-2
 
+    - name: Zip the build
+      run: |
+        cd backend/build/libs/
+        zip -r build.zip .
+    
     - name: Upload to S3
       run: |
-        aws s3 cp --region ap-northeast-2 ./build.zip s3://webduck-bucket/build.zip
-    - name: Deploy
-      run: aws deploy create-deployment
-        --application-name webduck-code-deploy 
-        --deployment-config-name CodeDeployDefault.AllAtOnce
-        --deployment-group-name webduck-code-deploy-group
-        --s3-location bucket=webduck-bucket,bundleType=zip,key=build.zip
+        aws s3 cp build.zip s3://webduck-bucket/build.zip # 수정됨: --region 옵션 제거 및 경로 수정
 
-
-
+    - name: Deploy to AWS CodeDeploy
+      run: |
+        aws deploy create-deployment --application-name webduck-code-deploy --s3-location bucket=webduck-bucket,key=build.zip,bundleType=zip --deployment-group-name webduck-code-deploy-group --deployment-config-name CodeDeployDefault.AllAtOnce --region ap-northeast-2 # 수정됨: 명령어 형식 수정
 
   dependency-submission:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-and-deploy # 수정됨: needs: build에서 needs: build-and-deploy로 변경
     permissions:
       contents: write
 
