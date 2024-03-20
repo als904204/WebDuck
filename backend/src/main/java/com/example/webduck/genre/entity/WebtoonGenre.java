@@ -1,5 +1,6 @@
 package com.example.webduck.genre.entity;
 
+import com.example.webduck.global.common.BaseTime;
 import com.example.webduck.webtoon.infrastructure.WebtoonEntity;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +16,7 @@ import javax.persistence.ManyToOne;
  * 즉 N-N 관계
  */
 @Entity
-public class WebtoonGenre {
+public class WebtoonGenre extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

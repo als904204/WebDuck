@@ -1,6 +1,7 @@
 package com.example.webduck.collection.infrastructure;
 
 import com.example.webduck.collection.domain.CollectionWebtoons;
+import com.example.webduck.global.common.BaseTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +12,13 @@ import lombok.Builder;
 
 @Table(name = "collection_webtoons")
 @Entity
-public class CollectionWebtoonsEntity {
+public class CollectionWebtoonsEntity extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ownerId")
+    @Column(name = "owner_Id")
     private Long ownerId;
 
     // todo 꼭 필요한가?
