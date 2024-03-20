@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Java CI with Gradle and AWS Deployment
 
 on:
   push:
@@ -7,24 +7,41 @@ on:
     branches: [ "main", "dev" ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
-        
-        
-    - name: Change directory to backend and Build with Gradle Wrapper
+
+    - name: Build with Gradle Wrapper
       run: |
         cd backend
         ./gradlew build --no-daemon
+
+    - name: Configure AWS Credentials
+      if: github.ref == 'refs/heads/main'
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: aws-region: ap-northeast-2
+
+    - name: Upload to S3
+      run: |
+        aws s3 cp --region ap-northeast-2 ./build.zip s3://webduck-bucket/build.zip
+    - name: Deploy
+      run: aws deploy create-deployment
+        --application-name webduck-code-deploy 
+        --deployment-config-name CodeDeployDefault.AllAtOnce
+        --deployment-group-name webduck-code-deploy-group
+        --s3-location bucket=webduck-bucket,bundleType=zip,key=build.zip
+
 
 
 
