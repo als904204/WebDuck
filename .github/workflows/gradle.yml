@@ -22,6 +22,8 @@ jobs:
 
     - name: Override application.yml for test profile
       run: |
+        cd backend
+        pwd
         echo "spring:\n  profiles:\n    active: test" > src/main/resources/application.yml
 
 
