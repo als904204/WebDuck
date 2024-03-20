@@ -23,7 +23,8 @@ jobs:
         
     - name: Override application.yml for test profile
       run: |
-        echo "spring:\n  profiles:\n    active: test" > src/main/resources/application.yml
+        pwd
+        echo "spring:\n  profiles:\n    active: test" > backend/src/main/resources/application.yml
 
     - name: Change directory to backend and Build with Gradle Wrapper
       run: |
