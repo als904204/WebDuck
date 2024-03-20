@@ -55,3 +55,13 @@ export const getGenres = async () => {
     throw error;
   }
 };
+
+// 컬렉션 ID로 웹툰 목록 가져오기
+export const fetchWebtoonsByCollectionId = async (id) => {
+  try {
+    const response = await axios.get(`/api/v1/webtoon/${id}/collection`);
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+};

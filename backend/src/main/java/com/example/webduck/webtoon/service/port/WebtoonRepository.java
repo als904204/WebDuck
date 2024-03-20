@@ -29,5 +29,7 @@ public interface WebtoonRepository {
 
     Webtoon save(Webtoon webtoon);
 
+    List<Webtoon> findByCollectionId(Long id);
+
     boolean existsById(Long id);
 }

@@ -4,7 +4,9 @@
       <router-link :to="`/review/${webtoon.id}`">
         <img class="webtoon-image" :src="webtoon.imagePath" :alt="webtoon.title">
       </router-link>
-        <p class="webtoon-title">{{ webtoon.title }}</p>
+        <span>
+          <span class="webtoon-title">{{ webtoon.title }}</span>
+        </span>
     </div>
   </div>
 </template>

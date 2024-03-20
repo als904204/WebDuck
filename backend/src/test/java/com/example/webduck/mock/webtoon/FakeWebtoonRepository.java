@@ -50,6 +50,12 @@ public class FakeWebtoonRepository implements WebtoonRepository {
     }
 
     @Override
+    public List<Webtoon> findByCollectionId(Long collectionId) {
+        return null;
+    }
+
+
+    @Override
     public boolean existsById(Long id) {
         return data.stream().anyMatch(webtoon -> webtoon.getId().equals(id));
     }
