@@ -82,6 +82,7 @@ class WebtoonApiControllerDocsTest {
             .imagePath("w1 imgPath")
             .publishDay(PublishDay.THURSDAY)
             .platform(Platform.NAVER)
+            .webtoonUrl("w1 url")
             .author("w1 author")
             .build();
 
@@ -92,6 +93,7 @@ class WebtoonApiControllerDocsTest {
             .imagePath("w2 imgPath")
             .publishDay(PublishDay.THURSDAY)
             .platform(Platform.NAVER)
+            .webtoonUrl("w2 url")
             .author("w2 author")
             .build();
 
@@ -101,6 +103,7 @@ class WebtoonApiControllerDocsTest {
             .originalImageName("w3 imgName")
             .imagePath("w3 imgPath")
             .publishDay(PublishDay.THURSDAY)
+            .webtoonUrl("w3 url")
             .platform(Platform.NAVER)
             .author("w3 author")
             .build();
@@ -133,7 +136,8 @@ class WebtoonApiControllerDocsTest {
                     fieldWithPath("[].imagePath").description("이미지 파일 경로"),
                     fieldWithPath("[].publishDay").description("연재 요일"),
                     fieldWithPath("[].platform").description("웹툰 플랫폼"),
-                    fieldWithPath("[].author").description("웹툰 작가")
+                    fieldWithPath("[].author").description("웹툰 작가"),
+                    fieldWithPath("[].webtoonUrl").description("웹툰 바로가기 URL")
                 )
             ));
     }
@@ -171,7 +175,9 @@ class WebtoonApiControllerDocsTest {
                         .type(JsonFieldType.STRING),
                     fieldWithPath("[].platform").description("웹툰이 연재되는 플랫폼")
                         .type(JsonFieldType.STRING),
-                    fieldWithPath("[].author").description("웹툰의 작가").type(JsonFieldType.STRING)
+                    fieldWithPath("[].author").description("웹툰의 작가").type(JsonFieldType.STRING),
+                    fieldWithPath("[].webtoonUrl").description("웹툰 바로가기 URL")
+
                 )
             ));
 
@@ -205,7 +211,9 @@ class WebtoonApiControllerDocsTest {
                     fieldWithPath("[].imagePath").description("이미지 파일 경로").type(JsonFieldType.STRING),
                     fieldWithPath("[].publishDay").description("웹툰의 연재 요일").type(JsonFieldType.STRING),
                     fieldWithPath("[].platform").description("웹툰이 연재되는 플랫폼").type(JsonFieldType.STRING),
-                    fieldWithPath("[].author").description("웹툰의 작가").type(JsonFieldType.STRING)
+                    fieldWithPath("[].author").description("웹툰의 작가").type(JsonFieldType.STRING),
+                    fieldWithPath("[].webtoonUrl").description("웹툰 바로가기 URL")
+
                 )
             ));
     }

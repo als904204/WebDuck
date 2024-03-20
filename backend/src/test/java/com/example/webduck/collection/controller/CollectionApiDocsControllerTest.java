@@ -208,7 +208,7 @@ class CollectionApiDocsControllerTest {
         doNothing().when(collectionService).deleteById(any(), any());
         mockMvc.perform(delete(uri+"/{id}", collectionId))
             .andExpect(status().isNoContent())
-            .andDo(document("collection-delete",
+            .andDo(document("delete-v1-delete-collection",
                 pathParameters(
                     parameterWithName("id").description("보관함 ID")
                 )
