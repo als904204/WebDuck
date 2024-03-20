@@ -24,7 +24,7 @@ jobs:
       run: |
         echo "spring:\n  profiles:\n    active: test" > backend/src/main/resources/application.yml
         cd backend
-        cat /src/main/resources/application.yml
+        cat src/main/resources/application.yml
         ./gradlew build --no-daemon
 
 
