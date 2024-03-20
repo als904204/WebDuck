@@ -9,6 +9,7 @@ import com.example.webduck.webtoon.infrastructure.Platform;
 import com.example.webduck.webtoon.infrastructure.PublishDay;
 import com.example.webduck.webtoon.infrastructure.WebtoonSortCondition;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,6 +65,15 @@ public class WebtoonApiController {
         List<WebtoonPopularResponse> webtoonsByWebtoonCondition = webtoonService.findPopularWebtoonsByCondition(
             condition);
         return ResponseEntity.ok(webtoonsByWebtoonCondition);
+    }
+
+    // 컬렉션에 해당하는 웹툰 조회
+    @GetMapping("/{id}/collection")
+    public ResponseEntity<List<WebtoonResponse>> findByCollectionId(@PathVariable Long id) {
+        List<WebtoonResponse> responses = webtoonService.findByCollectionId(id).stream()
+            .map(WebtoonResponse::from)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(responses);
     }
 
 }

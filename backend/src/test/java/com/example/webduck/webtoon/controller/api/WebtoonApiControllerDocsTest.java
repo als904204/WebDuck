@@ -15,7 +15,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.requestP
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.webduck.review.domain.Review;
-import com.example.webduck.review.infrastructure.ReviewEntity;
 import com.example.webduck.webtoon.controller.WebtoonApiController;
 import com.example.webduck.webtoon.domain.Webtoon;
 import com.example.webduck.webtoon.controller.response.WebtoonDetails;
@@ -52,7 +51,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @ExtendWith(RestDocumentationExtension.class)
 @AutoConfigureRestDocs
 @ActiveProfiles("test")
-class WebtoonEntityApiControllerDocsTest {
+class WebtoonApiControllerDocsTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -83,6 +82,7 @@ class WebtoonEntityApiControllerDocsTest {
             .imagePath("w1 imgPath")
             .publishDay(PublishDay.THURSDAY)
             .platform(Platform.NAVER)
+            .webtoonUrl("w1 url")
             .author("w1 author")
             .build();
 
@@ -93,6 +93,7 @@ class WebtoonEntityApiControllerDocsTest {
             .imagePath("w2 imgPath")
             .publishDay(PublishDay.THURSDAY)
             .platform(Platform.NAVER)
+            .webtoonUrl("w2 url")
             .author("w2 author")
             .build();
 
@@ -102,6 +103,7 @@ class WebtoonEntityApiControllerDocsTest {
             .originalImageName("w3 imgName")
             .imagePath("w3 imgPath")
             .publishDay(PublishDay.THURSDAY)
+            .webtoonUrl("w3 url")
             .platform(Platform.NAVER)
             .author("w3 author")
             .build();
@@ -119,6 +121,7 @@ class WebtoonEntityApiControllerDocsTest {
     @Test
     void testWebtoonList() throws Exception {
 
+
         Mockito.when(webtoonServiceImpl.findAll()).thenReturn(mockWebtoonResponses);
 
         mockMvc.perform(get(uri))
@@ -133,7 +136,8 @@ class WebtoonEntityApiControllerDocsTest {
                     fieldWithPath("[].imagePath").description("이미지 파일 경로"),
                     fieldWithPath("[].publishDay").description("연재 요일"),
                     fieldWithPath("[].platform").description("웹툰 플랫폼"),
-                    fieldWithPath("[].author").description("웹툰 작가")
+                    fieldWithPath("[].author").description("웹툰 작가"),
+                    fieldWithPath("[].webtoonUrl").description("웹툰 바로가기 URL")
                 )
             ));
     }
@@ -171,7 +175,9 @@ class WebtoonEntityApiControllerDocsTest {
                         .type(JsonFieldType.STRING),
                     fieldWithPath("[].platform").description("웹툰이 연재되는 플랫폼")
                         .type(JsonFieldType.STRING),
-                    fieldWithPath("[].author").description("웹툰의 작가").type(JsonFieldType.STRING)
+                    fieldWithPath("[].author").description("웹툰의 작가").type(JsonFieldType.STRING),
+                    fieldWithPath("[].webtoonUrl").description("웹툰 바로가기 URL")
+
                 )
             ));
 
@@ -205,7 +211,9 @@ class WebtoonEntityApiControllerDocsTest {
                     fieldWithPath("[].imagePath").description("이미지 파일 경로").type(JsonFieldType.STRING),
                     fieldWithPath("[].publishDay").description("웹툰의 연재 요일").type(JsonFieldType.STRING),
                     fieldWithPath("[].platform").description("웹툰이 연재되는 플랫폼").type(JsonFieldType.STRING),
-                    fieldWithPath("[].author").description("웹툰의 작가").type(JsonFieldType.STRING)
+                    fieldWithPath("[].author").description("웹툰의 작가").type(JsonFieldType.STRING),
+                    fieldWithPath("[].webtoonUrl").description("웹툰 바로가기 URL")
+
                 )
             ));
     }

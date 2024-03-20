@@ -5,7 +5,6 @@ import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.webtoon.infrastructure.Platform;
 import com.example.webduck.webtoon.infrastructure.PublishDay;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
