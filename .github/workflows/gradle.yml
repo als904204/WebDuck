@@ -20,16 +20,10 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: Override application.yml for test profile
-      run: |
-        cd backend
-        pwd
-        echo "spring:\n  profiles:\n    active: test" > src/main/resources/application.yml
-
-
     - name: Change directory to backend and Build with Gradle Wrapper
       run: |
         cd backend
+        echo "spring:\n  profiles:\n    active: test" > src/main/resources/application.yml
         ./gradlew build --no-daemon
 
 
