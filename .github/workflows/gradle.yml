@@ -22,9 +22,7 @@ jobs:
         
     - name: Change directory to backend and Build with Gradle Wrapper
       run: |
-        echo "spring:\n  profiles:\n    active: test" > backend/src/main/resources/application.yml
         cd backend
-        cat src/main/resources/application.yml
         ./gradlew build --no-daemon
 
 
