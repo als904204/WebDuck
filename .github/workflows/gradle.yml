@@ -11,7 +11,7 @@ on:
         - 'dev'
 env: 
   S3_BUCKET_NAME: webudck-deploy
-  PROJECT_NAME: playground-logging # 이 부분 의아함
+  PROJECT_NAME: webduck-logging
  
 jobs:
   build:
@@ -35,8 +35,13 @@ jobs:
         cd backend
         ./gradlew clean build
 
+
     - name: Make zip file
-      run: size ./$GITHUB_SHA.zip .
+      run: |
+        pwd
+        cd backend
+        pwd
+        zip -r ../../$GITHUB_SHA.zip .
       shell: bash
     
     - name: Configure AWS credentials
