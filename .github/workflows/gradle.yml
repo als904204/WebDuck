@@ -11,7 +11,7 @@ on:
         - 'dev'
 env: 
   S3_BUCKET_NAME: webduck-deploy
-  PROJECT_NAME: WebDuck
+  PROJECT_NAME: webduck-deploy
  
 jobs:
   build:
