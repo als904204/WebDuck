@@ -32,7 +32,7 @@ jobs:
     
     - name: Update application.yml active profile from test to prod
       run: |
-        sed -i 's/spring: profiles: active: test/spring: profiles: active: prod/g' backend/src/main/resources/application.yml
+        echo -e "spring:\n  profiles:\n    active: prod\nlogging-module:\n  version: 0.0.5" > backend/src/main/resources/application.yml
         cat backend/src/main/resources/application.yml
 
     - name: Grant execute permission for gradlew
