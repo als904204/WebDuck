@@ -2,15 +2,17 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: 
+        - 'main'
+        - 'dev'
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: 
+        - 'main'
+        - 'dev'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
     - uses: actions/checkout@v4
@@ -19,24 +21,15 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
         
     - name: Build with Gradle
       run: |
         cd backend
         ./gradlew clean build
-        
-    - name: Set artifact
-      run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
-      
-    - name: Beanstalk Deploy
-      uses: einaregilsson/beanstalk-deploy@v20
-      with: 
-        aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: springboot-developer
-        environment_name: springboot-developer-env
-        deployment_package: |
-          cd backend
-          ./build/libs/${{env.artifact}}
+
+
 
   
