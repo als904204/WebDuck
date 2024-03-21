@@ -20,9 +20,17 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         
-    - name: Change directory to backend and Build with Gradle Wrapper
+    - name: Build with Gradle
       run: |
         cd backend
         ./gradlew clean build
+
+      #2 현재시간가져오기
+      - name: Get current time
+        uses: josStorer/get-current-time@v2.0.2
+        id: current-time
+        with:
+           format: YYYY-MM-DDTHH-mm-ss
+           utcOffset: "+09:00"
 
   
