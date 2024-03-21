@@ -36,8 +36,10 @@ jobs:
         ./gradlew clean build
 
     - name: Make zip file
-      run: size -r ./$GITHUB_SHA.zip .
-      shell: bash
+      run: |
+        cd backend
+        size -r ./$GITHUB_SHA.zip .
+        shell: bash
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
