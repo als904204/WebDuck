@@ -1,3 +1,6 @@
 spring:
   profiles:
     active: test
+
+logging-module:
+  version: 0.0.4

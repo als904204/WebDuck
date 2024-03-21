@@ -53,7 +53,8 @@ public class SecurityConfig {
         "/api/v1/genre/**",
         "/api/v1/review/**",
         "/api/v1/auth/status",
-        "/api/v1/collection/**"
+        "/api/v1/collection/**",
+        "/api/v1/health/**"
     };
 
     private static final String[] POST_API_LIST_URL = {
