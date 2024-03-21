@@ -41,14 +41,8 @@ jobs:
           pwd
           ls -l
           zip -r ./$GITHUB_SHA.zip . 
-      #   cd backend
-      #   zip -r ../../$GITHUB_SHA.zip .
       shell: bash
 
-    # - name: Change working directory
-    #   run: |
-    #     cd ..
-    
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
