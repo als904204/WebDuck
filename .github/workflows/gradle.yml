@@ -24,12 +24,7 @@ jobs:
       run: |
         cd backend
         ./gradlew clean build
-    - name: Get current Time
-      uses: josStorer/get-current-time@v2.0.2
-      id: current-time
-      with:
-          format: YYYY-MM-DDTHH-mm-ss
-          utcoffset: "+09:00"
+        
     - name: Set artifact
       run: echo "artifact=$(ls ./build/libs)" >> $GITHUB_ENV
       
