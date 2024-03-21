@@ -10,8 +10,8 @@ on:
         - 'main'
         - 'dev'
 env: 
-  S3_BUCKET_NAME: webudck-deploy
-  PROJECT_NAME: webduck-logging
+  S3_BUCKET_NAME: webduck-deploy
+  PROJECT_NAME: WebDuck
  
 jobs:
   build:
@@ -50,4 +50,6 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+      run: |
+       cd backend
+       aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
