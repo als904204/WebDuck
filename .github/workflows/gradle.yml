@@ -25,6 +25,16 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
+    - name: Create application-prod.yml
+      run: |
+        echo "${{ secrets.APPLICATION_YML }}" > backend/src/main/resources/application-prod.yml
+     
+    
+    - name: Update application.yml active profile from test to prod
+      run: |
+        sed -i 's/spring.profiles.active: test/spring.profiles.active: prod/' backend/src/main/resources/application.yml
+
+
     - name: Grant execute permission for gradlew
       run: |
         cd backend
