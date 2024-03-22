@@ -12,14 +12,11 @@ echo "> Deploying new Spring Boot application"
 
 cd /home/ubuntu/webduck/backend/
 
-sed -i 's/active: test/active: prod/' ./src/main/resources/application.yml
-
-sudo rm -rf /home/ubuntu/webduck/backend/build/libs/WebDuck*.jar
-
 ./gradlew clean build
 
 cd build/libs/
 
-sudo nohup java -jar WebDuck-0.0.1-SNAPSHOT.jar > /home/ubuntu/webduck/backend/build/libs/nohup.out 2>&1 &
+sudo nohup java -jar -Dspring.profiles.active=prod WebDuck-0.0.1-SNAPSHOT.jar > /home/ubuntu/webduck/backend/build/libs/nohup.out 2>&1 &
+
 
 echo "> Deployment completed"
