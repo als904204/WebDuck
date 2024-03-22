@@ -7,8 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+@Profile({"dev", "test"}) // 개발 및 테스트 환경에서만 실행
 @RequiredArgsConstructor
 @Component
 public class GenresInit {
