@@ -2,7 +2,7 @@
 
 echo "> Building Vue.js application"
 cd /home/ubuntu/WebDuck/frontend/
-npm install
+npm install vite --save-dev
 npm run build
 
 echo "> Deploying new frontend to Nginx"
