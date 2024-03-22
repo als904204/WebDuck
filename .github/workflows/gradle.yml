@@ -29,6 +29,10 @@ jobs:
       run: |
         echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > backend/src/main/resources/application-prod.yml
      
+    - name: Create .env.production
+      run: |
+        echo "${{ secrets.ENV_PRODUCTION }}" | base64 --decode > frontend/.env.production
+        
     - name: Grant execute permission for gradlew
       run: |
         cd backend
