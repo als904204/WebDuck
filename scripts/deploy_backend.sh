@@ -10,7 +10,7 @@ fi
 
 echo "> Deploying new Spring Boot application"
 
-cd /home/ubuntu/WebDuck/backend/
+cd /home/ubuntu/webduck/backend/
 
 sed -i 's/active: test/active: prod/' ./src/main/resources/application.yml
 
