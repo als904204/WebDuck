@@ -14,6 +14,8 @@ cd /home/ubuntu/webduck/backend/
 
 sed -i 's/active: test/active: prod/' ./src/main/resources/application.yml
 
+sudo rm -rf /home/ubuntu/webduck/backend/build/libs/WebDuck*.jar
+
 ./gradlew clean build
 
 cd build/libs/
