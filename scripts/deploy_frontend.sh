@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "> Building Vue.js application"
-cd /home/ubuntu/WebDuck/frontend/
+cd /home/ubuntu/webduck/frontend/
 npm install vite --save-dev
 npm run build
 
