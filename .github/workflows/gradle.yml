@@ -2,19 +2,18 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: 
+    branches:
       - 'main'
-      - 'dev'
   pull_request:
-    branches: 
-      - 'main'
+    branches:
       - 'dev'
-env: 
+
+env:
   S3_BUCKET_NAME: webduck-deploy
   PROJECT_NAME: webduck
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,39 +22,32 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-
-      - name: Create application-prod.yml
-        run: |
-          echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > backend/src/main/resources/application-prod.yml
-
-      - name: Create .env.production
-        run: |
-          echo "${{ secrets.ENV_PRODUCTION }}" | base64 --decode > frontend/.env.production
-
+      
+      # 모든 브랜치에서 build 실행
       - name: Grant execute permission for gradlew
         run: |
-          cd backend
-          chmod +x gradlew
-        
+          chmod +x ./backend/gradlew
+
       - name: Build with Gradle
         run: |
-          cd backend
-          ./gradlew clean build
+          cd backend && ./gradlew clean build
 
-      - name: Make zip file
-        run: |
-          pwd
-          ls -l
-          zip -r ./$GITHUB_SHA.zip .
-        shell: bash
-
+  deploy:
+    # 'main' 브랜치에 push될 때만 deploy job 실행
+    if: github.ref == 'refs/heads/main'
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      # S3 업로드 및 AWS CodeDeploy를 사용한 배포를 위한 단계
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-        
+
       - name: Upload to S3
         run: |
           aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
