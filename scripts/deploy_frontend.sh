@@ -11,6 +11,6 @@ sudo cp -r dist/* /var/www/html/dist/
 
 echo "> Restarting Nginx"
 sudo nginx -t
-sudo systemctl restart nginx
+sudo systemctl reload nginx
 
 echo "> Frontend deployment completed"
