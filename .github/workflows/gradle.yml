@@ -39,7 +39,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
+      - name : Make zip file
+        run : |
+          zip -r ./$GITHUB_SHA.zip . 
+          shell: bash
+          
       # S3 업로드 및 AWS CodeDeploy를 사용한 배포를 위한 단계
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
