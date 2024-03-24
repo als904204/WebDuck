@@ -1,5 +1,6 @@
 spring:
   profiles:
-    active: test # prod,dev,test
----
+    active: test
 
+logging-module:
+  version: 1.0.0

@@ -44,3 +44,6 @@ spy.log
 
 ### docs ###
 **/src/main/resources/static/docs/**
+
+### secret ###
+*.pem
