@@ -40,7 +40,7 @@ jobs:
 
    # 'main' 브랜치에 push,pr될 때만 deploy 실행
   deploy:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/main')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'pull_request' && github.base_ref == 'main'
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
