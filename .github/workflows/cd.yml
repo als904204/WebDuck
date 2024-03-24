@@ -3,10 +3,10 @@ name: CI/CD for Main
 on:
   push:
     branches:
-      - 'main'
+      - main
   pull_request:
     branches:
-      - 'main'
+      - main
 
 env:
   S3_BUCKET_NAME: webduck-deploy
