@@ -81,7 +81,6 @@ public class WebtoonServiceImpl implements WebtoonService {
             genreNames);
 
         if (webtoonsByGenres.isEmpty()) {
-            log.warn("There are no webtoons in the genre. client genre request ={}", genreNames);
             throw new CustomException(LogicExceptionCode.WEBTOON_NOT_FOUND);
         }
 
