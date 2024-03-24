@@ -1,6 +1,7 @@
 package com.example.webduck.webtoon.infrastructure;
 
 import com.example.webduck.genre.entity.WebtoonGenre;
+import com.example.webduck.global.common.BaseTime;
 import com.example.webduck.webtoon.domain.Webtoon;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ import lombok.Builder;
 
 @Table(name = "webtoon")
 @Entity
-public class WebtoonEntity {
+public class WebtoonEntity extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -14,6 +14,7 @@ import CollectionList from "../components/collection/Collections.vue";
 import CollectionAdd from "../components/collection/CollectionCreate.vue";
 import CollectionDetails from "../components/collection/CollectionDetails.vue";
 import CollectionUpdate from "../components/collection/CollectionUpdate.vue";
+import Health from "../components/common/Health.vue";
 
 const routes = [
   {path : '/',component:Home},
@@ -30,7 +31,8 @@ const routes = [
   {path : '/review/:id',component: Review, name: 'review'},
   {path : '/notFound', component: NotFound, name: 'notFound'},
   {path: "/:pathMatch(.*)*", redirect: "/notFound"},
-  {path: '/oauth2/redirect', component: Redirect}
+  {path: '/oauth2/redirect', component: Redirect},
+  {path : '/health', component: Health},
 ]
 
 

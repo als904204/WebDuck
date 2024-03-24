@@ -1,6 +1,7 @@
 package com.example.webduck.review.infrastructure;
 
 
+import com.example.webduck.global.common.BaseTime;
 import com.example.webduck.review.domain.ReviewLikes;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import lombok.Builder;
 
 @Table(name = "review_likes")
 @Entity
-public class ReviewLikesEntity {
+public class ReviewLikesEntity extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
