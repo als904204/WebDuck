@@ -22,7 +22,14 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-      
+
+      - name: Make zip file
+        run: |
+          pwd
+          ls -l
+          zip -r ./$GITHUB_SHA.zip . 
+        shell: bash
+        
       # 모든 브랜치에서 build 실행
       - name: Grant execute permission for gradlew
         run: |
