@@ -37,9 +37,10 @@ jobs:
         run: |
           cd backend && ./gradlew clean build
 
+
+   # 'main' 브랜치에 push,pr될 때만 deploy 실행
   deploy:
-    # 'main' 브랜치에 push될 때만 deploy job 실행
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/main')
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
