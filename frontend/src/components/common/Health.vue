@@ -19,7 +19,7 @@ onMounted(async () => {
 
 const fetchVersion = async () => {
   try {
-    const response = await axios.get(`/api/v1/health`);
+    const response = await axios.get(`/api/v1/health/check`);
     return response.data;
   } catch (error) {
     console.error(error);

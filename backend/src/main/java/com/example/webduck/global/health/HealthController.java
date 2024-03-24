@@ -13,13 +13,8 @@ public class HealthController {
     @Value("${logging-module.version}")
     private String version;
 
-    @GetMapping("/")
-    public ResponseEntity<String> version() {
-        return ResponseEntity.ok().body(version);
-    }
-
     @GetMapping("/check")
     public ResponseEntity<String> check() {
-        return ResponseEntity.ok().body("healty");
+        return ResponseEntity.ok().body(version);
     }
 }
