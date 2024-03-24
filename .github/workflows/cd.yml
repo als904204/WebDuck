@@ -1,22 +1,19 @@
-name: Java CI with Gradle
+name: CI/CD for Main
 
 on:
   push:
     branches:
       - main
-      - dev
-      
   pull_request:
     branches:
       - main
-      - dev
 
 env:
   S3_BUCKET_NAME: webduck-deploy
   PROJECT_NAME: webduck
 
 jobs:
-  build-and-test:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,41 +22,41 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-      
-      # 모든 브랜치에서 build 실행
+          
+      - name: Create application-prod.yml
+        run: |
+          echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > backend/src/main/resources/application-prod.yml
+          
+      - name: Create .env.production
+        run: |
+          echo "${{ secrets.ENV_PRODUCTION }}" | base64 --decode > frontend/.env.production
+          
       - name: Grant execute permission for gradlew
         run: |
-          chmod +x ./backend/gradlew
-
+          cd backend
+          chmod +x gradlew
+          
       - name: Build with Gradle
         run: |
-          cd backend && ./gradlew clean build
-
-  deploy:
-    # 'main' 브랜치에 push될 때만 deploy job 실행
-    if: github.ref == 'refs/heads/main'
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name : Make zip file
-        run : |
-          zip -r ./$GITHUB_SHA.zip . 
-          shell: bash
+          cd backend
+          ./gradlew clean build
           
-      # S3 업로드 및 AWS CodeDeploy를 사용한 배포를 위한 단계
+      - name: Make zip file
+        run: |
+          zip -r ./$GITHUB_SHA.zip .
+        shell: bash
+        
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-
+          
       - name: Upload to S3
         run: |
           aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
-
+          
       - name: Code Deploy
         run: |
           aws deploy create-deployment --application-name webduck-code-deploy --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name webduck-code-deploy-group --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
