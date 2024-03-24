@@ -13,7 +13,6 @@ permissions:
 
 file_exists_behavior: OVERWRITE
 
-
 hooks:
   AfterInstall:
     - location: scripts/deploy_backend.sh
