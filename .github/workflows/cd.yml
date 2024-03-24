@@ -43,7 +43,6 @@ jobs:
           
       - name: Make zip file
         run: |
-          pwd
           zip -r ./$GITHUB_SHA.zip .
         shell: bash
         
