@@ -27,8 +27,6 @@ jobs:
       - name: Make zip file
         run: |
           zip -r ./$GITHUB_SHA.zip . 
-          shell: bash
-
 
       # 모든 브랜치에서 build 실행
       - name: Grant execute permission for gradlew
