@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: test
 
 logging-module:
   version: 1.0.1
