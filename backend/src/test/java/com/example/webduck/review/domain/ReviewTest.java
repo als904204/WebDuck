@@ -87,7 +87,7 @@ class ReviewTest {
             .memberId(1L)
             .build();
 
-        review.upLikesCount();
+        review.increaseLikes();
 
         assertThat(review.getLikesCount()).isEqualTo(100);
     }
@@ -101,7 +101,7 @@ class ReviewTest {
             .memberId(1L)
             .build();
 
-        review.downLikesCount();
+        review.decreaseLikes();
 
         assertThat(review.getLikesCount()).isEqualTo(99);
     }

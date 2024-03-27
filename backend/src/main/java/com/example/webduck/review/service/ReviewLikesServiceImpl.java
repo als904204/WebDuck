@@ -18,9 +18,11 @@ public class ReviewLikesServiceImpl implements ReviewLikesService {
     private final ReviewRepository reviewRepository;
     private final ReviewLikesRepository reviewLikesRepository;
 
+
+
+
     @Transactional
     public Review updateLikes(Long reviewId, SessionMember sessionMember) {
-
 
         Review review = reviewRepository.getById(reviewId);
 
@@ -32,7 +34,7 @@ public class ReviewLikesServiceImpl implements ReviewLikesService {
         // 이미 좋아요가 있을 경우 삭제 후 취소
         existingLikes.ifPresentOrElse(reviewLikes -> {
             reviewLikesRepository.deleteById(reviewLikes.getId());
-            review.downLikesCount();
+            review.decreaseLikes();
         }, () -> {
 
             // 좋아요 안했을 경우 저장 후 증가
@@ -42,7 +44,7 @@ public class ReviewLikesServiceImpl implements ReviewLikesService {
                 .build();
 
             reviewLikesRepository.save(newReviewLikes);
-            review.upLikesCount();
+            review.increaseLikes();
 
         });
 
