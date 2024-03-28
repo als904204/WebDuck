@@ -5,6 +5,7 @@ import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.review.controller.response.ReviewSliceResponse;
 import com.example.webduck.review.domain.Review;
+import com.example.webduck.review.domain.ReviewLikes;
 import com.example.webduck.review.service.port.ReviewRepository;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 public class ReviewRepositoryImpl implements ReviewRepository {
 
     private final ReviewJpaRepository reviewJpaRepository;
+    private final ReviewLikesJpaRepository reviewLikesJpaRepository;
 
     @Override
     public Review save(Review review) {
@@ -84,6 +86,25 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     public SliceResponse<ReviewSliceResponse> findSliceReviews(Long webtoonId, Long nextReviewId,
         Pageable pageable) {
         return reviewJpaRepository.findSliceReviews(webtoonId, nextReviewId, pageable);
+    }
+
+    @Override
+    public void deleteReviewLikesById(Long id) {
+        reviewLikesJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public ReviewLikes saveReviewLikes(ReviewLikes reviewLikes) {
+        ReviewLikesEntity entity = reviewLikesJpaRepository.save(ReviewLikesEntity.from(reviewLikes));
+        return entity.toModel();
+    }
+
+    @Override
+    public Optional<ReviewLikes> findReviewLikesByReviewIdAndMemberId(Long reviewId,
+        Long memberId) {
+        Optional<ReviewLikesEntity> entity = reviewLikesJpaRepository.findByReviewIdAndMemberId(
+            reviewId, memberId);
+        return entity.map(ReviewLikesEntity::toModel);
     }
 
 

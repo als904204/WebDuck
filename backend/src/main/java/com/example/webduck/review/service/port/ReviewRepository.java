@@ -3,6 +3,7 @@ package com.example.webduck.review.service.port;
 import com.example.webduck.global.common.SliceResponse;
 import com.example.webduck.review.controller.response.ReviewSliceResponse;
 import com.example.webduck.review.domain.Review;
+import com.example.webduck.review.domain.ReviewLikes;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Pageable;
@@ -28,4 +29,10 @@ public interface ReviewRepository {
     boolean existsById(Long id);
 
     SliceResponse<ReviewSliceResponse> findSliceReviews(Long webtoonId, Long nextReviewId, Pageable pageable);
+
+    void deleteReviewLikesById(Long id);
+
+    ReviewLikes saveReviewLikes(ReviewLikes newReviewLikes);
+
+    Optional<ReviewLikes> findReviewLikesByReviewIdAndMemberId(Long reviewId, Long memberId);
 }

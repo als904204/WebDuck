@@ -26,7 +26,6 @@ import com.example.webduck.review.controller.response.ReviewLikesResponse;
 import com.example.webduck.review.domain.Review;
 import com.example.webduck.review.domain.ReviewCreate;
 import com.example.webduck.review.controller.response.ReviewSliceResponse;
-import com.example.webduck.review.service.ReviewLikesServiceImpl;
 import com.example.webduck.review.service.ReviewServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
@@ -62,9 +61,6 @@ class ReviewApiControllerDocsTest {
 
     @MockBean
     private ReviewServiceImpl reviewServiceImpl;
-
-    @MockBean
-    private ReviewLikesServiceImpl reviewLikesService;
 
     private final String uri = "/api/v1/review";
 
@@ -278,7 +274,7 @@ class ReviewApiControllerDocsTest {
 
 
         Mockito.when(
-                reviewLikesService.updateLikes(Mockito.any(Long.class), Mockito.any(SessionMember.class)))
+                reviewServiceImpl.updateLikes(Mockito.any(Long.class), Mockito.any(SessionMember.class)))
             .thenReturn(review);
 
         SessionMember sessionMember = MockMemberUtil.getMockSessionMember();

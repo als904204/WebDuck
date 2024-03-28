@@ -4,7 +4,6 @@ package com.example.webduck.review.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.example.webduck.global.common.SliceResponse;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.member.domain.Member;
@@ -13,7 +12,6 @@ import com.example.webduck.member.infrastructure.SocialType;
 import com.example.webduck.mock.member.FakeMemberRepository;
 import com.example.webduck.mock.review.FakeReviewRepository;
 import com.example.webduck.mock.webtoon.FakeWebtoonRepository;
-import com.example.webduck.review.controller.response.ReviewSliceResponse;
 import com.example.webduck.review.domain.Review;
 import com.example.webduck.review.domain.ReviewCreate;
 import com.example.webduck.webtoon.domain.Webtoon;
@@ -23,7 +21,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-// TODO fake repo
 class ReviewServiceTest {
 
     private ReviewServiceImpl reviewService;
@@ -196,6 +193,8 @@ class ReviewServiceTest {
         int count = reviewService.getCount(1L);
         assertThat(count).isEqualTo(1);
     }
+
+
 
 
 
