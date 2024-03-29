@@ -133,11 +133,9 @@ public class ReviewServiceImpl implements ReviewService{
             reviewRepository.deleteReviewLikesById(existsLikes.getId());
             review.decreaseLikes();
         }, () -> {
-            // 좋아요 안했을 경우 저장 후 증가
-            ReviewLikes newReviewLikes = ReviewLikes.builder()
-                .reviewId(reviewId)
-                .memberId(memberId)
-                .build();
+
+        // 좋아요 안했을 경우 저장 후 증가
+            ReviewLikes newReviewLikes = ReviewLikes.from(reviewId, memberId);
             reviewRepository.saveReviewLikes(newReviewLikes);
             review.increaseLikes();
         });

@@ -21,7 +21,6 @@ public class CollectionWebtoonsEntity extends BaseTime {
     @Column(name = "owner_Id")
     private Long ownerId;
 
-    // todo 꼭 필요한가?
     @Column(name = "webtoon_id")
     private Long webtoonId;
 
