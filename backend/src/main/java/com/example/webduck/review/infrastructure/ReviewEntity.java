@@ -20,11 +20,9 @@ public class ReviewEntity extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 웹툰 ID
     @Column(nullable = false)
     private Long webtoonId;
 
-    // 작성자 ID
     @Column(nullable = false)
     private Long memberId;
 

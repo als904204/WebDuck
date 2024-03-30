@@ -17,4 +17,11 @@ public class ReviewLikes {
         this.memberId = memberId;
     }
 
+    public static ReviewLikes from(Long reviewId, Long memberId) {
+        return ReviewLikes.builder()
+            .reviewId(reviewId)
+            .memberId(memberId)
+            .build();
+    }
+
 }

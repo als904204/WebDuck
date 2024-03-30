@@ -66,31 +66,27 @@ public class CollectionServiceImpl implements CollectionService {
 
         // 요청한 웹툰ID 들이 DB에 있는지 검증
         // DB actual webtoons size : req webtoons size 검증
-        List<Long> webtoonIds = collectionCreate.getWebtoonIds();
-        int actualSize = webtoonRepository.findAllByIdIn(webtoonIds).size();
-        int reqWebtoonSize = collectionCreate.getWebtoonIds().size();
-        Webtoon.validateSizeMismatch(actualSize, reqWebtoonSize);
+        List<Long> reqWebtoonSize = collectionCreate.getWebtoonIds();
+        List<Webtoon> actualWebtoons = webtoonRepository.findAllByIdIn(reqWebtoonSize);
+        Webtoon.validateWebtoonIds(actualWebtoons, reqWebtoonSize);
 
         // 컬렉션 생성
         Collection collection = Collection.from(member, collectionCreate);
         collection = collectionRepository.save(collection);
 
         // 컬렉션 웹툰 생성
-        List<CollectionWebtoons> collectionWebtoons = new ArrayList<>(reqWebtoonSize);
+        List<CollectionWebtoons> collectionWebtoons = new ArrayList<>(reqWebtoonSize.size());
 
         for (Long webtoonId : collectionCreate.getWebtoonIds()) {
-            CollectionWebtoons colWebtoons = CollectionWebtoons.builder()
-                .ownerId(memberId)
-                .webtoonId(webtoonId)
-                .collectionId(collection.getId())
-                .build();
-
+            CollectionWebtoons colWebtoons = CollectionWebtoons.from(memberId, webtoonId,
+                collection.getId());
             collectionWebtoons.add(colWebtoons);
         }
 
         collectionWebtoonsRepository.saveAll(collectionWebtoons);
         return collection;
     }
+
 
     @Override
     @Transactional
@@ -104,11 +100,11 @@ public class CollectionServiceImpl implements CollectionService {
             });
 
         Member member = memberRepository.getById(sessionMember.getId());
+
         // 웹툰 ID 검증
-        List<Long> reqWebtoonIds = collectionUpdate.getWebtoonIds();
-        int actualSize = webtoonRepository.findAllByIdIn(reqWebtoonIds).size();
-        int reqWebtoonSize = collectionUpdate.getWebtoonIds().size();
-        Webtoon.validateSizeMismatch(actualSize, reqWebtoonSize);
+        List<Long> reqWebtoonSize = collectionUpdate.getWebtoonIds();
+        List<Webtoon> actualWebtoons = webtoonRepository.findAllByIdIn(reqWebtoonSize);
+        Webtoon.validateWebtoonIds(actualWebtoons, reqWebtoonSize);
 
 
         // 작성자 검증,업데이트 후 저장
@@ -118,7 +114,7 @@ public class CollectionServiceImpl implements CollectionService {
 
         collectionWebtoonsRepository.deleteAllByCollectionId(collectionId);
 
-        List<CollectionWebtoons> collectionWebtoons = new ArrayList<>(reqWebtoonSize);
+        List<CollectionWebtoons> collectionWebtoons = new ArrayList<>(reqWebtoonSize.size());
 
         for (Long webtoonId : collectionUpdate.getWebtoonIds()) {
             CollectionWebtoons colWebtoons = CollectionWebtoons.builder()

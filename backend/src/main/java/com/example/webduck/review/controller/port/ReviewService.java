@@ -6,9 +6,12 @@ import com.example.webduck.review.controller.response.ReviewLikesResponse;
 import com.example.webduck.review.domain.Review;
 import com.example.webduck.review.domain.ReviewCreate;
 import com.example.webduck.review.controller.response.ReviewSliceResponse;
+import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface ReviewService {
 
+    Review findById(Long id);
     Review create(SessionMember sessionMember, ReviewCreate reviewCreate);
 
     void deleteReview(SessionMember sessionMember,Long reviewId);
@@ -20,4 +23,6 @@ public interface ReviewService {
     SliceResponse<ReviewSliceResponse> findReviewsByWebtoonId(Long webtoonId,
         Long nextReviewId, int page, int size, SessionMember member);
 
+    @Transactional
+    Review updateLikes(Long reviewId, SessionMember sessionMember);
 }

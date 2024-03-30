@@ -1,4 +1,4 @@
-package com.example.webduck.config;
+package com.example.webduck.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

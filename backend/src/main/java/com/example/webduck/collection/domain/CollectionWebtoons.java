@@ -19,13 +19,11 @@ public class CollectionWebtoons {
         this.collectionId = collectionId;
     }
 
-    public static CollectionWebtoons from(CollectionWebtoons collectionWebtoons) {
+    public static CollectionWebtoons from(Long memberId,Long webtoonId,Long collectionId) {
         return CollectionWebtoons.builder()
-            .id(collectionWebtoons.id)
-            .ownerId(collectionWebtoons.ownerId)
-            .webtoonId(collectionWebtoons.webtoonId)
-            .collectionId(collectionWebtoons.collectionId)
+            .ownerId(memberId)
+            .webtoonId(webtoonId)
+            .collectionId(collectionId)
             .build();
     }
-
 }

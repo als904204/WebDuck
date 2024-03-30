@@ -11,7 +11,6 @@ import com.example.webduck.mock.member.MockMemberUtil;
 import com.example.webduck.mock.member.WithMockCustomUser;
 import com.example.webduck.review.domain.Review;
 import com.example.webduck.review.domain.ReviewCreate;
-import com.example.webduck.review.service.ReviewLikesServiceImpl;
 import com.example.webduck.review.service.ReviewServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -34,8 +33,6 @@ class ReviewApiControllerTest {
     @MockBean
     private ReviewServiceImpl reviewServiceImpl;
 
-    @MockBean
-    private ReviewLikesServiceImpl reviewLikesService;
 
     private final String uri = "/api/v1/review";
 

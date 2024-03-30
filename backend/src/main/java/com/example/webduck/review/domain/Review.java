@@ -74,11 +74,11 @@ public class Review {
         return Math.round(avg * 10.0) / 10.0; // 반올림 후 리턴
     }
 
-    public void upLikesCount() {
+    public void increaseLikes() {
         this.likesCount += 1;
     }
 
-    public void downLikesCount() {
+    public void decreaseLikes() {
         this.likesCount = this.likesCount > 0 ? this.likesCount - 1 : 0;
     }
 
