@@ -17,7 +17,6 @@ public class Collection {
 
     private static final Logger logger = LoggerFactory.getLogger(Collection.class);
 
-
     private Long id;
     private String title;
     private String description;

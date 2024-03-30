@@ -1,4 +1,4 @@
-package com.example.webduck.config;
+package com.example.webduck.global.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 

@@ -38,7 +38,8 @@ cd /home/ubuntu/webduck/backend/
 
 cd build/libs/
 
-sudo nohup java -jar -Dserver.port=${TARGET_PORT} -Dspring.profiles.active=prod WebDuck-0.0.1-SNAPSHOT.jar > /home/ubuntu/webduck/backend/build/libs/nohup.out 2>&1 &
+# sudo nohup java -jar -Dserver.port=${TARGET_PORT} -Dspring.profiles.active=prod WebDuck-0.0.1-SNAPSHOT.jar > /home/ubuntu/webduck/backend/build/libs/nohup.out 2>&1 &
+sudo nohup java -javaagent:/home/ubuntu/scouter/agent.java/scouter.agent.jar -Dscouter.config=/home/ubuntu/scouter/agent.host/conf/scouter.conf -Dobj_name=demoTomcat --add-opens=java.base/java.lang=ALL-UNNAMED -Dserver.port=${TARGET_PORT} -Dspring.profiles.active=prod WebDuck-0.0.1-SNAPSHOT.jar > /home/ubuntu/webduck/backend/build/libs/nohup.out 2>&1 &
 echo "> WAS Deployment completed"
 echo "> New WAS port is ${TARGET_PORT}"
 exit 0

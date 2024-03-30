@@ -1,4 +1,4 @@
-package com.example.webduck.config;
+package com.example.webduck.global.config;
 
 import com.example.webduck.global.security.oauth.resolver.LoginMemberArgumentResolver;
 import java.util.List;

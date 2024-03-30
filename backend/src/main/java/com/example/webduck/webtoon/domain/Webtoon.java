@@ -42,12 +42,15 @@ public class Webtoon {
     }
 
 
+
     public void incrementReviewCount() {
         ++this.reviewCount;
     }
 
-    public static void validateSizeMismatch(int actual,int expected) {
-        if (actual != expected) {
+    public static void validateWebtoonIds(List<Webtoon> actualWebtoons, List<Long> webtoonIds) {
+        int actual = actualWebtoons.size();
+        int expect = webtoonIds.size();
+        if (actual != expect) {
             throw new CustomException(LogicExceptionCode.BAD_REQUEST);
         }
     }

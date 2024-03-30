@@ -3,7 +3,6 @@ package com.example.webduck.review.controller;
 import com.example.webduck.global.security.oauth.dto.LoginMember;
 import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.global.common.SliceResponse;
-import com.example.webduck.review.controller.port.ReviewLikesService;
 import com.example.webduck.review.controller.port.ReviewService;
 import com.example.webduck.review.controller.response.ReviewAvgResponse;
 import com.example.webduck.review.controller.response.ReviewCountResponse;
@@ -32,7 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReviewApiController {
 
     private final ReviewService reviewService;
-    private final ReviewLikesService reviewLikesService;
 
     @PostMapping
     public ResponseEntity<ReviewCreateResponse> create(@LoginMember SessionMember member,@Valid @RequestBody
@@ -81,7 +79,7 @@ public class ReviewApiController {
         @LoginMember SessionMember sessionMember) {
 
         ReviewLikesResponse response = ReviewLikesResponse.from(
-            reviewLikesService.updateLikes(reviewId, sessionMember));
+            reviewService.updateLikes(reviewId, sessionMember));
 
         return ResponseEntity.ok(response);
     }

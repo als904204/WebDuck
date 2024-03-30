@@ -10,10 +10,12 @@ import com.example.webduck.review.controller.port.ReviewService;
 import com.example.webduck.review.domain.Review;
 import com.example.webduck.review.domain.ReviewCreate;
 import com.example.webduck.review.controller.response.ReviewSliceResponse;
+import com.example.webduck.review.domain.ReviewLikes;
 import com.example.webduck.review.service.port.ReviewRepository;
 import com.example.webduck.webtoon.domain.Webtoon;
 import com.example.webduck.webtoon.service.port.WebtoonRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +34,14 @@ public class ReviewServiceImpl implements ReviewService{
 
     private final WebtoonRepository webtoonRepository;
 
-
     private final MemberRepository memberRepository;
 
+
+    @Override
+    public Review findById(Long id) {
+        return reviewRepository.findById(id).orElseThrow(() -> new CustomException(
+            LogicExceptionCode.REVIEW_NOT_FOUND));
+    }
 
     @Override
     @Transactional
@@ -110,6 +117,34 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewList;
     }
 
+    // 리뷰 좋아요
+    @Transactional
+    public Review updateLikes(Long reviewId, SessionMember sessionMember) {
+
+        Review review = reviewRepository.getById(reviewId);
+
+        Long memberId = sessionMember.getId();
+
+        Optional<ReviewLikes> reviewLikes = reviewRepository.findReviewLikesByReviewIdAndMemberId(
+            reviewId, memberId);
+
+        // 이미 좋아요가 있을 경우 삭제 후 취소
+        reviewLikes.ifPresentOrElse(existsLikes -> {
+            reviewRepository.deleteReviewLikesById(existsLikes.getId());
+            review.decreaseLikes();
+        }, () -> {
+
+        // 좋아요 안했을 경우 저장 후 증가
+            ReviewLikes newReviewLikes = ReviewLikes.from(reviewId, memberId);
+            reviewRepository.saveReviewLikes(newReviewLikes);
+            review.increaseLikes();
+        });
+
+        // 변경된 Review Domain 좋아요 값 DB 저장
+        reviewRepository.save(review);
+
+        return review;
+    }
 
 
     // 리뷰 작성자 여부
