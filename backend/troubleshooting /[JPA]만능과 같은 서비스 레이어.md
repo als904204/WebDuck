@@ -21,7 +21,7 @@
 
 
 
-![img_1.png](../img/img_1.png)
+![img_1.png](img/j2.png)
 
 아래는 보관함 생성의 코드 입니다.
 - CollectionService.class
@@ -127,7 +127,7 @@ public class Collection extends BaseTimeEntity {
 
 첫 번째 해결방식은 Entity 클래스 안에 비즈니스 로직을 넣음으로 써 아래와 같은 흐름으로 리팩토링을 했습니다.
 
-![img.png](../img/img.png)
+![img.png](img/j1.png)
 
 > 서비스 클래스는 단지 객체를 받아 DB조회 하거나 객체를 다른 클래스로 전송하고, 가공된 객체를 받아와 DB에 저장하는 방식으로 변경되었습니다.
 > 
@@ -220,7 +220,7 @@ public class CollectionService {
 ```
 
 비즈니스 로직을 도메인 클래스로 분리함에 따라 아래와 같은 흐름으로 변경되었습니다.
-![img_2.png](../img/img_2.png)
+![img_2.png](img/j3.png)
 
 ---
 ## 느낀점
