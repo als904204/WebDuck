@@ -2,6 +2,7 @@ package com.example.webduck.webtoon.infrastructure;
 
 import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
 import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonSortCondition;
 import java.util.List;
 
 public interface WebtoonGenreCustom {

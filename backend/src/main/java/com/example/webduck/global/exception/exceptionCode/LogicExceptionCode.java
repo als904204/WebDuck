@@ -2,6 +2,7 @@ package com.example.webduck.global.exception.exceptionCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @AllArgsConstructor
 public enum LogicExceptionCode implements ExceptionCode {
@@ -10,7 +11,9 @@ public enum LogicExceptionCode implements ExceptionCode {
     REVIEW_NOT_FOUND(404, "Review not found"),
     COLLECTION_NOT_FOUND(404, "Collection not found"),
     MEMBER_NOT_FOUND(404, "Member not found"),
-    DUPLICATE_REQUEST(409,"Duplicate request" );
+    DUPLICATE_REQUEST(409,"Duplicate request"),
+    API_REQUEST_ERROR(400,"API Request error! please check log"),
+    THREAD_INTERRUPTED_ERROR(HttpStatus.REQUEST_TIMEOUT.value(), "Thread interrupted error");
 
 
     @Getter

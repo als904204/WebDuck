@@ -16,7 +16,10 @@ import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@Getter
 @Table(name = "webtoon")
 @Entity
 public class WebtoonEntity extends BaseTime {
@@ -59,6 +62,11 @@ public class WebtoonEntity extends BaseTime {
     @Column(nullable = false,length = 30)
     private String author;
 
+    // 활성화 비활성화 상태
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private WebtoonStatus webtoonStatus = WebtoonStatus.INACTIVE;
+
     // 웹툰 바로가기 주소
     private String webtoonUrl;
 
@@ -70,7 +78,8 @@ public class WebtoonEntity extends BaseTime {
     @Builder
     public WebtoonEntity(Long id, String title, String summary, String originalImageName,
         String imagePath,
-        PublishDay publishDay, Platform platform, String author, String webtoonUrl) {
+        PublishDay publishDay, Platform platform, String author, String webtoonUrl,
+        WebtoonStatus webtoonStatus) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -80,6 +89,7 @@ public class WebtoonEntity extends BaseTime {
         this.platform = platform;
         this.author = author;
         this.webtoonUrl = webtoonUrl;
+        this.webtoonStatus = webtoonStatus;
     }
 
     public static WebtoonEntity from(Webtoon webtoon) {
@@ -93,8 +103,10 @@ public class WebtoonEntity extends BaseTime {
             .platform(webtoon.getPlatform())
             .author(webtoon.getAuthor())
             .webtoonUrl(webtoon.getWebtoonUrl())
+            .webtoonStatus(webtoon.getWebtoonStatus())
             .build();
     }
+
     // Entity to Domain
     public Webtoon toModel() {
         return Webtoon.builder()
@@ -106,11 +118,10 @@ public class WebtoonEntity extends BaseTime {
             .publishDay(publishDay)
             .platform(platform)
             .author(author)
+            .webtoonStatus(webtoonStatus)
             .webtoonUrl(webtoonUrl)
             .build();
     }
-
-
 
     // 양방향 관계 객체 연결 (+순환 참조 방지)
     public void addWebtoonGenre(WebtoonGenre webtoonGenre) {
@@ -120,47 +131,19 @@ public class WebtoonEntity extends BaseTime {
         }
     }
 
-    public Long getId() {
-        return id;
+    public enum WebtoonStatus {
+        ACTIVE, // 활성화된 웹툰
+        INACTIVE // 비활성화된 웹툰
     }
 
-    public String getTitle() {
-        return title;
+    @Getter
+    @RequiredArgsConstructor
+    public enum WebtoonSortCondition {
+        RATING("RATING"),
+        COUNT("COUNT");
+        private final String condition;
     }
 
-    public String getSummary() {
-        return summary;
-    }
 
-    public String getOriginalImageName() {
-        return originalImageName;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public PublishDay getPublishDay() {
-        return publishDay;
-    }
-
-    public Platform getPlatform() {
-        return platform;
-    }
-    public List<WebtoonGenre> getWebtoonGenres() {
-        return webtoonGenres;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getWebtoonUrl() {
-        return webtoonUrl;
-    }
-
-    public int getReviewCount() {
-        return reviewCount;
-    }
 }
 
