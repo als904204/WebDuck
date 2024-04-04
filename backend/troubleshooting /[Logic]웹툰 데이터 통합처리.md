@@ -74,12 +74,12 @@
 
 ### 1. 트래픽 제한 없는 Korea Webtoon API 요청 후 List 로 저장
 
-![img.png](img.png)
+![img.png](img/l1.png)
 
 응답받은 Korea 웹툰 목록을 List 형태로 저장
 
 ### 2. 만화 규장각 API 요청 후 Map 저장
-![img_2.png](img_2.png)
+![img_2.png](img/l2.png)
 
 1. 응답받은 만화 규장각 웹툰 목록을 Map 형태로 저장
 2. Map으로 저장한 이유는 만화 규장각에서 응답온 데이터 중 중복된 데이터 제거 및 제목을 기준으로 Korea 데이터와 병합해야 되기 때문에 Map으로 저장
