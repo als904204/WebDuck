@@ -1,6 +1,7 @@
 package com.example.webduck.genre.entity;
 
 import com.example.webduck.global.common.BaseTime;
+import com.example.webduck.webtoon.domain.Webtoon;
 import com.example.webduck.webtoon.infrastructure.WebtoonEntity;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,6 +41,14 @@ public class WebtoonGenre extends BaseTime {
 
     // 양방향 참조 설정
     public void setWebtoon(WebtoonEntity webtoonEntity) {
+        this.webtoon = webtoonEntity;
+        if (!webtoonEntity.getWebtoonGenres().contains(this)) {
+            webtoonEntity.getWebtoonGenres().add(this);
+        }
+    }
+
+    public void setWebtoon(Webtoon webtoon) {
+        WebtoonEntity webtoonEntity = WebtoonEntity.from(webtoon);
         this.webtoon = webtoonEntity;
         if (!webtoonEntity.getWebtoonGenres().contains(this)) {
             webtoonEntity.getWebtoonGenres().add(this);

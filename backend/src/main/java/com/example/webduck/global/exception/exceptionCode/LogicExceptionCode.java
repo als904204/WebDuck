@@ -13,7 +13,8 @@ public enum LogicExceptionCode implements ExceptionCode {
     MEMBER_NOT_FOUND(404, "Member not found"),
     DUPLICATE_REQUEST(409,"Duplicate request"),
     API_REQUEST_ERROR(400,"API Request error! please check log"),
-    THREAD_INTERRUPTED_ERROR(HttpStatus.REQUEST_TIMEOUT.value(), "Thread interrupted error");
+    THREAD_INTERRUPTED_ERROR(HttpStatus.REQUEST_TIMEOUT.value(), "Thread interrupted error"),
+    SERVER_ERROR(500,"SERVER ERROR please check your log");
 
 
     @Getter
