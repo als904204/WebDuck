@@ -3,11 +3,10 @@ package com.example.webduck.webtoon.domain;
 import com.example.webduck.genre.entity.WebtoonGenre;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
-import com.example.webduck.webtoon.service.port.KoreaWebtoonApiResponse.WebtoonKorItem;
 import com.example.webduck.webtoon.infrastructure.Platform;
 import com.example.webduck.webtoon.infrastructure.PublishDay;
-import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonStatus;
-import com.example.webduck.webtoon.service.port.KyuWebtoonApiResponse.WebtoonKyuItem;
+import com.example.webduck.webtoon.service.port.KyuWebtoonResponse.WebtoonKyu;
+import com.example.webduck.webtoon.service.port.KoreaWebtoonResponse.WebtoonKor;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,14 +25,13 @@ public class Webtoon {
     private String author;
     private String webtoonUrl;
     private int reviewCount;
-    private WebtoonStatus webtoonStatus;
 
 
 
     @Builder
     public Webtoon(Long id, String title, String summary, String originalImageName,
         String imagePath, PublishDay publishDay, Platform platform,
-        List<WebtoonGenre> webtoonGenres, String author, String webtoonUrl, int reviewCount,WebtoonStatus webtoonStatus) {
+        List<WebtoonGenre> webtoonGenres, String author, String webtoonUrl, int reviewCount) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -45,24 +43,7 @@ public class Webtoon {
         this.author = author;
         this.webtoonUrl = webtoonUrl;
         this.reviewCount = reviewCount;
-        this.webtoonStatus = webtoonStatus;
     }
-
-    public static Webtoon fromWebtoonKorItem(WebtoonKorItem item) {
-        return Webtoon.builder()
-            .title(item.getTitle())
-            .originalImageName(item.getTitle() + ".jpg")
-            .imagePath(item.getImg())
-            .publishDay(PublishDay.fromString(item.getPublishDay()))
-            .platform(Platform.fromString(item.getService()))
-            .webtoonUrl(item.getUrl())
-            .author("")
-            .summary("")
-            .webtoonStatus(WebtoonStatus.INACTIVE)
-            .build();
-    }
-
-
 
 
     public void incrementReviewCount() {
@@ -77,7 +58,20 @@ public class Webtoon {
         }
     }
 
-    public Webtoon updateToActive(WebtoonKyuItem webtoonKyuItem) {
+    public static Webtoon fromWebtoonKor(WebtoonKor webtoonKor) {
+        return Webtoon.builder()
+            .title(webtoonKor.getTitle())
+            .originalImageName(webtoonKor.getTitle() + ".jpg")
+            .imagePath(webtoonKor.getImg())
+            .platform(Platform.fromString(webtoonKor.getService()))
+            .publishDay(PublishDay.fromString(webtoonKor.getPublishDay()))
+            .webtoonUrl(webtoonKor.getUrl())
+            .author("")
+            .summary("")
+            .build();
+    }
+
+    public Webtoon merge(WebtoonKyu webtoonKyu) {
         return Webtoon.builder()
             .id(id)
             .title(title)
@@ -88,10 +82,8 @@ public class Webtoon {
             .webtoonGenres(webtoonGenres)
             .webtoonUrl(webtoonUrl)
             .reviewCount(reviewCount)
-            .webtoonStatus(WebtoonStatus.ACTIVE)
-            .summary(webtoonKyuItem.getOutline())
-            .author(webtoonKyuItem.getPictrWritrNm() + "," + webtoonKyuItem.getSntncWritrNm())
+            .summary(webtoonKyu.getOutline())
+            .author("그림 작가 " + webtoonKyu.getPictrWritrNm() + ", 글 작가 " + webtoonKyu.getSntncWritrNm())
             .build();
     }
-
 }

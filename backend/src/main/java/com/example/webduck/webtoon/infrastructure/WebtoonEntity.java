@@ -59,13 +59,8 @@ public class WebtoonEntity extends BaseTime {
     private List<WebtoonGenre> webtoonGenres = new ArrayList<>();
 
     // 웹툰 작가
-    @Column(nullable = false,length = 30)
+    @Column(nullable = false,length = 60)
     private String author;
-
-    // 활성화 비활성화 상태
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private WebtoonStatus webtoonStatus = WebtoonStatus.INACTIVE;
 
     // 웹툰 바로가기 주소
     private String webtoonUrl;
@@ -78,8 +73,7 @@ public class WebtoonEntity extends BaseTime {
     @Builder
     public WebtoonEntity(Long id, String title, String summary, String originalImageName,
         String imagePath,
-        PublishDay publishDay, Platform platform, String author, String webtoonUrl,
-        WebtoonStatus webtoonStatus) {
+        PublishDay publishDay, Platform platform, String author, String webtoonUrl) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -89,7 +83,6 @@ public class WebtoonEntity extends BaseTime {
         this.platform = platform;
         this.author = author;
         this.webtoonUrl = webtoonUrl;
-        this.webtoonStatus = webtoonStatus;
     }
 
     public static WebtoonEntity from(Webtoon webtoon) {
@@ -103,7 +96,6 @@ public class WebtoonEntity extends BaseTime {
             .platform(webtoon.getPlatform())
             .author(webtoon.getAuthor())
             .webtoonUrl(webtoon.getWebtoonUrl())
-            .webtoonStatus(webtoon.getWebtoonStatus())
             .build();
     }
 
@@ -118,7 +110,6 @@ public class WebtoonEntity extends BaseTime {
             .publishDay(publishDay)
             .platform(platform)
             .author(author)
-            .webtoonStatus(webtoonStatus)
             .webtoonUrl(webtoonUrl)
             .build();
     }
@@ -130,12 +121,6 @@ public class WebtoonEntity extends BaseTime {
             webtoonGenre.setWebtoon(this);
         }
     }
-
-    public enum WebtoonStatus {
-        ACTIVE, // 활성화된 웹툰
-        INACTIVE // 비활성화된 웹툰
-    }
-
     @Getter
     @RequiredArgsConstructor
     public enum WebtoonSortCondition {

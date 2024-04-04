@@ -1,6 +1,5 @@
 package com.example.webduck.webtoon.infrastructure;
 
-import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonStatus;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,8 +15,6 @@ public interface WebtoonJpaRepository extends JpaRepository<WebtoonEntity, Long>
     List<WebtoonEntity> findAllByIdIn(List<Long> webtoonIds);
 
     boolean existsByPlatform(Platform platform);
-
-    List<WebtoonEntity> findAllByWebtoonStatus(WebtoonStatus webtoonStatus);
 
 
 }

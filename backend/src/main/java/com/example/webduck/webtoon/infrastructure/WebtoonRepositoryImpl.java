@@ -6,7 +6,6 @@ import com.example.webduck.webtoon.domain.Webtoon;
 import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
 import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
 import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonSortCondition;
-import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonStatus;
 import com.example.webduck.webtoon.service.port.WebtoonRepository;
 import java.util.List;
 import java.util.Optional;
@@ -32,11 +31,7 @@ public class WebtoonRepositoryImpl implements WebtoonRepository {
         return entities.stream().map(WebtoonEntity::toModel).collect(Collectors.toList());
     }
 
-    @Override
-    public List<Webtoon> findAllByStatus(WebtoonStatus webtoonStatus) {
-        List<WebtoonEntity> entities = webtoonJpaRepository.findAllByWebtoonStatus(webtoonStatus);
-        return entities.stream().map(WebtoonEntity::toModel).collect(Collectors.toList());
-    }
+
 
     @Override
     public List<WebtoonGenreResponse> findWebtoonsByGenres(List<String> genreNames) {
