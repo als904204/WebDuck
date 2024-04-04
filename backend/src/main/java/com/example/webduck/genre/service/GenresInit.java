@@ -26,7 +26,12 @@ public class GenresInit {
     private static final String THRILLER = "THRILLER"; // 스릴러
     private static final String DRAMA = "DRAMA"; // 드라마
     private static final String SPORTS = "SPORTS"; // 스포츠
+    private static final String PURE = "PURE"; // 순정
+    private static final String MYSTERY = "MYSTERY"; // 미스터리
 
+
+
+    // 드라마, 로맨스판타지, 로맨스, 판타지, 액션, 순정, 무협, 추리미스터리, 스포츠, 일상, 코믹, 소년, BL, 공포
 
     // TODO : 서버 시작할때 마다 모든 장르 하나하나 쿼리 함, 한번에 쿼리하는 방법 없나?
     // 기본 장르 DB INSERT
@@ -41,7 +46,9 @@ public class GenresInit {
             THRILLER,
             MARTIAL_ARTS,
             DRAMA,
-            SPORTS
+            SPORTS,
+            PURE,
+            MYSTERY
         );
 
         initGenres.forEach(genre ->

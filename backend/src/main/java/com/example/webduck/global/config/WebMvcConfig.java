@@ -32,7 +32,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         argumentResolvers.add(loginMemberArgumentResolver);
     }
 
-    // TODO : 현재는 모두 허용, 나중에 제한적 허용으로 변경
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/v1/**")

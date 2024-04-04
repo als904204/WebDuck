@@ -8,7 +8,7 @@ import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.mock.member.WithMockCustomUser;
 import com.example.webduck.webtoon.controller.WebtoonApiController;
-import com.example.webduck.webtoon.infrastructure.WebtoonSortCondition;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonSortCondition;
 import com.example.webduck.webtoon.service.WebtoonServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

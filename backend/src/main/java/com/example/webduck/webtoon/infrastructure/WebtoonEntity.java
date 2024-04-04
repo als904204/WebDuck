@@ -16,7 +16,10 @@ import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@Getter
 @Table(name = "webtoon")
 @Entity
 public class WebtoonEntity extends BaseTime {
@@ -56,7 +59,7 @@ public class WebtoonEntity extends BaseTime {
     private List<WebtoonGenre> webtoonGenres = new ArrayList<>();
 
     // 웹툰 작가
-    @Column(nullable = false,length = 30)
+    @Column(nullable = false,length = 60)
     private String author;
 
     // 웹툰 바로가기 주소
@@ -95,6 +98,7 @@ public class WebtoonEntity extends BaseTime {
             .webtoonUrl(webtoon.getWebtoonUrl())
             .build();
     }
+
     // Entity to Domain
     public Webtoon toModel() {
         return Webtoon.builder()
@@ -110,8 +114,6 @@ public class WebtoonEntity extends BaseTime {
             .build();
     }
 
-
-
     // 양방향 관계 객체 연결 (+순환 참조 방지)
     public void addWebtoonGenre(WebtoonGenre webtoonGenre) {
         this.webtoonGenres.add(webtoonGenre);
@@ -119,48 +121,14 @@ public class WebtoonEntity extends BaseTime {
             webtoonGenre.setWebtoon(this);
         }
     }
-
-    public Long getId() {
-        return id;
+    @Getter
+    @RequiredArgsConstructor
+    public enum WebtoonSortCondition {
+        RATING("RATING"),
+        COUNT("COUNT");
+        private final String condition;
     }
 
-    public String getTitle() {
-        return title;
-    }
 
-    public String getSummary() {
-        return summary;
-    }
-
-    public String getOriginalImageName() {
-        return originalImageName;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public PublishDay getPublishDay() {
-        return publishDay;
-    }
-
-    public Platform getPlatform() {
-        return platform;
-    }
-    public List<WebtoonGenre> getWebtoonGenres() {
-        return webtoonGenres;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getWebtoonUrl() {
-        return webtoonUrl;
-    }
-
-    public int getReviewCount() {
-        return reviewCount;
-    }
 }
 

@@ -12,7 +12,7 @@ import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
 import com.example.webduck.webtoon.controller.response.WebtoonResponse;
 import com.example.webduck.webtoon.infrastructure.Platform;
 import com.example.webduck.webtoon.infrastructure.PublishDay;
-import com.example.webduck.webtoon.infrastructure.WebtoonSortCondition;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonSortCondition;
 import com.example.webduck.webtoon.service.port.WebtoonRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,6 +88,7 @@ public class WebtoonServiceImpl implements WebtoonService {
     }
 
     // 인기 웹툰 조회 (리뷰 개수 순, 평점 순)
+    @Override
     @Transactional(readOnly = true)
     public List<WebtoonPopularResponse> findPopularWebtoonsByCondition(
         WebtoonSortCondition condition) {

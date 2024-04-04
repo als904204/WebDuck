@@ -22,10 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminApiController {
 
     private final UploadService uploadService;
-
     @PostMapping("/webtoon")
     public ResponseEntity<Long> uploadWebtoon(@Valid @ModelAttribute WebtoonUpload webtoonUpload) {
         uploadService.uploadWebtoon(webtoonUpload);
         return ResponseEntity.noContent().build();
     }
+
+
 }
