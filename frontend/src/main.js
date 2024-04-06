@@ -5,10 +5,11 @@ import App from './App.vue'
 // Router
 import { router } from './router/index.js'
 
+// Pinia
+import { createPinia } from 'pinia'
+
 // PrimeVue
 import PrimeVue from 'primevue/config';
-
-
 import Button from "primevue/button"
 import Menubar from 'primevue/menubar';
 import Badge from 'primevue/badge';
@@ -21,27 +22,31 @@ import RadioButton from 'primevue/radiobutton';
 import Checkbox from 'primevue/checkbox';
 import InlineMessage from 'primevue/inlinemessage';
 import Tag from 'primevue/tag';
-
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css';
+
+
 
 
 // axios
 import axios from "axios";
 import VueAxios from "vue-axios";
 
-
+// pinia
+const pinia = createPinia()
 
 // app
 const app = createApp(App)
-
 
 // router
 app.use(router)
 
 // prime
 app.use(PrimeVue);
+
+app.use(pinia)
+
 
 app.component('Button', Button);
 app.component('Menubar', Menubar);

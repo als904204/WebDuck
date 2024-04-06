@@ -5,9 +5,10 @@
 <script setup>
 import {computed} from "vue";
 import { useRouter } from 'vue-router';
-import {isLoggedIn, logout} from "../../store/auth.js";
+import {isLoggedIn, logout, useAuthStore} from "../../store/auth.js";
 
 const router = useRouter();
+const authStore = useAuthStore();
 
 const handleLogout = async () => {
   await logout();
@@ -25,6 +26,12 @@ const items = computed(() => {
     { label: '카카오 웹툰', icon: 'pi pi-book', command: () => router.push("/kakao") },
     { label: '네이버 웹툰', icon: 'pi pi-book', command: () => router.push("/naver") },
   ];
+
+  if (isLoggedIn.value && authStore.isLoggedIn && authStore.isAdministrator) {
+    baseItems.push(
+        { label: '관리자 페이지', icon: 'pi pi-cog', command: () => router.push("/admin") }
+    );
+  }
 
   // 로그인 상태에 따라 '로그인/가입' 또는 '내정보' 메뉴 항목 추가
   if (isLoggedIn.value) {

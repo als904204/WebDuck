@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {ref} from "vue";
+import { defineStore } from 'pinia';
 
 export const isLoggedIn = ref(false);
 export const csrfToken = ref('');
@@ -56,6 +57,24 @@ export async function logout() {
   }
 }
 
-
+export const useAuthStore = defineStore('auth', {
+  state: () => ({
+    user: null,
+  }),
+  actions: {
+    async fetchUser() {
+      try {
+        const response = await axios.get('/api/v1/auth/me');
+        this.user = response.data;
+      } catch (error) {
+        this.user = null; // 실패 시 사용자 정보를 null로 설정
+      }
+    }
+  },
+  getters: {
+    isLoggedIn: (state) => !!state.user,
+    isAdministrator: (state) => state.user?.role === 'ROLE_ADMIN'
+  }
+});
 
 
