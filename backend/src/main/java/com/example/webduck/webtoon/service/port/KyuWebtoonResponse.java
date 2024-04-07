@@ -46,4 +46,6 @@ public class KyuWebtoonResponse {
         private String mainGenreCdNm;
         private String prdctNm;
     }
+
+
 }

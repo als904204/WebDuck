@@ -25,6 +25,8 @@ public class KyuApiClient {
 
     private final ExternalApiRequestLogRepository externalApiRequestLogRepository;
 
+    private final int itemCount = 20;
+
     public Map<String, WebtoonKyu> getWebtoons(Platform platform) {
 
         ExternalApiRequestLog apiRequestLog = externalApiRequestLogRepository.findByPlatform(platform)
@@ -36,7 +38,7 @@ public class KyuApiClient {
 
 
         int startPage = apiRequestLog.getLastRequestedPage() + 1; // 마지막으로 요청된 페이지 이후부터 시작
-        int maxPage = startPage + 29;
+        int maxPage = startPage + itemCount;
 
         // 마지막 api 요청 페이지부터, 최대 페이지까지 요청한다.
         // 트래픽 제한 걸려 실패할 경우, 반복문을 중단한다.
@@ -50,7 +52,8 @@ public class KyuApiClient {
                 apiRequestLog.setLastRequestedPage(pageNo);
             } else {
                 log.error("kyu : Failed to fetch data, error message: {}, error status: {}",
-                    response.getResultMessage(), response.getResultMessage());
+                    response.getResultMessage(), response.getResultState());
+
                 break; // 요청 중단
             }
         }
@@ -66,12 +69,11 @@ public class KyuApiClient {
     }
 
     private String buildKyuRequestUri(String platformName, int pageNo) {
-        String kyuKey = "fb9d29708ea1903b86bbdfd012cf1189";
-        int viewItemCnt = 50;
+        String key = "fb9d29708ea1903b86bbdfd012cf1189";
         return UriComponentsBuilder.fromHttpUrl(url)
-            .queryParam("prvKey", kyuKey)
+            .queryParam("prvKey", key)
             .queryParam("pageNo", pageNo)
-            .queryParam("viewItemCnt", viewItemCnt)
+            .queryParam("viewItemCnt", itemCount)
             .queryParam("pltfomCdNm", platformName)
             .build()
             .toUriString();

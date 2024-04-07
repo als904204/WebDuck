@@ -89,6 +89,35 @@ public class WebtoonGenreCustomImpl implements WebtoonGenreCustom{
             .fetch();
     }
 
+    @Override
+    public long deleteDuplicateWebtoons() {
+        QWebtoonEntity webtoon1 = QWebtoonEntity.webtoonEntity;
+        QWebtoonEntity webtoon2 = new QWebtoonEntity("webtoon2");
+
+        QWebtoonGenre webtoonGenre = QWebtoonGenre.webtoonGenre;
+
+        // 중복 ID 검색
+        List<Long> duplicateIds = queryFactory
+            .select(webtoon1.id)
+            .from(webtoon1)
+            .join(webtoon2).on(webtoon1.title.eq(webtoon2.title).and(webtoon1.id.gt(webtoon2.id)))
+            .fetch();
+
+        // 관련 장르 삭제
+        queryFactory
+            .delete(webtoonGenre)
+            .where(webtoonGenre.webtoon.id.in(duplicateIds))
+            .execute();
+
+
+        // 웹툰 삭제
+        return queryFactory
+            .delete(webtoon1)
+            .where(webtoon1.id.in(duplicateIds))
+            .execute();
+    }
+
+
     private OrderSpecifier<?> sortByRatingOrReviewCount(WebtoonSortCondition condition) {
         QReviewEntity review = QReviewEntity.reviewEntity;
         QWebtoonEntity webtoon = QWebtoonEntity.webtoonEntity;

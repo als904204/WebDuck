@@ -34,7 +34,7 @@ public class ExternalApiRequestLog extends BaseTime {
 
     public ExternalApiRequestLog(Platform platform) {
         this.platform = platform;
-        this.lastRequestedPage = 0;
+        this.lastRequestedPage = 500; // 500 페이지까지 순정웹툰만있음
     }
 
 

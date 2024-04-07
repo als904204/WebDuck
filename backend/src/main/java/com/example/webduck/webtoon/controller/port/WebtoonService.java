@@ -26,4 +26,5 @@ public interface WebtoonService {
 
     List<Webtoon> findByCollectionId(Long id);
 
+    long deleteDuplicateWebtoons();
 }

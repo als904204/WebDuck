@@ -63,6 +63,12 @@ public class Member {
             .build();
     }
 
+    public static void validateAdmin(Member member) {
+        if (!member.getRole().equals(Role.ADMIN)) {
+            throw new CustomException(LogicExceptionCode.BAD_REQUEST);
+        }
+    }
+
     public void updatePrevLoginAt(LocalDateTime now) {
         this.previousLoginAt = this.currentLoginAt;
         this.currentLoginAt = now;

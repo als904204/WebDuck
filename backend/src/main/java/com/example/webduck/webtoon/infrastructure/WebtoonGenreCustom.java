@@ -15,5 +15,7 @@ public interface WebtoonGenreCustom {
     // 컬렉션 ID 에 해당하는 웹툰 조회
     List<WebtoonEntity> findWebtoonsByCollectionId(Long id);
 
+    long deleteDuplicateWebtoons();
+
 
 }

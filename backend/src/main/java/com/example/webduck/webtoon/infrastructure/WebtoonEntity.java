@@ -33,7 +33,7 @@ public class WebtoonEntity extends BaseTime {
     private String title;
 
     // 줄거리
-    @Column(nullable = false,length = 600)
+    @Column(nullable = false,length = 4000)
     private String summary;
 
     // 썸네일 이미지 파일 원본이름
