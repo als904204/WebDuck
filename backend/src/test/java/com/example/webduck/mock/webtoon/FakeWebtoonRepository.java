@@ -72,6 +72,11 @@ public class FakeWebtoonRepository implements WebtoonRepository {
     }
 
     @Override
+    public long deleteDuplicateWebtoon() {
+        return 5;
+    }
+
+    @Override
     public Optional<Webtoon> findById(Long Id) {
         return data.stream().filter(webtoon -> webtoon.getId().equals(Id)).findAny();
     }
