@@ -18,7 +18,6 @@ export async function checkLoginStatus() {
     }
     return response.data;
   } catch (error) {
-    console.error("Error checking login status", error);
     return false;
   }
 }
@@ -52,7 +51,6 @@ export async function logout() {
     sessionStorage.setItem('isLoggedIn', 'false');
     sessionStorage.clear();
   } catch (error) {
-    console.error("Error during logout", error);
     alert('알수없는 에러가 발생했습니다')
   }
 }

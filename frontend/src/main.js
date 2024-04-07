@@ -22,6 +22,7 @@ import RadioButton from 'primevue/radiobutton';
 import Checkbox from 'primevue/checkbox';
 import InlineMessage from 'primevue/inlinemessage';
 import Tag from 'primevue/tag';
+import ProgressBar from 'primevue/progressbar';
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css';
@@ -60,6 +61,7 @@ app.component('RadioButton', RadioButton);
 app.component('Checkbox', Checkbox);
 app.component('InlineMessage', InlineMessage);
 app.component('Tag', Tag);
+app.component('ProgressBar', ProgressBar);
 
 // axios
 app.use(VueAxios, axios);
