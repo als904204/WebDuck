@@ -7,7 +7,7 @@ import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
 import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
 import com.example.webduck.webtoon.infrastructure.Platform;
 import com.example.webduck.webtoon.infrastructure.PublishDay;
-import com.example.webduck.webtoon.infrastructure.WebtoonSortCondition;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonSortCondition;
 import com.example.webduck.webtoon.service.port.WebtoonRepository;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +49,12 @@ public class FakeWebtoonRepository implements WebtoonRepository {
         }
     }
 
+    // todo :
+    @Override
+    public List<Webtoon> saveAll(List<Webtoon> webtoons) {
+        return null;
+    }
+
     @Override
     public List<Webtoon> findByCollectionId(Long collectionId) {
         return null;
@@ -58,6 +64,16 @@ public class FakeWebtoonRepository implements WebtoonRepository {
     @Override
     public boolean existsById(Long id) {
         return data.stream().anyMatch(webtoon -> webtoon.getId().equals(id));
+    }
+
+    @Override
+    public boolean existsByPlatform(Platform platform) {
+        return data.stream().anyMatch(webtoon -> webtoon.getPlatform().equals(platform));
+    }
+
+    @Override
+    public long deleteDuplicateWebtoon() {
+        return 5;
     }
 
     @Override
@@ -96,6 +112,7 @@ public class FakeWebtoonRepository implements WebtoonRepository {
     public List<Webtoon> findAll() {
         return new ArrayList<>(data);
     }
+
 
     @Override
     public List<WebtoonGenreResponse> findWebtoonsByGenres(List<String> genreNames) {

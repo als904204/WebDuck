@@ -2,6 +2,7 @@ package com.example.webduck.webtoon.infrastructure;
 
 import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
 import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonSortCondition;
 import java.util.List;
 
 public interface WebtoonGenreCustom {
@@ -13,6 +14,8 @@ public interface WebtoonGenreCustom {
 
     // 컬렉션 ID 에 해당하는 웹툰 조회
     List<WebtoonEntity> findWebtoonsByCollectionId(Long id);
+
+    long deleteDuplicateWebtoons();
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.webduck.webtoon.service;
 
+import com.example.webduck.admin.controller.response.WebtoonDelete;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.review.domain.Review;
@@ -12,7 +13,7 @@ import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
 import com.example.webduck.webtoon.controller.response.WebtoonResponse;
 import com.example.webduck.webtoon.infrastructure.Platform;
 import com.example.webduck.webtoon.infrastructure.PublishDay;
-import com.example.webduck.webtoon.infrastructure.WebtoonSortCondition;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonSortCondition;
 import com.example.webduck.webtoon.service.port.WebtoonRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,6 +89,7 @@ public class WebtoonServiceImpl implements WebtoonService {
     }
 
     // 인기 웹툰 조회 (리뷰 개수 순, 평점 순)
+    @Override
     @Transactional(readOnly = true)
     public List<WebtoonPopularResponse> findPopularWebtoonsByCondition(
         WebtoonSortCondition condition) {
@@ -97,5 +99,11 @@ public class WebtoonServiceImpl implements WebtoonService {
     @Override
     public List<Webtoon> findByCollectionId(Long id) {
         return webtoonRepository.findByCollectionId(id);
+    }
+
+    @Transactional
+    @Override
+    public long deleteDuplicateWebtoons() {
+        return webtoonRepository.deleteDuplicateWebtoon();
     }
 }

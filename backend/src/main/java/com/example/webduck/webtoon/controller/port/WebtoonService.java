@@ -7,7 +7,7 @@ import com.example.webduck.webtoon.controller.response.WebtoonResponse;
 import com.example.webduck.webtoon.domain.Webtoon;
 import com.example.webduck.webtoon.infrastructure.Platform;
 import com.example.webduck.webtoon.infrastructure.PublishDay;
-import com.example.webduck.webtoon.infrastructure.WebtoonSortCondition;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonSortCondition;
 import java.util.List;
 
 public interface WebtoonService {
@@ -26,4 +26,5 @@ public interface WebtoonService {
 
     List<Webtoon> findByCollectionId(Long id);
 
+    long deleteDuplicateWebtoons();
 }

@@ -5,6 +5,7 @@ import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.webtoon.domain.Webtoon;
 import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
 import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonSortCondition;
 import com.example.webduck.webtoon.service.port.WebtoonRepository;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,8 @@ public class WebtoonRepositoryImpl implements WebtoonRepository {
         return entities.stream().map(WebtoonEntity::toModel).collect(Collectors.toList());
     }
 
+
+
     @Override
     public List<WebtoonGenreResponse> findWebtoonsByGenres(List<String> genreNames) {
         return webtoonJpaRepository.findWebtoonsByGenres(genreNames);
@@ -48,8 +51,25 @@ public class WebtoonRepositoryImpl implements WebtoonRepository {
     }
 
     @Override
+    public List<Webtoon> saveAll(List<Webtoon> webtoons) {
+
+        List<WebtoonEntity> webtoonEntities = webtoons.stream()
+            .map(WebtoonEntity::from)
+            .collect(Collectors.toList());
+
+        return webtoonJpaRepository.saveAll(webtoonEntities).stream()
+            .map(WebtoonEntity::toModel)
+            .collect(Collectors.toList());
+    }
+
+    @Override
     public boolean existsById(Long id) {
         return webtoonJpaRepository.existsById(id);
+    }
+
+    @Override
+    public boolean existsByPlatform(Platform platform) {
+        return webtoonJpaRepository.existsByPlatform(platform);
     }
 
     @Override
@@ -86,6 +106,10 @@ public class WebtoonRepositoryImpl implements WebtoonRepository {
         return entities.stream()
             .map(WebtoonEntity::toModel)
             .collect(Collectors.toList());
+    }
+
+    public long deleteDuplicateWebtoon() {
+        return webtoonJpaRepository.deleteDuplicateWebtoons();
     }
 
 

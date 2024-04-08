@@ -11,6 +11,7 @@ import com.example.webduck.review.infrastructure.QReviewEntity;
 import com.example.webduck.webtoon.controller.response.WebtoonGenreResponse;
 import com.example.webduck.webtoon.controller.response.WebtoonPopularResponse;
 import com.example.webduck.webtoon.domain.Webtoon;
+import com.example.webduck.webtoon.infrastructure.WebtoonEntity.WebtoonSortCondition;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -87,6 +88,35 @@ public class WebtoonGenreCustomImpl implements WebtoonGenreCustom{
             .where(collectionWebtoons.collectionId.eq(collectionId))
             .fetch();
     }
+
+    @Override
+    public long deleteDuplicateWebtoons() {
+        QWebtoonEntity webtoon1 = QWebtoonEntity.webtoonEntity;
+        QWebtoonEntity webtoon2 = new QWebtoonEntity("webtoon2");
+
+        QWebtoonGenre webtoonGenre = QWebtoonGenre.webtoonGenre;
+
+        // 중복 ID 검색
+        List<Long> duplicateIds = queryFactory
+            .select(webtoon1.id)
+            .from(webtoon1)
+            .join(webtoon2).on(webtoon1.title.eq(webtoon2.title).and(webtoon1.id.gt(webtoon2.id)))
+            .fetch();
+
+        // 관련 장르 삭제
+        queryFactory
+            .delete(webtoonGenre)
+            .where(webtoonGenre.webtoon.id.in(duplicateIds))
+            .execute();
+
+
+        // 웹툰 삭제
+        return queryFactory
+            .delete(webtoon1)
+            .where(webtoon1.id.in(duplicateIds))
+            .execute();
+    }
+
 
     private OrderSpecifier<?> sortByRatingOrReviewCount(WebtoonSortCondition condition) {
         QReviewEntity review = QReviewEntity.reviewEntity;
