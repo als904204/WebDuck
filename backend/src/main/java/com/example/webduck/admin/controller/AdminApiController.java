@@ -2,7 +2,6 @@ package com.example.webduck.admin.controller;
 
 
 import com.example.webduck.admin.controller.request.WebtoonApiRequest;
-import com.example.webduck.admin.controller.response.WebtoonDelete;
 import com.example.webduck.admin.controller.response.WebtoonMergeResponse;
 import com.example.webduck.global.security.oauth.dto.LoginMember;
 import com.example.webduck.global.security.oauth.entity.SessionMember;
@@ -29,7 +28,6 @@ public class AdminApiController {
 
     private final WebtoonMergeService webtoonMergeService;
     private final WebtoonService webtoonService;
-
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/webtoon")
     public ResponseEntity<WebtoonMergeResponse> uploadWebtoon(
