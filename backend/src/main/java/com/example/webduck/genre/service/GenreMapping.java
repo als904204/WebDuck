@@ -2,16 +2,16 @@ package com.example.webduck.genre.service;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GenreMapping {
 
     private static final Map<String, List<String>> genreMapping;
 
     static {
-        genreMapping = new HashMap<>();
+        genreMapping = new ConcurrentHashMap<>();
         genreMapping.put("액션", Collections.singletonList("ACTION"));
         genreMapping.put("일상", Collections.singletonList("DAILYLIFE"));
         genreMapping.put("드라마", Collections.singletonList("DRAMA"));

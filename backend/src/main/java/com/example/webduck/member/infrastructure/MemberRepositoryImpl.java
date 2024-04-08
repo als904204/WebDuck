@@ -56,4 +56,11 @@ public class MemberRepositoryImpl implements MemberRepository {
         return memberJpaRepository.existsById(id);
     }
 
+    @Override
+    public Optional<Member> findByIdAneUsername(Long id, String username) {
+        Optional<MemberEntity> entity = memberJpaRepository.findByIdAndUsername(id,
+            username);
+        return entity.map(MemberEntity::toModel);
+    }
+
 }

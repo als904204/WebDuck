@@ -15,6 +15,10 @@ import CollectionAdd from "../components/collection/CollectionCreate.vue";
 import CollectionDetails from "../components/collection/CollectionDetails.vue";
 import CollectionUpdate from "../components/collection/CollectionUpdate.vue";
 import Health from "../components/common/Health.vue";
+import Admin from "../components/admin/Admin.vue";
+import axios from "axios";
+import {useAuthStore} from "../store/auth.js";
+
 
 const routes = [
   {path : '/',component:Home},
@@ -33,6 +37,15 @@ const routes = [
   {path: "/:pathMatch(.*)*", redirect: "/notFound"},
   {path: '/oauth2/redirect', component: Redirect},
   {path : '/health', component: Health},
+  {
+    path: '/admin',
+    name: 'admin',
+    component: Admin,
+    meta: {
+      roles: ['ROLE_ADMIN']
+    }
+
+  }
 ]
 
 
@@ -42,5 +55,26 @@ const router = createRouter({
   routes
 });
 
-// 라우터 추출 (main.js에서 import)
-export {router}
+
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
+  if (!authStore.user) {
+    await authStore.fetchUser();
+  }
+
+  // 권한 필요
+  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+    // 로그인하지 않은 사용자를 로그인 페이지로 리다이렉션
+    next('/login');
+  } else if (to.meta.roles && !to.meta.roles.includes(authStore.user?.role)) {
+    // 필요한 권한이 없는 사용자를 notFound 페이지로 리다이렉션
+    next('/notFound');
+  } else {
+    // 그 외의 경우 정상적으로 라우트 이동을 허용
+    next();
+  }
+
+});
+
+
+export {router};

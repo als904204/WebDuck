@@ -36,4 +36,6 @@ public interface WebtoonRepository {
     boolean existsById(Long id);
 
     boolean existsByPlatform(Platform platform);
+
+    long deleteDuplicateWebtoon();
 }

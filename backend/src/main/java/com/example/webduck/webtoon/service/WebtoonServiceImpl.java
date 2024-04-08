@@ -1,5 +1,6 @@
 package com.example.webduck.webtoon.service;
 
+import com.example.webduck.admin.controller.response.WebtoonDelete;
 import com.example.webduck.global.exception.CustomException;
 import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import com.example.webduck.review.domain.Review;
@@ -98,5 +99,11 @@ public class WebtoonServiceImpl implements WebtoonService {
     @Override
     public List<Webtoon> findByCollectionId(Long id) {
         return webtoonRepository.findByCollectionId(id);
+    }
+
+    @Transactional
+    @Override
+    public long deleteDuplicateWebtoons() {
+        return webtoonRepository.deleteDuplicateWebtoon();
     }
 }

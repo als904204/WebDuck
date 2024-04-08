@@ -108,5 +108,9 @@ public class WebtoonRepositoryImpl implements WebtoonRepository {
             .collect(Collectors.toList());
     }
 
+    public long deleteDuplicateWebtoon() {
+        return webtoonJpaRepository.deleteDuplicateWebtoons();
+    }
+
 
 }

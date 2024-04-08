@@ -45,7 +45,9 @@ const engGenresToKorean = {
   "MARTIALARTS": "무협",
   "ROMANCE": "로맨스",
   "SPORTS": "스포츠",
-  "THRILLER": "스릴러"
+  "THRILLER": "스릴러",
+  "PURE" : "순정",
+  "MYSTERY": "미스터리",
 };
 
 const korGenresToEng = {
@@ -58,7 +60,9 @@ const korGenresToEng = {
   "무협": "MARTIALARTS",
   "로맨스": "ROMANCE",
   "스포츠": "SPORTS",
-  "스릴러": "THRILLER"
+  "스릴러": "THRILLER",
+  "순정" : "PURE",
+  "미스터리": "MYSTERY",
 };
 
 const genres = ref([]);
