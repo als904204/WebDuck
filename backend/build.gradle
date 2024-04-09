@@ -37,12 +37,14 @@ jar {
 dependencies {
     // WEB
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
     // UTILS
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
+    implementation 'com.google.code.gson:gson:2.10.1'
 
     compileOnly("org.springframework.boot:spring-boot-devtools")
     implementation 'org.springframework.boot:spring-boot-starter-validation'
