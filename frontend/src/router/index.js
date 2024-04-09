@@ -18,6 +18,7 @@ import Health from "../components/common/Health.vue";
 import Admin from "../components/admin/Admin.vue";
 import axios from "axios";
 import {useAuthStore} from "../store/auth.js";
+import Monitor from "../components/admin/Monitor.vue";
 
 
 const routes = [
@@ -44,7 +45,14 @@ const routes = [
     meta: {
       roles: ['ROLE_ADMIN']
     }
-
+  },
+  {
+    path: '/monitor',
+    name: 'monitor',
+    component: Monitor,
+    meta: {
+      roles: ['ROLE_ADMIN'],
+    }
   }
 ]
 
