@@ -169,7 +169,7 @@ const memberMonitor = async () => {
 
 </script>
 
-<style scoped>
+<style>
 .no-underline {
   text-decoration: none;
 }

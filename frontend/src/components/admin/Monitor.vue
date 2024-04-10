@@ -24,7 +24,7 @@ let webSocket = null;
 const connectWebSocket = () => {
   const baseUrl = import.meta.env.VITE_APP_BACKEND_URL;
 
-  const socketUrl = baseUrl.replace(/^http/, 'ws') + '/admin/memory-monitor';
+  const socketUrl = baseUrl.replace(/^http/, 'ws') + '/api/v1/admin/memory';
 
   const socket = new WebSocket(socketUrl);
 
