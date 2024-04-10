@@ -64,13 +64,30 @@
       </div>
       <div class="col-12 md:col-6 lg:col-4">
         <div class="text-center p-3 border-round-sm border-500 border-1 font-bold">
-          <span>회원 관리<i class="pi pi-user pl-2" ></i></span>
+          <div class="mb-5">
+            <span>회원 관리<i class="pi pi-server pl-2" ></i></span>
+          </div>
+          <hr/>
+
+          <div class="card flex justify-content-center mt-3">
+            <Button label="회원 모니터링" severity="info" @click="memberMonitor" />
+          </div>
         </div>
       </div>
       <div class="col-12 md:col-6 lg:col-4">
         <div class="text-center p-3 border-round-sm border-500 border-1 font-bold">
-          <span>서버 관리<i class="pi pi-server pl-2" ></i></span>
+          <div class="mb-5">
+            <span>서버 관리<i class="pi pi-server pl-2" ></i></span>
+          </div>
+          <hr/>
+
+          <router-link to="/monitor" class="no-underline">
+            <div class="card flex justify-content-center mt-3">
+              <Button severity="help"><span class="mr-2">메모리 모니터링</span>  <i class="pi pi-desktop"></i></Button>
+            </div>
+          </router-link>
         </div>
+
       </div>
     </div>
 
@@ -145,5 +162,16 @@ const deleteDuplicateWebtoons = async () => {
 
 
 }
+const memberMonitor = async () => {
+  alert('아직 준비중입니다.')
+}
+
 
 </script>
+
+<style>
+.no-underline {
+  text-decoration: none;
+}
+
+</style>
