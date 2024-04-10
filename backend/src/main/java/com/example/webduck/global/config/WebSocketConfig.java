@@ -17,7 +17,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(memoryMonitorHandler, "/admin/memory-monitor")
+        registry.addHandler(memoryMonitorHandler, "/api/v1/admin/memory")
             .setAllowedOrigins("*");
 
     }
