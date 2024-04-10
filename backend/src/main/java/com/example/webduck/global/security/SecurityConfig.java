@@ -47,7 +47,8 @@ public class SecurityConfig {
         "/genre/**",
         "/naver/**",
         "/kakao/**",
-        "/webtoon/details/**"
+        "/webtoon/details/**",
+        "/api/v1/dev/**"
 
     };
 

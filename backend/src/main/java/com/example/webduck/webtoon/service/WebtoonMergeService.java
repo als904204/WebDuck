@@ -62,7 +62,7 @@ public class WebtoonMergeService {
         mergedWebtoons = webtoonRepository.saveAll(mergedWebtoons);
 
         saveMappedGenres(mergedWebtoons, kyuWebtoons);
-        log.info("Successfully saved {} merged webtoons with genres for platform: {}",
+        log.info("Successfully {} merged webtoons with genres for platform: {}",
             mergedWebtoons.size(), platform);
 
         return new WebtoonMergeResponse(mergedWebtoons.size(), platform);
@@ -71,6 +71,7 @@ public class WebtoonMergeService {
     // korea 웹툰 <=> 만화 규장각 웹툰 title 같을 경우 merge
     private List<Webtoon> mergeWebtoons(KoreaWebtoonResponse webtoonKorea,
         Map<String, WebtoonKyu> kyuWebtoons) {
+        log.info("merge webtoons");
         List<Webtoon> mergedWebtoons = new ArrayList<>();
 
         for (WebtoonKor webtoonKor : webtoonKorea.getWebtoons()) {
@@ -87,8 +88,9 @@ public class WebtoonMergeService {
     }
 
     // merge 된 웹툰의 장르를 만화 규장각에서 받아온 장르를 변환하여 저장한다.
-    private void saveMappedGenres(List<Webtoon> mergedWebtoons, Map<String, WebtoonKyu> kyuWebtoons) {
-
+    private void saveMappedGenres(List<Webtoon> mergedWebtoons,
+        Map<String, WebtoonKyu> kyuWebtoons) {
+        log.info("starting mapping genres");
         for (Webtoon webtoon : mergedWebtoons) {
 
             WebtoonKyu webtoonKyu = kyuWebtoons.get(webtoon.getTitle());
@@ -98,13 +100,14 @@ public class WebtoonMergeService {
 
             for (String genreName : mappedGenres) {
                 Genre genre = genreRepository.findByName(genreName)
-                    .orElseThrow(
-                        () -> new CustomException(ValidationExceptionCode.INVALID_GENRE_NAME));
+                    .orElseThrow(() -> {
+                        log.error("Invalid genre name: {}", genreName);
+                        return new CustomException(ValidationExceptionCode.INVALID_GENRE_NAME);
+                    });
 
                 WebtoonGenre webtoonGenre = new WebtoonGenre();
                 webtoonGenre.setGenre(genre);
                 webtoonGenre.setWebtoon(webtoon);
-
 
                 webtoonGenreRepository.save(webtoonGenre);
             }
