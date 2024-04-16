@@ -3,32 +3,33 @@ package com.example.webduck.webtoon.service.port;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 public class KyuWebtoonResponse {
 
     private Result result;
     private List<WebtoonKyu> itemList;
-
     public boolean isSuccess() {
         return result.getResultState().equals("success");
     }
-
     public boolean isEmpty() {
         return itemList.isEmpty();
     }
     public int getTotalCount() {
         return result.getTotalCount();
     }
-
     public String getResultMessage() {
         return result.getResultMessage();
     }
-
     public String getResultState() {
         return result.getResultState();
     }
 
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     @Getter
     public static class Result {
         private int viewItemCnt;
@@ -37,6 +38,9 @@ public class KyuWebtoonResponse {
         private int totalCount;
         private String resultMessage;
     }
+
+    @Setter
+    @NoArgsConstructor
     @AllArgsConstructor
     @Getter
     public static class WebtoonKyu {

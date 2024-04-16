@@ -66,7 +66,7 @@ if (isDev.value) {
     try {
       await axios.get('/api/v1/dev/login');
       alert('관리자로 접속합니다.');
-      await router.push('/oauth2/redirect');
+      await router.push('/adminLogin');
     } catch (error) {
       alert('관리자 로그인 실패');
     }

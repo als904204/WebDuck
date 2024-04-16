@@ -18,6 +18,7 @@ import Health from "../components/common/Health.vue";
 import Admin from "../components/admin/Admin.vue";
 import {useAuthStore} from "../store/auth.js";
 import Monitor from "../components/admin/Monitor.vue";
+import AdminLogin from "../components/login/AdminLogin.vue";
 
 
 const routes = [
@@ -53,6 +54,11 @@ const routes = [
       roles: ['ROLE_ADMIN'],
     }
   },
+  {
+    path: '/adminLogin',
+    name: 'adminLogin',
+    component: AdminLogin,
+  }
 ]
 
 
