@@ -36,4 +36,8 @@ public class RuntimeUtil {
         return memoryFormat.format(getUsedMemoryInMb());
     }
 
+    public static String getAvailableProcessors() {
+        return String.valueOf(Runtime.getRuntime().availableProcessors());
+    }
+
 }
