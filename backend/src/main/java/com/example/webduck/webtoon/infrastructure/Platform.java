@@ -23,6 +23,7 @@ public enum Platform {
         }
     }
 
+    // 만화 규장각 API 는 플랫폼을 한국어로 요청 보내야 한다.
     public String toKorean() {
         return koreanName;
     }
