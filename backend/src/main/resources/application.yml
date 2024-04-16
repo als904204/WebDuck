@@ -6,7 +6,7 @@ spring:
     open-in-view: false
 
 logging-module:
-  version: 1.1.1
+  version: 1.2.2
 
 webtoon:
   kor:
