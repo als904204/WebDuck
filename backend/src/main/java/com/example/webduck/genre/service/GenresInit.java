@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile({"dev", "test"}) // 개발 및 테스트 환경에서만 실행
+@Profile({"dev", "test", "docker"}) // 개발 및 테스트 환경에서만 실행
 @RequiredArgsConstructor
 @Component
 public class GenresInit {
@@ -28,8 +28,6 @@ public class GenresInit {
     private static final String SPORTS = "SPORTS"; // 스포츠
     private static final String PURE = "PURE"; // 순정
     private static final String MYSTERY = "MYSTERY"; // 미스터리
-
-
 
     // 드라마, 로맨스판타지, 로맨스, 판타지, 액션, 순정, 무협, 추리미스터리, 스포츠, 일상, 코믹, 소년, BL, 공포
 
