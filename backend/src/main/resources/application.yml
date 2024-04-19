@@ -6,11 +6,12 @@ spring:
     open-in-view: false
 
 logging-module:
-  version: 1.1.1
+  version: 1.2.3
 
 webtoon:
   kor:
     url: "https://korea-webtoon-api.herokuapp.com/"
   kyu:
     url: "https://www.kmas.or.kr/openapi/search/bookAndWebtoonList/"
+    key: "fb9d29708ea1903b86bbdfd012cf1189"
 

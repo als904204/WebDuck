@@ -14,16 +14,17 @@ import com.example.webduck.global.security.oauth.entity.SessionMember;
 import com.example.webduck.member.domain.Member;
 import com.example.webduck.member.service.port.MemberRepository;
 import com.example.webduck.webtoon.domain.Webtoon;
+import com.example.webduck.webtoon.infrastructure.KyuAsyncApiClient;
 import com.example.webduck.webtoon.infrastructure.Platform;
-import com.example.webduck.webtoon.service.port.KoreaApiClient;
+import com.example.webduck.webtoon.infrastructure.KoreaApiClient;
 import com.example.webduck.webtoon.service.port.KoreaWebtoonResponse;
-import com.example.webduck.webtoon.service.port.KyuApiClient;
 import com.example.webduck.webtoon.service.port.WebtoonRepository;
 import com.example.webduck.webtoon.service.port.KoreaWebtoonResponse.WebtoonKor;
 import com.example.webduck.webtoon.service.port.KyuWebtoonResponse.WebtoonKyu;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,12 +35,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class WebtoonMergeService {
 
-    private final KyuApiClient kyuApiClient;
     private final KoreaApiClient koreaWebtoonApiClient;
     private final WebtoonRepository webtoonRepository;
     private final GenreRepository genreRepository;
     private final WebtoonGenreRepository webtoonGenreRepository;
     private final MemberRepository memberRepository;
+    private final KyuAsyncApiClient kyuAsyncApiClient;
 
     @Transactional
     public WebtoonMergeResponse mergeAndSave(WebtoonApiRequest request, SessionMember sessionMember) {
@@ -47,25 +48,27 @@ public class WebtoonMergeService {
                 sessionMember.getUsername())
             .orElseThrow(() -> new CustomException(
                 LogicExceptionCode.MEMBER_NOT_FOUND));
-        Platform platform = request.getPlatform();
+
         Member.validateAdmin(member);
 
-        KoreaWebtoonResponse webtoonKorea = koreaWebtoonApiClient.getWebtoons(platform);
-        log.info("Fetched {} webtoons from Korea Webtoon API for {}",
-            webtoonKorea.getWebtoons().size(), platform);
+        Platform platform = request.getPlatform();
 
-        Map<String, WebtoonKyu> kyuWebtoons = kyuApiClient.getWebtoons(platform);
-        log.info("Fetched {} webtoons from Kyu Webtoon API for {}", kyuWebtoons.size(), platform);
+        CompletableFuture<Map<String, WebtoonKyu>> kyuWebtoonsAsync = kyuAsyncApiClient.getWebtoonsAsync(
+            platform);
 
-        List<Webtoon> mergedWebtoons = mergeWebtoons(webtoonKorea, kyuWebtoons);
+        KoreaWebtoonResponse koreaWebtoons = koreaWebtoonApiClient.getWebtoons(platform);
 
-        mergedWebtoons = webtoonRepository.saveAll(mergedWebtoons);
-
-        saveMappedGenres(mergedWebtoons, kyuWebtoons);
-        log.info("Successfully {} merged webtoons with genres for platform: {}",
-            mergedWebtoons.size(), platform);
-
-        return new WebtoonMergeResponse(mergedWebtoons.size(), platform);
+        // getWebtoonsAsync 완료되면 실행
+        return kyuWebtoonsAsync.thenApply(
+            kyuWebtoons -> {
+                // 데이터 통합 및 저장
+                List<Webtoon> mergedWebtoons = mergeWebtoons(koreaWebtoons, kyuWebtoons);
+                mergedWebtoons = webtoonRepository.saveAll(mergedWebtoons);
+                saveMappedGenres(mergedWebtoons, kyuWebtoons);
+                log.info("Successfully merged {} webtoons with genres for platform: {}",
+                    mergedWebtoons.size(), platform);
+                return new WebtoonMergeResponse(mergedWebtoons.size(), platform);
+            }).join();
     }
 
     // korea 웹툰 <=> 만화 규장각 웹툰 title 같을 경우 merge

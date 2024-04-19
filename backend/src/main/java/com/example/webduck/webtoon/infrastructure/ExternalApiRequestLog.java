@@ -41,4 +41,14 @@ public class ExternalApiRequestLog extends BaseTime {
     public void setLastRequestedPage(int pageNo) {
         this.lastRequestedPage = pageNo;
     }
+
+    // 마지막으로 요청한 +1 페이지
+    public int getStartPage() {
+        return this.lastRequestedPage + 1;
+    }
+
+    // 마지막으로 요청한 페이지부터 20페이지
+    public int getLastPage() {
+        return getStartPage() + 20;
+    }
 }

@@ -34,6 +34,8 @@ public class MemoryMonitorHandler extends TextWebSocketHandler {
         memoryInfo.put("totalMemory", RuntimeUtil.getTotalMemoryStringInMb());
         memoryInfo.put("usedMemory", RuntimeUtil.getUsedMemoryStringInMb());
         memoryInfo.put("freeMemory", RuntimeUtil.getFreeMemoryStringInMb());
+        memoryInfo.put("hostProcessors", RuntimeUtil.getAvailableProcessors());
+
         return gson.toJson(memoryInfo);
     }
 

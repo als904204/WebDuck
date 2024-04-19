@@ -1,4 +1,4 @@
-package com.example.webduck.webtoon.service.port;
+package com.example.webduck.webtoon.infrastructure;
 
 import com.example.webduck.webtoon.infrastructure.Platform;
 import com.example.webduck.webtoon.service.port.KoreaWebtoonResponse;

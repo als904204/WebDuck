@@ -3,6 +3,7 @@
   <p>totalMemory : {{ totalMemory }}</p>
   <p>usedMemory : {{ usedMemory }}</p>
   <p>freeMemory : {{ freeMemory }}</p>
+  <p>hostProcessors : {{ hostProcessors }}</p>
 
 </template>
 
@@ -18,6 +19,7 @@ onMounted(() => {
 const totalMemory = ref('');
 const usedMemory = ref('');
 const freeMemory = ref('');
+const hostProcessors = ref();
 
 let webSocket = null;
 
@@ -25,7 +27,7 @@ const connectWebSocket = () => {
   const baseUrl = import.meta.env.VITE_APP_BACKEND_URL;
 
   const socketUrl = baseUrl.replace(/^http/, 'ws') + '/api/v1/admin/memory';
-
+  console.log(socketUrl);
   const socket = new WebSocket(socketUrl);
 
   socket.onopen = () => {
@@ -37,6 +39,7 @@ const connectWebSocket = () => {
     totalMemory.value = data.totalMemory;
     usedMemory.value = data.usedMemory;
     freeMemory.value = data.freeMemory;
+    hostProcessors.value = data.hostProcessors;
 
   };
 

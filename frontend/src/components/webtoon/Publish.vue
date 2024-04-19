@@ -28,6 +28,10 @@
       <Badge class="publish-btn" value="일요일 웹툰" size="xlarge" severity="warning"></Badge>
       <FetchWebtoonList param="SUNDAY" serviceType="PUBLISH" />
     </div>
+    <div>
+      <Badge class="publish-btn" value="매일 +" size="xlarge" severity="success"></Badge>
+      <FetchWebtoonList param="DAILY" serviceType="PUBLISH" />
+    </div>
   </div>
 </template>
 

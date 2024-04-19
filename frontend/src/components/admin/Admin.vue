@@ -131,7 +131,6 @@ const saveWebtoons = async (platform) => {
     webtoonSaveResultStatus.value = true;
   } catch (error) {
     webtoonSaveResultStatus.value = false;
-    alert('웹툰 데이터 요청 중 오류가 발생했습니다.');
   } finally {
     webtoonSaveLoading.value = false; // 요청 완료 시 로딩 종료
   }
