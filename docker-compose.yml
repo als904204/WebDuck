@@ -1,0 +1,61 @@
+version: '3'
+
+networks:
+  webduck-network:
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: webduck
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - webduck-network
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb -h localhost -u root -proot -e 'SELECT 1;'"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/webduck
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8090:8080"
+    networks:
+      - webduck-network
+
+  frontend:
+    build:
+      context: ./frontend
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env.development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - webduck-network
+  
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - 80:80
+    volumes:
+      - ./frontend/nginx/conf/webduck.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+    networks:
+      - webduck-network

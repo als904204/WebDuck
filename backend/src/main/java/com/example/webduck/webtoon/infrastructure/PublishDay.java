@@ -1,5 +1,8 @@
 package com.example.webduck.webtoon.infrastructure;
 
+import com.example.webduck.global.exception.CustomException;
+import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
+
 public enum PublishDay {
     MONDAY,
     TUESDAY,
@@ -32,7 +35,7 @@ public enum PublishDay {
             case "naverdaily" :
                 return DAILY;
             default:
-                throw new IllegalArgumentException("Unknown day: " + day); // todo
+                throw new CustomException(LogicExceptionCode.REVIEW_NOT_FOUND); // todo
         }
     }
 

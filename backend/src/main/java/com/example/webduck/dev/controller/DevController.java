@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/dev")
-@Profile("dev")
+@Profile({"dev","docker"})
 public class DevController {
 
     private final DevService devService;

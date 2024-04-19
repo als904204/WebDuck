@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-@Profile("dev")
+@Profile({"dev","docker"})
 public class DevService {
 
     private final MemberRepository memberRepository;

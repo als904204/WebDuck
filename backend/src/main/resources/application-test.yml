@@ -23,9 +23,9 @@ spring:
             client-secret: test-secret
             scope: profile,email
 
-
-secret:
-  key: "asdfasdfasdfasdfasdfasdfdasdfasdfadfafdsa"
+encryptor:
+  secret:
+    key: "asdfasdfasdfasdfasdfasdfdasdfasdfadfafdsa"
 
 
 login:
