@@ -3,6 +3,7 @@ package com.example.webduck.global.security.encryption;
 import static com.example.webduck.global.exception.exceptionCode.LogicExceptionCode.BAD_REQUEST;
 
 import com.example.webduck.global.exception.CustomException;
+import com.example.webduck.global.exception.exceptionCode.LogicExceptionCode;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Base64;
@@ -32,10 +33,10 @@ public class AttributeEncryptor {
     private final IvParameterSpec iv;
 
     // 시크릿키를 가져오지 못할경우 500번 에러
-    public AttributeEncryptor(@Value("${secret.key}") String secretKey) throws Exception {
+    public AttributeEncryptor(@Value("${encryptor.secret.key}") String secretKey) throws Exception {
         if (secretKey.isEmpty() || secretKey.isBlank()) {
             log.error("#failed to load config. secretKey is can't not be null or empty");
-            throw new ConfigurationException();
+            throw new CustomException(LogicExceptionCode.ENCRYPTOR_SECRET_KEY);
         }
 
         // SHA-256 해시 알고리즘을 사용하여 시크릿키를 해시. 이렇게 하면 어떤 길이의 키든 일정한 길이(256비트)의 해시로 변환
