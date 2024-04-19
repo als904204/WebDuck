@@ -42,7 +42,7 @@ out/
 
 ### log files ###
 spy.log
-
+db_data/
 ### docs ###
 **/src/main/resources/static/docs/**
 
