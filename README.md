@@ -105,6 +105,7 @@ java -jar webduck/backend/build/libs/*.jar
   http://localhost:8090
 
 ---
+
 ## 아키텍쳐
 ![architecture.png](img/architecture.png)
 
@@ -122,6 +123,7 @@ java -jar webduck/backend/build/libs/*.jar
 http://localhost:8090/docs/index.html
 
 ---
+
 ## 관리자 페이지
 
 
@@ -144,18 +146,3 @@ http://localhost:8090/docs/index.html
 
 3. 메뉴 목록
 ![admin3.png](img/admin3.png)
-
-<br/>
-
-4. 웹툰 자동 저장 메뉴
-![admin4.png](img/admin4.png)
-
-<br/>
-
-5. 회원 모니터링 (준비중)
-
-<br/>
-
-6. 실시간 메모리 모니터링
-
-![admin6.png](img/admin6.png)
