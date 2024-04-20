@@ -15,3 +15,5 @@ webtoon:
     url: "https://www.kmas.or.kr/openapi/search/bookAndWebtoonList/"
     key: "fb9d29708ea1903b86bbdfd012cf1189"
 
+server:
+  port: 8090
