@@ -48,8 +48,8 @@ public class SecurityConfig {
         "/naver/**",
         "/kakao/**",
         "/webtoon/details/**",
-        "/api/v1/dev/**"
-
+        "/api/v1/dev/**",
+        "/docs/**"
     };
 
 
