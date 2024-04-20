@@ -23,9 +23,9 @@
 ## 📝목차
 
 - [기술스택](#기술스택)
-- [빌드](#빌드)
 - [아키텍처](#아키텍쳐)
 - [ERD](#erd)
+- [빌드](#빌드)
 - [API 문서](#api-문서)
 - [관리자 페이지](#관리자-페이지)
 
@@ -43,6 +43,20 @@
 |                                                                                                                                                                                                                         ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=flat-the-badge&logo=mariadb&logoColor=white)                                                                                                                                                                                                                              
 |                                                                                                                                                                                                                                                                            **Infra**                                                                                                                                                                                                                                                                            |
 | ![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=AmazonAWS&logoColor=white) ![Git Action](https://img.shields.io/badge/GitAction-2088FF?style=flat-square&logo=GithubActions&logoColor=white) ![S3](https://img.shields.io/badge/S3-569A31?style=flat-square&logo=AmazonS3&logoColor=white) ![EC2](https://img.shields.io/badge/EC2-orange?style=flat-square&logo=AmazonAWS&logoColor=white) ![RDS](https://img.shields.io/badge/RDS-1E90FF?style=flat-square&logo=AmazonAWS&logoColor=white) ![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=Nginx&logoColor=white)
+---
+
+
+## 아키텍쳐
+![architecture.png](img/architecture.png)
+
+---
+
+
+## ERD
+
+---
+![db.png](img/db.png)
+
 ---
 
 ## 빌드
@@ -103,19 +117,6 @@ java -jar webduck/backend/build/libs/*.jar
 - 백엔드
 
   http://localhost:8090
-
----
-
-## 아키텍쳐
-![architecture.png](img/architecture.png)
-
----
-
-
-## ERD
-
----
-![db.png](img/db.png)
 
 ---
 
