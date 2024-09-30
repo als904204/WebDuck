@@ -11,15 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/dev")
-@Profile({"dev","docker"})
+@Profile({"dev","docker","test"})
 public class DevController {
 
     private final DevService devService;
 
     @GetMapping("/login")
-    public ResponseEntity<Void> devAdminLogin() {
+    public ResponseEntity<String> devAdminLogin() {
         devService.login();
-        return ResponseEntity.noContent().build();
-
+        return ResponseEntity.ok("Successfully logged-in by admin!");
     }
 }

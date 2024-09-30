@@ -16,7 +16,7 @@ public enum Platform {
             case "naver":
                 return NAVER;
             case "kakao":
-            case "kakaopage":
+            case "kakao_page":
                 return KAKAO;
             default:
                 return ELSE;

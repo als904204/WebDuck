@@ -16,14 +16,10 @@ public class KoreaWebtoonResponse {
     @Getter
     public static class WebtoonKor {
         private String title;
-        private String img;
+        private List<String> thumbnail;
         private List<String> updateDays;
-        private String service;
+        private String provider;
         private String url;
-
-        public String getPublishDay() {
-            return updateDays.get(0);
-        }
     }
 
 }

@@ -26,12 +26,16 @@ public class KoreaApiClient {
     }
 
     private String buildKorRequestUri(Platform platform) {
-        String service = platform.name().toLowerCase();
-        return UriComponentsBuilder.fromHttpUrl(url)
+        String service = platform.name().toUpperCase();
+        String resultUri = UriComponentsBuilder.fromHttpUrl(url)
+            .path("/webtoons")
             .queryParam("perPage", 0)
-            .queryParam("service", service)
+            .queryParam("provider", service)
             .build()
             .toUriString();
+
+        log.info("Korea-Webtoon-API Result URI={}", resultUri);
+        return resultUri;
     }
 
 }
