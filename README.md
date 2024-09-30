@@ -83,31 +83,31 @@ docker compose up
 | **수동 빌드 시** |
 |:-----------:|
 ### Vue
-#### webduck/frontend
+#### 경로 : webduck/frontend
+
 ```java
+cd frontend
+npm install (버전 오류 나면)
 vue run dev  // 개발환경
 vue run build // 배포환경
 ```
 ### SpringBoot
-#### webduck/backend
-#### 환경 설정
+#### 경로 : webduck/backend
+
+#### gradle
+```java
+cd backend
+./gradlew clean build
+java -jar build/libs/*.jar
+```
+
+#### 환경 설정 변경
 ```yaml
 # webduck/backend/src/main/resources/application.yml
 spring:
   profiles:
     active: dev // prod,test,docker
 
-```
-
-
-#### gradle
-```java
-./gradlew build
-```
-
-#### jar
-```java
-java -jar webduck/backend/build/libs/*.jar
 ```
 
 ### 접속
