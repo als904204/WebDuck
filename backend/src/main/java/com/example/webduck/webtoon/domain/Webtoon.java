@@ -8,6 +8,7 @@ import com.example.webduck.webtoon.infrastructure.PublishDay;
 import com.example.webduck.webtoon.service.port.KyuWebtoonResponse.WebtoonKyu;
 import com.example.webduck.webtoon.service.port.KoreaWebtoonResponse.WebtoonKor;
 import java.util.List;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -59,12 +60,23 @@ public class Webtoon {
     }
 
     public static Webtoon fromWebtoonKor(WebtoonKor webtoonKor) {
+
+        // 없다면 썸네일 UUID로 설정
+        String thumbnail = webtoonKor.getThumbnail().stream()
+            .findFirst()
+            .orElse(UUID.randomUUID().toString());
+
+        // 없다면 연재 종료된 웹툰
+        String updateDays = webtoonKor.getUpdateDays().stream()
+            .findFirst()
+            .orElse("finished");
+
         return Webtoon.builder()
             .title(webtoonKor.getTitle())
             .originalImageName(webtoonKor.getTitle() + ".jpg")
-            .imagePath(webtoonKor.getImg())
-            .platform(Platform.fromString(webtoonKor.getService()))
-            .publishDay(PublishDay.fromString(webtoonKor.getPublishDay()))
+            .imagePath(thumbnail)
+            .platform(Platform.fromString(webtoonKor.getProvider()))
+            .publishDay(PublishDay.fromString(updateDays))
             .webtoonUrl(webtoonKor.getUrl())
             .author("")
             .summary("")
