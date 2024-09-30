@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +28,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-@Profile({"dev","docker"})
+@Profile({"dev","docker","test"})
 public class DevService {
 
     private final MemberRepository memberRepository;
@@ -35,8 +36,16 @@ public class DevService {
     private final HttpSession httpSession;
     private final String email = "admin@admin.com";
     private final SocialType socialType = SocialType.GOOGLE;
+    private final Environment env;
+
     @PostConstruct
     public void initAdmin() {
+        String[] activeProfiles = env.getActiveProfiles();
+        String currentProfile = String.join(", ", activeProfiles);
+
+        log.info("current active profiles={}",currentProfile);
+
+        
         if (memberRepository.findByEmailAndSocialType(email, socialType).isEmpty()) {
 
             log.info("init admin");
@@ -84,6 +93,14 @@ public class DevService {
 
         SecurityContextHolder.getContext().setAuthentication(adminAuth);
 
+        String adminInfo = SecurityContextHolder.getContext().getAuthentication().toString();
+
+        if (!adminInfo.isEmpty()) {
+            log.info("successfully logged-in by admin!");
+            log.info("ADMIN INFO={}", adminInfo);
+        } else {
+            log.error("Admin Login Failed!");
+        }
     }
 
 }
