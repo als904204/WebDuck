@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: test
+    active: dev
 
   jpa:
     open-in-view: false
@@ -10,7 +10,7 @@ logging-module:
 
 webtoon:
   kor:
-    url: "https://korea-webtoon-api.herokuapp.com/"
+    url: "https://korea-webtoon-api-cc7dda2f0d77.herokuapp.com/"
   kyu:
     url: "https://www.kmas.or.kr/openapi/search/bookAndWebtoonList/"
     key: "fb9d29708ea1903b86bbdfd012cf1189"
