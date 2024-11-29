@@ -1,6 +1,6 @@
 ![notice1.png](img/notice1.png)
 
-## 🧑🏻‍💻<a href="https://webduck.info">Webduck 방문하기</a>
+## 🧑🏻‍💻<a href="https://webduck.info">Webduck 방문하기</a> (웹툰 OpenAPI 중단으로인해 배포 종료)
 
 ---
 
