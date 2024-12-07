@@ -28,7 +28,7 @@
 - [빌드](#빌드)
 - [API 문서](#api-문서)
 - [관리자 페이지](#관리자-페이지)
-- [트러블슈팅](#📌트러블슈팅--성능-개선)
+- [트러블슈팅](#트러블슈팅)
 
 ---
 
@@ -150,7 +150,7 @@ http://localhost:8090/docs/index.html
 ![admin3.png](img/admin3.png)
 
 ---
-## 📌트러블슈팅 & 성능 개선
+## 트러블슈팅
 - [외부 API 여러건 요청 성능 개선](https://velog.io/@minu1117/%EC%86%8D%EB%8F%84%EA%B0%80-%EB%8A%90%EB%A6%B0-%EC%99%B8%EB%B6%80-API-%EA%B0%9C%EC%84%A0%EA%B8%B0-1-Multi-Thread)
 - [자주 조회되는 API 성능 개선](https://velog.io/@minu1117/Ehcache-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0ngrinder-%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81)
 - [만능과 같은 서비스 레이어](backend/troubleshooting%20/서비스_레이어.md)
